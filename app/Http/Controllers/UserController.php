@@ -323,11 +323,19 @@ class UserController extends Controller
         $organisasi = collect($request->organisasi_id);
         $indeks = count($organisasi);
 
+        // $jenis = DetailUser::where('user_id', $user->id)->get();
+
         for($i=0;$i<$indeks;$i++){
-            DetailUser::create([
-                'user_id' => $user->id,
-                'organisasi_id' => $organisasi[$i],
-            ]);
+
+DB::table('detail_user')
+                ->where('user_id', $user->id)
+                ->update(['organisasi_id' => $organisasi[$i]]);
+            // DB::table('detail_user')
+            //     ->where('id', $user->id)
+            //     ->update(['organisasi_id' => $organisasi[$i]]);
+            // DetailUser::updateOrCreate([
+            //     'organisasi_id' => $organisasi[$i],
+            // ],['user_id' => $user->id,]);
 
         }
 

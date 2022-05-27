@@ -9,7 +9,7 @@ class ExcelAbsensi extends Model
 {
     protected $table = 'excel_absensi';
     protected $fillable = [
-        'anggota_id',
+        'user_id',
         'nama',
         'status'];
 }

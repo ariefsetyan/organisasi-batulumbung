@@ -22,7 +22,7 @@ class AbsensiImport implements ToModel, WithHeadingRow
             // 'tanggal'       => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['TANGGAL']),
             // 'jenis'         => $row['JENIS'],
             // 'status'        => $row['STATUS']
-            'anggota_id'        => $row['anggota_id'],
+            'user_id'        => $row['user_id'],
             'nama'              => $row['nama'],
             // 'nama_kegiatan' => $row['nama_kegiatan'],
             // 'tanggal'       => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tanggal']),

@@ -146,7 +146,7 @@
                             <thead>
                                 <tr>
                                     <th class="border-top-0">NO</th>
-                                    <th class="border-top-0">ID ANGGOTA</th>
+                                    <th class="border-top-0">USER ID</th>
                                     <th class="border-top-0">NAMA ANGGOTA</th>
                                     <th class="border-top-0">NAMA KEGIATAN</th>
                                     <th class="border-top-0">TANGGAL</th>
@@ -160,7 +160,7 @@
                             @foreach ($absensi as $result => $absen)
                                 <tr>
                                     <td scope="row">{{ $result + $absensi->firstitem() }}</td>
-                                    <td>{{$absen->anggota_id}}</td>
+                                    <td>{{$absen->user_id}}</td>
                                     <td>{{$absen->nama}}</td>
                                     <td>{{$absen->nama_kegiatan}}</td>
                                     <td>{{ \Carbon\Carbon::parse($absen->tanggal)->format('Y-m-d')}}</td>

@@ -217,19 +217,20 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="exampleFormControlSelect">Jenis Organisasi</label> <br>
-                            <input type="checkbox" class="check_all" name="organisasi_id[]" id="sekaateruna" value="1" @if($user->organisasi_id == "1") checked @endif> Sekaa Teruna<br>
-                            <input type="checkbox" class="check_all" name="organisasi_id[]" id="sekaagong" value="2" @if($user->organisasi_id == "2") checked @endif> Sekaa Gong<br>
-                            <input type="checkbox" class="check_all" name="organisasi_id[]" id="sekaasanti" value="3" @if($user->organisasi_id == "3") checked @endif> Sekaa Santi<br>
-                            <input type="checkbox" class="check_all" name="organisasi_id[]" id="pkk" value="4" @if($user->organisasi_id == "4") checked @endif> PKK<br>
+                            <label for="exampleFormControlSelect" >Jenis Organisasi</label> <br>
+                            
+                            <input type="checkbox" class="check_all" name="organisasi_id[]" id="sekaateruna" value="1" onclick="myFunction()" @if($user->organisasi_id == "1") checked @endif > Sekaa Teruna<br>
+                            <input type="checkbox" class="check_all" name="organisasi_id[]" id="sekaagong" value="2" onclick="myFunction()" @if($user->organisasi_id == "2") checked @endif> Sekaa Gong<br>
+                            <input type="checkbox" class="check_all" name="organisasi_id[]" id="sekaasanti" value="3" onclick="myFunction()" @if($user->organisasi_id == "3") checked @endif> Sekaa Santi<br>
+                            <input type="checkbox" class="check_all" name="organisasi_id[]" id="pkk" value="4" onclick="myFunction()" @if($user->organisasi_id == "4") checked @endif> PKK<br>
                         </div>
 
                         <div class="form-group">
                             <label for="exampleFormControlSelect">Status</label>
                             <select name="status" value="{{ $user->status }}" class="form-control @error('status') is-invalid @enderror" 
                             id="exampleFormControlSelect">
-                                <option value="Aktif" @if($user->status == "Aktif") selected @endif>Aktif</option>
-                                <option value="Tidak Aktif" @if($user->status == "Tidak Aktif") selected @endif>Tidak Aktif</option>
+                                <option value="1" @if($user->status == "1") selected @endif>Aktif</option>
+                                <option value="0" @if($user->status == "0") selected @endif>Tidak Aktif</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -312,3 +313,26 @@
 
 
 @endsection
+
+
+@push('script')
+    <script>
+        function myFunction() {
+  // Get the checkbox
+  var checkBox = document.getElementById("myCheck");
+  // Get the output text
+  var text = document.getElementById("text");
+
+  // If the checkbox is checked, display the output text
+  if (checkBox.checked == true){
+    text.style.display = "block";
+  } else {
+    text.style.display = "none";
+  }
+}
+
+
+    </script>
+
+
+@endpush

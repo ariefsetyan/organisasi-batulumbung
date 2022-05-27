@@ -86,7 +86,7 @@
                                     @forelse ($absensi as $result => $absen)
                                         <tr>
                                             <th scope="row">{{ $result + $absensi->firstitem() }}</th>
-                                            <td>{{$absen->anggota_id}}</td>
+                                            <td>{{$absen->user_id}}</td>
                                             <td>{{$absen->nama}}</td>
                                             <td>{{$absen->nama_kegiatan}}</td>
                                             <td>{{ \Carbon\Carbon::parse($absen->tanggal)->format('Y-m-d')}}</td> 

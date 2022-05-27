@@ -75,7 +75,7 @@ class RegisterController extends Controller
                 'pekerjaan'         => $request->pekerjaan,
                 'alamat'            => $request->alamat,
                 'level'             => $request->level,
-                'status'            => $request->status
+                'status'            => "Tidak Aktif"
             ]);
 
             $organisasi = collect($request->organisasi_id);

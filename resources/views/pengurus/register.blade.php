@@ -178,14 +178,14 @@
                
             </div>`
 
-            <div class="login100-form">
+            {{-- <div class="login100-form">
                 <label for="exampleFormControlSelect">Status</label>
                 <select name="status" value="{{ old ('status') }}" class="form-control" id="exampleFormControlSelect">
                     <option value="">--Pilih--</option>
                     <option value="Aktif">Aktif</option>
                     <option value="Tidak Aktif">Tidak Aktif</option>
                 </select>
-            </div>
+            </div> --}}
 
             <div class="container-login100-form-btn m-t-26 m-b-26 m-l-225">
                 <button class="login100-form-btn">

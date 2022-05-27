@@ -1,4 +1,7 @@
 <style>
+    .card {
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
     table, td, th {
         border: 1px solid;
     }
@@ -6,34 +9,36 @@
     table {
         width: 100%;
         border-collapse: collapse;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     }
 </style>
 <div class="card">
     <div class="card-body">
 @foreach($data1 as $x)
-        <p>ID : {{$x->id}}</p>
+        <p>ID Pengeluaran: {{$x->id}}</p>
+        <p>ID Pengurus :  1</p>
         <table>
-            <tr>
-                <td>nama barang</td>
-                <td>jumlah</td>
-                <td>harga satuan</td>
-                <td>total</td>
+            <tr align="center">
+                <th>Nama Barang</th>
+                <th>Jumlah</th>
+                <th>Harga Satuan</th>
+                <th>Total</th>
             </tr>
             @foreach($data as $y)
-            <tr>
+            <tr align="center">
                 <td>{{$y->nama_barang}}</td>
                 <td>{{$y->jmlh_barang}}</td>
-                <td>{{$y->satuan_harga}}</td>
-                <td>{{$y->jmlh_barang*$y->satuan_harga}}</td>
+                <td>Rp {{number_format ($y->satuan_harga) }}</td>
+                <td>Rp {{number_format ($y->jmlh_barang*$y->satuan_harga)}}</td>
             </tr>
             @endforeach
         </table>
 <br>
-        <p>subtotal : {{$x->total}}</p>
-        <p>sumber dana :  {{$x->sumber_dana}}</p>
-        <p>organisasi :  {{$x->jenis}}</p>
-        <p>keterangan : {{$x->keterangan}}</p>
-        <p>petugas :  1</p>
+        <p>Subtotal : Rp {{number_format($x->total)}}</p>
+        <p>Sumber Dana :  {{$x->sumber_dana}}</p>
+        <p>Organisasi :  {{$x->jenis}}</p>
+        <p>Keterangan : {{$x->keterangan}}</p>
+        
 
         </table>
         @endforeach

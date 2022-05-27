@@ -44,12 +44,12 @@
                                 <thead>
                                 <tr>
                                     <th class="border-top-0">NO</th>
-                                    <th class="border-top-0">organisasi</th>
+                                    <th class="border-top-0">Organisasi</th>
                                     <th class="border-top-0">Tanggal</th>
                                     <th class="border-top-0">Sumber Dana</th>
                                     <th class="border-top-0">Total</th>
-                                    <th class="border-top-0">keterangan</th>
-                                    <th class="border-top-0">ACTION</th>
+                                    <th class="border-top-0">Keterangan</th>
+                                    <th class="border-top-0">AKSI</th>
                                 </tr>
                                 </thead>
 
@@ -61,11 +61,11 @@
                                     <td>{{$row->jenis}}</td>
                                     <td>{{$row->tanggal}}</td>
                                     <td>{{$row->sumber_dana}}</td>
-                                    <td>{{$row->total}}</td>
+                                    <td>Rp {{ number_format ($row->total)}}</td>
                                     <td>{{$row->keterangan}}</td>
                                     <td>
-                                        <a href="view/{{$row->id}}" id="btn-update" class="btn btn-primary"><i class="bi bi-eye m-r-5"></i>view</a> |
-                                        <a href="hapus-pengeluaran/{{$row->id}}" class="btn btn-primary"><i class="bi bi-archive m-r-5"></i>Delete</a></td>
+                                        <a href="view/{{$row->id}}" id="btn-update" class="btn btn-primary"><i class="bi bi-eye-fill m-r-5"></i></a> |
+                                        <a href="hapus-pengeluaran/{{$row->id}}" class="btn btn-danger text-white"><i class="bi bi-trash-fill"></i></a></td>
                                     </td>
                                 </tr>
                                 @endforeach

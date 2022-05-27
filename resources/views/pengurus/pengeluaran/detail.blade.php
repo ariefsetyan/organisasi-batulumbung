@@ -36,7 +36,7 @@
                     <div class="white-box">
 
                         <a href="{{url('download/'.$id)}}" class="btn btn-primary mr-5">
-                            download
+                            Download
                         </a>
 
                         <div class="table-responsive mt-3" id="conten">

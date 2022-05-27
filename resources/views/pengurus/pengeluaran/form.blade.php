@@ -37,9 +37,9 @@
                                     {{ csrf_field() }}
 
                                     <div class="form-group">
-                                        <label for="nama_kegiatan">organisasi</label>
+                                        <label for="nama_kegiatan">Organisasi</label>
                                         <select name="nama_kegiatan" id="nama_kegiatan" class="form-control" required>
-                                            <option value="" selected>Pilih organisasi</option>
+                                            <option value="" selected>Pilih Organisasi</option>
                                             @foreach($organisasi as $row)
                                                 <option value="{{$row->id}}">{{$row->jenis}}</option>
                                             @endforeach
@@ -56,10 +56,10 @@
                                         <thead>
                                         <tr>
                                             <th width="35%">Nama Barang</th>
-                                            <th width="20%">jumlah</th>
+                                            <th width="20%">Jumlah</th>
                                             <th width="20%">Harga Satuan</th>
-                                            <th width="20%">total</th>
-                                            <th width="20%">Action</th>
+                                            <th width="20%">Total</th>
+                                            <th width="20%">Aksi</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -67,7 +67,7 @@
                                         </tbody>
                                         <tfoot>
                                         <tr>
-                                            <td colspan="3" align="right">&nbsp jumlah</td>
+                                            <td colspan="3" align="right">&nbsp Jumlah</td>
                                             <td>
                                                 <input type="number" name="sum" id="sum" class="form-control sum" required readonly/>
                                             </td>

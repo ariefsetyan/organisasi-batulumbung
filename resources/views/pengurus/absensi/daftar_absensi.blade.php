@@ -72,7 +72,7 @@
                             <thead>
                                 <tr>
                                     <th class="border-top-0">NO</th>
-                                    <th class="border-top-0">ID ANGGOTA</th>
+                                    <th class="border-top-0">ID USER</th>
                                     <th class="border-top-0">NAMA ANGGOTA</th>
                                     <th class="border-top-0">NAMA KEGIATAN</th>
                                     <th class="border-top-0">TANGGAL</th>

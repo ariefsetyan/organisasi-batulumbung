@@ -34,12 +34,13 @@
                                 <div class="modal-body">
                                     {{ csrf_field() }}
 
+                                    <label for="id">ID</label>
                                     <input type="text" name="id" class="form-control"
                                            id="id" value="{{$data->id}}">
                                     <div class="form-group">
-                                        <label for="nama_kegiatan">organisasi</label>
+                                        <label for="nama_kegiatan">Organisasi</label>
                                         <select name="nama_kegiatan" id="nama_kegiatan" class="form-control">
-                                            <option value="" selected>Pilih organisasi</option>
+                                            <option value="" selected>Pilih Organisasi</option>
                                             @foreach($organisasi as $row)
                                                 <option value="{{$row->id}}">{{$row->jenis}}</option>
                                             @endforeach
@@ -68,7 +69,7 @@
 
                                     <div class="modal-footer">
                                         <a href="/pemasukan" type="button" class="btn btn-secondary" data-dismiss="modal">Close</a>
-                                        <button type="submit" class="btn btn-primary">Save</button>
+                                        <button type="submit" class="btn btn-primary">Simpan</button>
                                     </div>
 
                                 </div>

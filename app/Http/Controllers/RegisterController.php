@@ -47,21 +47,21 @@ class RegisterController extends Controller
             'unique'   => 'NIK sudah terdaftar'
         ];
 
-//        $request->validate([
-//            'nama'              => 'required',
-//            'nik'               => 'required|unique',
-//            'tempat_lahir'      => 'required',
-//            'tgl_lahir'         => 'required',
-//            'email'             => 'required',
-//            'password'          => 'required|min:5|max:10',
-//            'konfirmpassword'   => 'required|min:5|max:10',
-//            'no_telp'           => 'required',
-//            'jenis_kelamin'     => 'required',
-//            'pekerjaan'         => 'required',
-//            'alamat'            => 'required',
-//            'level'             => 'required',
-//            'status'            => 'required'
-//        ], $message);
+       $request->validate([
+           'nama'              => 'required',
+           'nik'               => 'required|unique',
+           'tempat_lahir'      => 'required',
+           'tgl_lahir'         => 'required',
+           'email'             => 'required',
+           'password'          => 'required|min:5|max:10',
+           'konfirmpassword'   => 'required|min:5|max:10',
+           'no_telp'           => 'required',
+           'jenis_kelamin'     => 'required',
+           'pekerjaan'         => 'required',
+           'alamat'            => 'required',
+           'level'             => 'required',
+           'status'            => 'required'
+       ], $message);
 
         $user = User :: create([
                 'nama'              => $request->nama,

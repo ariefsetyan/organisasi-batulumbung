@@ -49,7 +49,7 @@
                                     <th class="border-top-0">Sumber Dana</th>
                                     <th class="border-top-0">Jenis Organisasi</th>
                                     <th class="border-top-0">Keterangan</th>
-                                    <th class="border-top-0">ACTION</th>
+                                    <th class="border-top-0">AKSI</th>
                                 </tr>
                                 </thead>
 
@@ -58,14 +58,14 @@
                                 @foreach($data as $row)
                                 <tr>
                                     <td>{{$no++}}</td>
-                                    <td>{{$row->jmlh_pemasukan}}</td>
+                                    <td>Rp {{number_format ($row->jmlh_pemasukan) }}</td>
                                     <td>{{$row->tanggal}}</td>
                                     <td>{{$row->sumber_dana}}</td>
                                     <td>{{$row->jenis}}</td>
                                     <td>{{$row->keterangan}}</td>
                                     <td>
-                                        <a href="form-edit-pemasukan/{{$row->id}}" value="{{$row->id}}" id="btn-update" class="btn btn-primary"><i class="bi bi-pencil m-r-5"></i>Edit</a> |
-                                        <a href="hapus-pemasukan/{{$row->id}}" class="btn btn-primary"><i class="bi bi-archive m-r-5"></i>Delete</a></td>
+                                        <a href="form-edit-pemasukan/{{$row->id}}" value="{{$row->id}}" id="btn-update" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a> |
+                                        <a href="hapus-pemasukan/{{$row->id}}" class="btn btn-danger text-light"><i class="bi bi-trash-fill"></i></a></td>
                                     </td>
                                 </tr>
                                 @endforeach

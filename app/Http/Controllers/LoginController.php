@@ -55,7 +55,7 @@ class LoginController extends Controller
         if($loginpengurus == false)
         {
             //dd('password salah');
-            return redirect()->back()->with('status', 'mennggu konformasi dari admin');
+            return redirect()->back()->with('status', 'Menunggu Konfirmasi dari Pengurus');
         }
         $id = User::where('email', $request->email)->value('id');
                 session([

@@ -168,8 +168,8 @@
                                     <td>{{$absen->organisasi->jenis}}</td>
                                     <td>{{$absen->status}}</td>
                                     <td>
-                                        <button value="{{$absen->id}}" onclick="form_edit({{$absen->id}})" class="btn btn-primary" data-toggle="modal" data-target="#edit"><i class="bi bi-pencil m-r-5"></i>Edit</button> |
-                                        <a href="hapus_absen/{{$absen->id}}" class="btn btn-primary"><i class="bi bi-archive m-r-5"></i>Delete</a></td>
+                                        <button value="{{$absen->id}}" onclick="form_edit({{$absen->id}})" class="btn btn-primary" data-toggle="modal" data-target="#edit"><i class="bi bi-pencil-square"></i></button> |
+                                        <a href="hapus_absen/{{$absen->id}}" class="btn btn-danger text-white"><i class="bi bi-trash-fill"></i></a></td>
                             @endforeach
                             </tbody>
                         </table>

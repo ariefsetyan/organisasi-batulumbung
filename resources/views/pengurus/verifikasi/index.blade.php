@@ -26,6 +26,7 @@
                                     <th class="border-top-0">NIK</th>
                                     <th class="border-top-0">NAMA</th>
                                     <th class="border-top-0">JABATAN</th>
+                                    <th class="border-top-0">JENIS ORGANISASI</th>
                                     <th class="border-top-0">AKSI</th>
                                 </tr>
                                 </thead>
@@ -37,7 +38,8 @@
                                         <td>{{$users->nik}}</td>
                                         <td>{{$users->nama}}</td>
                                         <td>{{$users->level}}</td>
-                                        <td><a href="\proses-verif\{{ $users->id }}" class="btn btn-primary"><i class="bi bi-eye-fill m-r-5"></i>verif</a></td>
+                                        <td></td>
+                                        <td><a href="\proses-verif\{{ $users->id }}" class="btn btn-primary"><i class="bi bi-check2"></i> Accept</a></td>
                                     </tr>
                                 @empty
                                     <td colspan="8" class="table-active text-center">Tidak Ada Data</td>

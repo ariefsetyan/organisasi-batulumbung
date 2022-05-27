@@ -267,6 +267,7 @@ class UserController extends Controller
 
     public function updatePasswordPengurus(Request $request)
     {
+        
         $gantipass = bcrypt($request->passwordbaru);
 
         //panggil id session yang login

@@ -18,7 +18,7 @@
             <div class="col-sm-12">
                 <div class="white-box">
 
-                
+
                     @if(session()->has('success'))
                     <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
                         {{ session('success') }}
@@ -32,7 +32,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                     @endif
-                            
+
                     <form action="{{ route ('filterTanggalAbsensi') }}" method="get">
                         @csrf
                         <div class="col-md-6">
@@ -51,18 +51,18 @@
                                     <select name="jenis" id="jenis" class="form-control" onchange="this.form.submit()" >
                                         <option value="" selected>Filter Organisasi</option>
                                         @foreach($organisasi as $organisasis)
-                                        <option value="{{$organisasis->jenis}}">{{$organisasis->jenis}}</option>
+                                        <option value="{{$organisasis->id}}">{{$organisasis->jenis}}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6">    
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <input type="text" name="cariAbsensi" class="form-control w-75 d-inline" value="{{ request('cariAbsensi')}}" id="cariAbsensi" placeholder="Cari ...">
-                                    <button type="submit" class="btn btn-primary mb-1"><i class="fa fa-search"></i> Cari</button>  
-                                </div>  
+                                    <button type="submit" class="btn btn-primary mb-1"><i class="fa fa-search"></i> Cari</button>
+                                </div>
                             </div>
-                        </div>                    
+                        </div>
                     </form>
 
                     <a href="{{ route ('export_absensi') }}" class="btn btn-success my-3 text-light" target="_blank">EXPORT ABSENSI</a>
@@ -81,7 +81,7 @@
                                     <th class="border-top-0">AKSI</th>
                                 </tr>
                             </thead>
-                                    
+
                                     <tbody>
                                     @forelse ($absensi as $result => $absen)
                                         <tr>
@@ -89,7 +89,7 @@
                                             <td>{{$absen->user_id}}</td>
                                             <td>{{$absen->nama}}</td>
                                             <td>{{$absen->nama_kegiatan}}</td>
-                                            <td>{{ \Carbon\Carbon::parse($absen->tanggal)->format('Y-m-d')}}</td> 
+                                            <td>{{ \Carbon\Carbon::parse($absen->tanggal)->format('Y-m-d')}}</td>
                                             <!-- carbon format (y-m-d) -->
                                             <td>{{$absen->organisasi->jenis}}</td>
                                             <td>{{$absen->status}}</td>
@@ -107,7 +107,7 @@
                                                             @csrf
                                                             <div class="form-group">
                                                                 <label for="exampleFormControlSelect">Status</label>
-                                                                <select name="status" value="{{ $absen->status }}" class="form-control @error('status') is-invalid @enderror" 
+                                                                <select name="status" value="{{ $absen->status }}" class="form-control @error('status') is-invalid @enderror"
                                                                 id="exampleFormControlSelect">
                                                                     <option value="Hadir" @if($absen->status == "Hadir") selected @endif>Hadir</option>
                                                                     <option value="Tidak Hadir" @if($absen->status == "Tidak Hadir") selected @endif>Tidak Hadir</option>
@@ -127,22 +127,22 @@
                                                 @method('delete')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger text-light"><i class="bi bi-trash-fill"></i></button>
-                                            </form> 
+                                            </form>
                                             </td>
                                         </tr>
                                         @empty
                                         <td colspan="8" class="table-active text-center">Tidak Ada Data</td>
                                         @endforelse
                                     </tbody>
-                                </table>  
+                                </table>
                                 <div class="d-flex justify-content-start">
                                     {{$absensi->links()}}
-                                </div>  
-                                <a href="/absensi/absensi" class="btn btn-danger my-3 text-light">Kembali</a>        
+                                </div>
+                                <a href="/absensi/absensi" class="btn btn-danger my-3 text-light">Kembali</a>
                             </div>
                         </div>
                     </div>
-                </div>  
+                </div>
             </div>
         </div>
         @endsection

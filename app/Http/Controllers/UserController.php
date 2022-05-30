@@ -207,6 +207,7 @@ class UserController extends Controller
     public function showUser(User $user)
     {
         $organisasis = DetailUser::where('user_id', $user->id)->get();
+        // dd($organisasis);
         if($user->level == "Anggota"){
             return view('pengurus.anggota.show-anggota', compact(['user','organisasis']));
         }else{

@@ -172,7 +172,7 @@ class LoginController extends Controller
         $id = $request->session()->get('idlogin');
         $semua = User::where('id', $id)->get();
         $organisasis = DetailUser::where('user_id', $id)->get();
-        
+        // dd($organisasis);
         $or = Organisasi::all();
 
         return view('/anggota/dashboard-anggota', (compact(['semua', 'organisasis','or'])));

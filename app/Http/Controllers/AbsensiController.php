@@ -46,14 +46,16 @@ class AbsensiController extends Controller
     {
         $organisasi = Organisasi::all();
         $absensi = Absensi::latest()->filter(request(['cariAbsensi', 'jenis']))->paginate(10)->withQueryString();
+        $kegiatan = Kegiatan::all();
 
-        return view('pengurus/absensi/absensi', compact('organisasi', 'absensi'));
+        return view('pengurus/absensi/absensi', compact('organisasi', 'absensi','kegiatan'));
     }
 
     public function filterTanggal(Request $request)
     {
-        $dari = $request->dari .'.'. '00:00:00';
-        $sampai = $request->sampai .'.'. '23:59:59';
+        // dd($request->all());
+        $dari = $request->dari;
+        $sampai = $request->sampai;
 
         if($request->dari == '' && $request->sampai == ''){
             return redirect('absensi/absensi');
@@ -73,9 +75,9 @@ class AbsensiController extends Controller
 
         $absensi = Absensi::whereBetween('tanggal', [$dari, $sampai])->latest()->paginate(10);
         $organisasi = Organisasi::all();
+        $kegiatan = Kegiatan::all();
 
-
-        return view('/pengurus/absensi/absensi', ['absensi' => $absensi, 'dari' => $request->dari, 'sampai' => $request->sampai, 'organisasi' => $organisasi]);
+        return view('/pengurus/absensi/absensi', ['absensi' => $absensi, 'dari' => $request->dari, 'sampai' => $request->sampai, 'organisasi' => $organisasi,'kegiatan'=>$kegiatan]);
     }
 
     // public function import_excel(Request $request)

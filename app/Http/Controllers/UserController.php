@@ -318,26 +318,17 @@ class UserController extends Controller
             'alamat'        => 'required',
             'status'        => 'required'
         ]);
-
+        
         User::where('id', $user->id)
                 ->update($validateData);
 
         $organisasi = collect($request->organisasi_id);
         $indeks = count($organisasi);
 
-        // $jenis = DetailUser::where('user_id', $user->id)->get();
-
         for($i=0;$i<$indeks;$i++){
-
-DB::table('detail_user')
-                ->where('user_id', $user->id)
-                ->update(['organisasi_id' => $organisasi[$i]]);
-            // DB::table('detail_user')
-            //     ->where('id', $user->id)
-            //     ->update(['organisasi_id' => $organisasi[$i]]);
-            // DetailUser::updateOrCreate([
-            //     'organisasi_id' => $organisasi[$i],
-            // ],['user_id' => $user->id,]);
+            DetailUser::updateOrCreate([
+                'user_id' => $user->id
+            ],['organisasi_id' => $organisasi[$i]])->save();
 
         }
 
@@ -372,10 +363,9 @@ DB::table('detail_user')
         $indeks = count($organisasi);
 
         for($i=0;$i<$indeks;$i++){
-            DetailUser::create([
-                'user_id' => $user->id,
-                'organisasi_id' => $organisasi[$i],
-            ]);
+            DetailUser::updateOrCreate([
+                'user_id' => $user->id
+            ],['organisasi_id' => $organisasi[$i]]);
 
         }
 

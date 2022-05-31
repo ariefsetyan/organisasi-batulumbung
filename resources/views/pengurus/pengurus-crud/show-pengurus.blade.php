@@ -142,10 +142,10 @@
                             <label for="exampleFormControlSelect">Jabatan</label>
                             <select name="level" class="form-control @error('level') is-invalid @enderror" id="exampleFormControlSelect">
                                 <option value="Ketua"  @if($user->level == "Ketua") selected @endif >Ketua</option>
-                                <option value="Wakil Ketua" selected @endif >Wakil Ketua</option>
-                                <option value="Sekretaris" selected @endif >Sekretaris</option>
-                                <option value="Bendahara" selected @endif >Bendahara</option>
-                                <option value="Anggota" selected @endif >Anggota</option>
+                                <option value="Wakil Ketua" @if($user->level == "Wakil Ketua") selected @endif >Wakil Ketua</option>
+                                <option value="Sekretaris" @if($user->level == "Sekretaris") selected @endif >Sekretaris</option>
+                                <option value="Bendahara" @if($user->level == "Bendahara") selected @endif >Bendahara</option>
+                                <option value="Anggota" @if($user->level == "Anggota") selected @endif >Anggota</option>
                             </select>
                         </div>
 
@@ -204,10 +204,10 @@
 
                         <div class="form-group">
                             <label for="exampleFormControlSelect">Jenis Organisasi</label> <br>
-                            <input type="checkbox" class="check_all" name="organisasi_id" id="sekaateruna" value="1" @foreach($organisasis as $row) @if($user->organisasi_id == "1") checked @endif @endforeach> Sekaa Teruna<br>
-                            <input type="checkbox" class="check_all" name="organisasi_id" id="sekaagong" value="2" @foreach($organisasis as $row) @if($user->organisasi_id == "2") checked @endif @endforeach> Sekaa Gong<br>
-                            <input type="checkbox" class="check_all" name="organisasi_id" id="sekaasanti" value="3" @foreach($organisasis as $row) @if($user->organisasi_id == "3") checked @endif @endforeach> Sekaa Santi<br>
-                            <input type="checkbox" class="check_all" name="organisasi_id" id="pkk" value="4" @foreach($organisasis as $row) @if($user->organisasi_id == "4") checked @endif @endforeach> PKK<br>
+                            <input type="checkbox" class="check_all" name="organisasi_id" id="sekaateruna" value="1" @foreach($organisasis as $row) @if($row->organisasi_id == "1") checked @endif @endforeach> Sekaa Teruna<br>
+                            <input type="checkbox" class="check_all" name="organisasi_id" id="sekaagong" value="2" @foreach($organisasis as $row) @if($row->organisasi_id == "2") checked @endif @endforeach> Sekaa Gong<br>
+                            <input type="checkbox" class="check_all" name="organisasi_id" id="sekaasanti" value="3" @foreach($organisasis as $row) @if($row->organisasi_id == "3") checked @endif @endforeach> Sekaa Santi<br>
+                            <input type="checkbox" class="check_all" name="organisasi_id" id="pkk" value="4" @foreach($organisasis as $row) @if($row->organisasi_id == "4") checked @endif @endforeach> PKK<br>
                         </div>
 
                         <div class="form-group">

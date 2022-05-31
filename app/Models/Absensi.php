@@ -18,17 +18,25 @@ class Absensi extends Model
     ];
 
     public function scopeFilter($query, array $filters) {
-    
-        $query->when($filters['cariAbsensi'] ?? false, function($query, $cariAbsensi) {
+        if($filters['jenis'] == null){
+            $query->when($filters['cariAbsensi'] ?? false, function($query, $cariAbsensi) {
             return $query->where('nama', 'like', '%' . $cariAbsensi . '%')
-            ->orWhere('status', 'like', '%' . $cariAbsensi . '%');
+            ->orWhere('status', 'like', '%' . $cariAbsensi . '%')->orWhere('organisasi_id','=',$filters['jenis']);
         });
-    
-        $query->when($filters['jenis'] ?? false, function($query, $organisasi) {
-            return $query->whereHas('organisasi', function($query) use ($organisasi) {
-                $query->where('jenis', $organisasi);
+        }
+        if($filters['cariAbsensi'] == null){
+            $query->when($filters['jenis'] ?? false, function($query, $organisasi) {
+                return $query->whereHas('organisasi', function($query) use ($organisasi) {
+                    $query->where('organisasi_id','=', $organisasi);
+                });
             });
-        });
+        }else{
+            $query->when($filters ?? false, function($query, $filters) {
+                return $query->where('nama', 'like', '%' . $filters['cariAbsensi'] . '%');
+                    $query->where('organisasi_id','=', $filters['organisasi']);  
+            });
+        }
+        
     }
 
     // relasi

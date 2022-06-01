@@ -215,7 +215,7 @@ class UserController extends Controller
         }
     }
 
-    public function updateUser(Request $request, Usur $user)
+    public function updateUser(Request $request, User $user)
     {
         $validateData = $request->validate([
             'nama'          => 'required',
@@ -227,7 +227,7 @@ class UserController extends Controller
             'jenis_kelamin' => 'required',
             'pekerjaan'     => 'required',
             'alamat'        => 'required',
-            'level'         => 'required',
+            'level'         => 'required'   ,
             'status'        => 'required'
         ]);
 

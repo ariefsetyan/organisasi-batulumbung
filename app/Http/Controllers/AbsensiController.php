@@ -24,7 +24,7 @@ class AbsensiController extends Controller
      */
     public function index()
     {
-        $absensi = Absensi::latest()->paginate(10);
+        $absensi = Absensi::where('is_label','f')->latest()->paginate(10);
         $organisasi = Organisasi::all();
         $kegiatan = Kegiatan::all();
 
@@ -155,7 +155,7 @@ class AbsensiController extends Controller
         }
 
         $excel_absensi = ExcelAbsensi::all();
-
+        Absensi::where('is_label','f')->update(['is_label'=>'t']);
         foreach($excel_absensi as $key){
         $create_data = [
             'nama_kegiatan' => $request->nama_kegiatan,
@@ -165,8 +165,8 @@ class AbsensiController extends Controller
             'nama'          => $key->nama,
             'status'        => $key->status,
             'user_id'        => Auth::user()->id,
+            'is_label'=>'f'
         ];
-
 
         Absensi::create($create_data);
     }

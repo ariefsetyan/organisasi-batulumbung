@@ -14,7 +14,8 @@ class Absensi extends Model
         'nama', 
         'nama_kegiatan', 
         'tanggal',
-        'status'
+        'status',
+        'is_label'
     ];
 
     public function scopeFilter($query, array $filters) {

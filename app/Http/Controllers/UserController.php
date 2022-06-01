@@ -30,10 +30,14 @@ class UserController extends Controller
 
     public function indexPengurus()
     {
-        $user = User::where('level', '=', 'Ketua')
+        $user = User::where('level', '=', 'Ketua')->select('user.id','user.nik','nama','level',DB::raw("GROUP_CONCAT(jenis) as jenis"))
+        ->leftJoin('detail_user','user.id','=','detail_user.user_id')
+        ->leftJoin('organisasi','detail_user.organisasi_id','=','organisasi.id')
                 ->orWhere('level', '=', 'Wakil Ketua')
                 ->orWhere('level', '=', 'Sekretaris')
-                ->orWhere('level', '=', 'Bendahara')->paginate(10);
+                ->orWhere('level', '=', 'Bendahara')
+                ->groupBy('user.id','user.nik','nama','level')->paginate(10);
+                // dd($user);
         $organisasi = Organisasi::all();
         return view('pengurus/pengurus-crud/pengurus', compact('user', 'organisasi'));
     }
@@ -238,7 +242,8 @@ class UserController extends Controller
         $indeks = count($organisasi);
 
         for($i=0;$i<$indeks;$i++){
-            DetailUser::create([
+            DetailUser::where('user_id',$user->id)->delete();
+            DetailUser::updateOrCreate([
                 'user_id' => $user->id,
                 'organisasi_id' => $organisasi[$i],
             ]);
@@ -249,7 +254,7 @@ class UserController extends Controller
             return redirect('/anggota/anggota')-> with('success', 'Data Anggota Berhasil Diubah!');
         }
         else{
-            return redirect('/pengurus/pengurus')-> with('success', 'Data Pengurus Berhasil Diubah!');
+            return redirect('/pengurus-crud/pengurus')-> with('success', 'Data Pengurus Berhasil Diubah!');
         }
 
 

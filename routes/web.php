@@ -68,7 +68,7 @@ use App\Models\Absensi;
     Route::post('/pengurus/pengurus-crud/pengurus', 'App\Http\Controllers\UserController@storeUser')->name('tambahUser');
     // Route::delete('/pengurus/pengurus-crud/pengurus/{user}', 'App\Http\Controllers\UserController@destroyUser')->name('hapusUser');
     // Route::get('/pengurus/pengurus-crud/{user}/edit', 'App\Http\Controllers\UserController@edit');
-    // Route::patch('/pengurus-crud/pengurus/{user}', 'App\Http\Controllers\UserController@update');
+    Route::patch('/pengurus-crud/pengurus/{user}', 'App\Http\Controllers\UserController@updateUser');
     Route::patch('/pengurus-crud/profil-pengurus/{user}', 'App\Http\Controllers\UserController@updateProfilPengurus')->name('updateProfilPengurus');
     Route::get('/pengurus-crud/profil-pengurus', 'App\Http\Controllers\UserController@profilPengurus');
     Route::get('/pengurus/cariPengurus','App\Http\Controllers\UserController@cariPengurus')->name('cariPengurus');

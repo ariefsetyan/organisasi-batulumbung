@@ -214,8 +214,8 @@
                             <label for="exampleFormControlSelect">Status</label>
                             <select name="status" class="form-control @error('status') is-invalid @enderror" 
                             id="exampleFormControlSelect">
-                                <option value="Aktif" @if($user->status == "Aktif") selected @endif>Aktif</option>
-                                <option value="Tidak Aktif" @if($user->status == "Tidak Aktif") selected @endif>Tidak Aktif</option>
+                                <option value="1" @if($user->status == "Aktif") selected @endif>Aktif</option>
+                                <option value="0" @if($user->status == "Tidak Aktif") selected @endif>Tidak Aktif</option>
                             </select>
                         </div>
                         <div class="form-group">

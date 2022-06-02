@@ -60,7 +60,7 @@ class RegisterController extends Controller
            'pekerjaan'         => 'required',
            'alamat'            => 'required',
            'level'             => 'required',
-           'status'            => 'required'
+        //    'status'            => 'required'
        ],$message);
 
         $user = User :: create([

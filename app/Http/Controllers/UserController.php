@@ -149,28 +149,28 @@ class UserController extends Controller
 
     public function storeUser(Request $request)
     {
-        // $message = [
-        //     'required' => 'Wajib diisi!',
-        //     'min'      => 'Wajib diisi minimal : 5, maksimal : 10  karakter!',
-        //     'max'      => 'Wajib diisi minimal : 5, maksimal : 10 karakter!',
-        //     'unique'   => 'NIK sudah terdaftar'
-        // ];
+        $message = [
+            'required' => 'Wajib diisi!',
+            'min'      => 'Wajib diisi minimal : 5, maksimal : 10  karakter!',
+            'max'      => 'Wajib diisi minimal : 5, maksimal : 10 karakter!',
+            'unique'   => 'NIK sudah terdaftar'
+        ];
 
-        // $request->validate([
-        //     'nama'            => 'required',
-        //     'nik'             => 'required|unique',
-        //     'tempat_lahir'    => 'required',
-        //     'tgl_lahir'       => 'required',
-        //     'email'           => 'required|unique',
-        //     'password'        => 'required|min:5|max:10',
-        //     'konfirmpassword' => 'required|min:5|max:10',
-        //     'no_telp'         => 'required',
-        //     'jenis_kelamin'   => 'required',
-        //     'pekerjaan'       => 'required',
-        //     'alamat'          => 'required',
-        //     'level'           => 'required',
-        //     'status'          => 'required'
-        // ], $message);
+        $request->validate([
+            'nama'            => 'required',
+            'nik'             => 'required|unique',
+            'tempat_lahir'    => 'required',
+            'tgl_lahir'       => 'required',
+            'email'           => 'required|unique',
+            'password'        => 'required|min:5|max:10',
+            'konfirmpassword' => 'required|min:5|max:10',
+            'no_telp'         => 'required',
+            'jenis_kelamin'   => 'required',
+            'pekerjaan'       => 'required',
+            'alamat'          => 'required',
+            'level'           => 'required',
+            'status'          => 'required'
+        ], $message);
 
 
 

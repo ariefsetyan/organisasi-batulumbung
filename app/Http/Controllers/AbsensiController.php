@@ -48,7 +48,7 @@ class AbsensiController extends Controller
         $absensi = Absensi::latest()->filter(request(['cariAbsensi', 'jenis']))->paginate(10)->withQueryString();
         $kegiatan = Kegiatan::all();
 
-        return view('pengurus/absensi/absensi', compact('organisasi', 'absensi','kegiatan'));
+        return view('pengurus/absensi/daftar_absensi', compact('organisasi', 'absensi','kegiatan'));
     }
 
     public function filterTanggal(Request $request)
@@ -164,7 +164,7 @@ class AbsensiController extends Controller
             'anggota_id'    => $key->anggota_id,
             'nama'          => $key->nama,
             'status'        => $key->status,
-            'user_id'        => Auth::user()->id,
+            'user_id'        => $key->user_id,
             'is_label'=>'f'
         ];
 

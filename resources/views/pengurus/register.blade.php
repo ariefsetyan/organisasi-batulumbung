@@ -173,9 +173,9 @@
             </div>
 
             <div class="login100-form">
-            <label for="level" class="form-label">Jabatan</label> <br/>
-            <input type="checkbox" class="check_all" name="level" id="anggota" value="Anggota" checked> Anggota<br/>
-               
+                <label for="level" class="form-label">Jabatan</label> <br/>
+                <input type="text" name="level" value="Anggota" class="form-control @error('level') is-invalid @enderror" 
+                id="level">
             </div>`
 
             {{-- <div class="login100-form">

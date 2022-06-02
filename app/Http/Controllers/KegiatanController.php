@@ -121,13 +121,21 @@ class KegiatanController extends Controller
             'image'         => 'required|file|mimes:jpg,jpeg,png|max:1024'
         ]);
         
-        // dd($request->file('image')->hashName());
-        if($request->file('image')){
-            if($request->oldImage) {
-                Storage::delete($request->oldImage);
-                }
-            $validateData['image'] = $request->file('image')->store('images-kegiatan');  
+        // dd($request->file('image'));
+        // if($request->file('image')){
+        //     if($request->oldImage) {
+        //         Storage::delete($request->oldImage);
+        //         }
+        //     $validateData['image'] = $request->file('image')->store('images-kegiatan');  
+        // }
+        $imageName = time().'.'.$request->image->extension();
+        $request->image->move(public_path('images'), $imageName);
+
+        $img_old = Kegiatan::where('id', $kegiatan->id)->get();
+        foreach ($img_old as $value) {
+            unlink("images/".$value->image);
         }
+        
 
         Kegiatan::where('id', $kegiatan->id)
                 ->update([ 
@@ -137,7 +145,7 @@ class KegiatanController extends Controller
                     'tempat'        =>$request->tempat,
                     'organisasi_id' =>$request->organisasi_id,
                     'deskripsi'     =>$request->deskripsi,
-                    'image'         => 'images-kegiatan/'. $request->image->hashName(),
+                    'image'         =>$imageName,
                 ]);
 
         return redirect('/kegiatan/kegiatan')-> with('success', 'Data Kegiatan Berhasil Diubah!');

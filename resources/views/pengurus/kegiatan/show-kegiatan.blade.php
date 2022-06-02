@@ -47,7 +47,7 @@
             <td>  
             @if($kegiatan->image)
                 <div style="overflow:hidden; width:300px">
-                   <img src="{{ asset('storage/'. $kegiatan->image) }}" class="img-fluid mb-3"  style="width:100%">
+                   <img src="{{ URL::to('/images/'.$kegiatan->image) }}" class="img-fluid mb-3"  style="width:100%">
                 </div>
             @endif
             </td>
@@ -149,7 +149,7 @@
                             <label for="image" class="form-label">Image</label>
                             <label type="hidden" name="old" value="{{$kegiatan->image}}"></label>
                                 @if($kegiatan->image)
-                                    <img src="{{ asset('storage/'.$kegiatan->image) }}" class="img-preview img-fluid mb-3 col-sm-5 d-block">
+                                    <img src="{{ URL::to('/images/'.$kegiatan->image) }}" class="img-preview img-fluid mb-3 col-sm-5 d-block">
                                 @else
                                     <img class="img-preview img-fluid mb-3 col=sm-5">
                                 @endif

@@ -49,7 +49,7 @@ class RegisterController extends Controller
 
        $request->validate([
            'nama'              => 'required',
-           'nik'               => 'required|unique',
+           'nik'               => 'required|unique:user',
            'tempat_lahir'      => 'required',
            'tgl_lahir'         => 'required',
            'email'             => 'required',
@@ -61,7 +61,7 @@ class RegisterController extends Controller
            'alamat'            => 'required',
            'level'             => 'required',
            'status'            => 'required'
-       ], $message);
+       ],$message);
 
         $user = User :: create([
                 'nama'              => $request->nama,

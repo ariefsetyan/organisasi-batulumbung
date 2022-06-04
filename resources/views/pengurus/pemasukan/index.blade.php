@@ -1,6 +1,6 @@
 @extends('layouts.main-pengurus')
 
-@section('title', 'Absensi')
+@section('title', 'Pemasukan')
 
 @push('link')
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css">

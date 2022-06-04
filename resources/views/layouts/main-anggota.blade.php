@@ -155,14 +155,14 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/pemasukan_anggota"
                                 aria-expanded="false">
-                                <i class="bi bi-file-earmark-text-fill" aria-hidden="true"></i>
+                                <i class="bi bi-clipboard-plus"></i>
                                 <span class="hide-menu">Pemasukan</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/pengeluaran_anggota"
                                 aria-expanded="false">
-                                <i class="bi bi-file-earmark-text-fill" aria-hidden="true"></i>
+                                <i class="bi bi-clipboard-minus"></i>
                                 <span class="hide-menu">Pengeluaran</span>
                             </a>
                         </li>

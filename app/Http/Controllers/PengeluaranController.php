@@ -91,7 +91,14 @@ class PengeluaranController extends Controller
 
     public function indexAnggota()
     {
-        $data = Pengeluaran::Get_data();
-        return view('anggota.pengeluaran_anggota',compact('data'));
+        
+        $data1 = DB::table('pengeluaran as p')
+            ->select('o.jenis','p.total', 'ps.sumber_dana', 'p.keterangan','p.tanggal',DB::raw("GROUP_CONCAT(p.id) as id"))
+            ->leftJoin('organisasi as o','p.organisasi_id','=','o.id')
+            ->leftJoin('pemasukan as ps','p.sumber_dana', '=', 'ps.id')
+            ->groupBy('o.jenis','p.total', 'ps.sumber_dana', 'p.keterangan','p.tanggal')
+            ->get();
+        $data = DB::table('pengeluaran')->get();
+        return view('anggota.pengeluaran_anggota',compact('data1', 'data'));
     }
 }

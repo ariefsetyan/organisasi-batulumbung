@@ -236,10 +236,11 @@ class AbsensiController extends Controller
     {
         // dd(Auth::guard('web')->user()->id);
         $absensi = Auth::guard('web')->user()->id;
+        $organisasi = Organisasi::all();
         $data_absensi = Absensi::where('user_id', $absensi)
             ->paginate(10);
 
-        return view('anggota.absensi', compact('data_absensi'));
+        return view('anggota.absensi', compact('data_absensi', 'organisasi'));
     }
 
     public function get_kegiatan($kegiatan)

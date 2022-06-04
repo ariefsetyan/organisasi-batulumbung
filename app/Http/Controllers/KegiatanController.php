@@ -77,7 +77,7 @@ class KegiatanController extends Controller
         ]);
 
         if($request->file('image')) {
-            $validateData['image'] = $request->file('image')->store('images-kegiatan');
+            $validateData['image'] =  $request->image->move(public_path('images'));
         }
 
         Kegiatan::create($validateData);
@@ -138,9 +138,6 @@ class KegiatanController extends Controller
                 unlink("images/".$value->image);
             }
         }
-        
-        
-        
 
         Kegiatan::where('id', $kegiatan->id)
                 ->update([ 

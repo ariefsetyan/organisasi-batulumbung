@@ -38,14 +38,14 @@
 
                             @forelse ($data_absensi as $absen)
                                 <tr>
-                                    <th scope="row">{{ ++$no }}</th>
-                                    <td>{{$absen->anggota_id}}</td>
-                                    <td>{{$absen->nama}}</td>
-                                    <td>{{$absen->nama_kegiatan}}</td>
-                                    <td>{{ \Carbon\Carbon::parse($absen->tanggal)->format('d/m/Y')}}</td> 
+                                    <th scope="row" class="text-white">{{ ++$no }}</th>
+                                    <td class="text-white">{{$absen->user_id}}</td>
+                                    <td class="text-white">{{$absen->nama}}</td>
+                                    <td class="text-white">{{$absen->nama_kegiatan}}</td>
+                                    <td class="text-white">{{ \Carbon\Carbon::parse($absen->tanggal)->format('d/m/Y')}}</td> 
                                     <!-- carbon format (y-m-d) -->
-                                    <td>{{$absen->jenis}}</td>
-                                    <td>{{$absen->status}}</td>
+                                    <td class="text-white">{{$absen->organisasi->jenis}}</td>
+                                    <td class="text-white">{{$absen->status}}</td>
                                 </tr>
                                 @empty
                                 <td colspan="8" class="table-active text-center text-white">Tidak Ada Data</td>

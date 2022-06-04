@@ -32,13 +32,13 @@
                                 </thead>
                                 <tbody>
                                 <?php $i=1?>
-                                @forelse($data_user as $result => $users)
+                                @forelse($user as $result => $users)
                                     <tr>
                                         <th scope="row">{{$i++}}</th>
                                         <td>{{$users->nik}}</td>
                                         <td>{{$users->nama}}</td>
                                         <td>{{$users->level}}</td>
-                                        <td></td>
+                                        <td>{{$users->jenis}}</td>
                                         <td><a href="\proses-verif\{{ $users->id }}" class="btn btn-primary"><i class="bi bi-check2"></i> Accept</a></td>
                                     </tr>
                                 @empty

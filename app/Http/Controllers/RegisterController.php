@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Register;
 use App\Models\User;
+use App\Models\Organisasi;
 use App\Models\DetailUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -94,8 +95,17 @@ class RegisterController extends Controller
 
     public function verifikasi_akun()
     {
-        $data_user = DB::table('user')->where('status','=','0')->get();
-        return view('pengurus.verifikasi.index',compact('data_user'));
+         $user = User::where('status', '=', '0')
+        ->selectRaw('GROUP_CONCAT(kode) as kode_orga')
+        ->select('user.id','nik','nama','level',DB::raw("GROUP_CONCAT(jenis) as jenis"),DB::raw("GROUP_CONCAT(kode) as kode_orga"))
+        ->leftJoin('detail_user','user.id','=','detail_user.user_id')
+        ->leftJoin('organisasi','detail_user.organisasi_id','=','organisasi.id')
+        ->groupBy('user.id','user.nik','nama','level')
+         ->paginate(10);
+         $jenis = DetailUser::all();
+         $organisasi = Organisasi::all();
+        // $data_user = DB::table('user')->where('status','=','0')->get();
+        return view('pengurus.verifikasi.index',compact('user', 'organisasi'));
     }
 
     public function update_akun($id)

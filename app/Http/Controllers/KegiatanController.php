@@ -120,6 +120,7 @@ class KegiatanController extends Controller
             'deskripsi'     => 'required',
             'image'         => 'required|file|mimes:jpg,jpeg,png|max:1024'
         ]);
+       
         
         // dd($request->file('image'));
         // if($request->file('image')){
@@ -130,11 +131,15 @@ class KegiatanController extends Controller
         // }
         $imageName = time().'.'.$request->image->extension();
         $request->image->move(public_path('images'), $imageName);
-
+        
         $img_old = Kegiatan::where('id', $kegiatan->id)->get();
         foreach ($img_old as $value) {
-            unlink("images/".$value->image);
+            if(!empty($img_old->image)){
+                unlink("images/".$value->image);
+            }
         }
+        
+        
         
 
         Kegiatan::where('id', $kegiatan->id)

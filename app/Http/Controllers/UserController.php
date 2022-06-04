@@ -311,6 +311,13 @@ class UserController extends Controller
 
     public function updateProfilPengurus(Request $request, User $user)
     {
+        $message = [
+            'required' => 'Wajib diisi!',
+            'min'      => 'Wajib diisi minimal : 5, maksimal : 10  karakter!',
+            'max'      => 'Wajib diisi minimal : 5, maksimal : 10 karakter!',
+            'unique'   => 'Data sudah terdaftar'
+        ];
+        
         $validateData = $request->validate([
             'nama'          => 'required',
             'tempat_lahir'  => 'required',
@@ -353,14 +360,15 @@ class UserController extends Controller
             'nama'          => 'required',
             'tempat_lahir'  => 'required',
             'tgl_lahir'     => 'required',
-            'email'         => 'required|unique',
+            'level'         => 'required',
+            'email'         => 'required',
             'no_telp'       => 'required',
             'jenis_kelamin' => 'required',
             'pekerjaan'     => 'required',
             'alamat'        => 'required',
             'status'        => 'required'
-        ], $message);
-
+        ]);
+        
         User::where('id', $user->id)
                 ->update($validateData);
 
@@ -370,10 +378,9 @@ class UserController extends Controller
         for($i=0;$i<$indeks;$i++){
             DetailUser::updateOrCreate([
                 'user_id' => $user->id
-            ],['organisasi_id' => $organisasi[$i]]);
+            ],['organisasi_id' => $organisasi[$i]])->save();
 
         }
-
         return redirect('/dashboard-anggota')-> with('success', 'Data Berhasil Diubah!');
     }
 

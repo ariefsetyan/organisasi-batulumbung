@@ -30,7 +30,7 @@
                 <td>  
                     @if(!empty($data->image))
                         <div style="overflow:hidden; width:300px">
-                        <img src="{{ public_path('storage/'. $data->image) }}" class="img-fluid mb-3 mt-4" style="width:100%, align-center">
+                        <img src="{{ URL::to('/images/'.$data->image) }}" class="img-preview img-fluid mb-3 col-sm-5 d-block" style="width:100%, align-center">
                         </div>
                     @endif
                 </td>

@@ -231,27 +231,12 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleFormControlSelect">Jenis Organisasi</label><br>
-                                    {{-- @foreach($or as $row)
-                                
-                                    <input type="checkbox" class="check_all" name="organisasi_id[]" id="sekaateruna" value="{{$row->id}}
-                                    " @if($organisasi->organisasi_id == null) checked @endif > {{$row->jenis}}<br>
-                                    @endforeach --}}
+                                    <label for="exampleFormControlSelect" >Jenis Organisasi</label> <br>
                                     
-                                    <input type="checkbox" class="check_all" name="organisasi_id" id="sekaateruna" value="1" @foreach($organisasis as $row) @if($row->organisasi_id == "1") checked @endif @endforeach> Sekaa Teruna<br>
-                            <input type="checkbox" class="check_all" name="organisasi_id" id="sekaagong" value="2" @foreach($organisasis as $row) @if($row->organisasi_id == "2") checked @endif @endforeach> Sekaa Gong<br>
-                            <input type="checkbox" class="check_all" name="organisasi_id" id="sekaasanti" value="3" @foreach($organisasis as $row) @if($row->organisasi_id == "3") checked @endif @endforeach> Sekaa Santi<br>
-                            <input type="checkbox" class="check_all" name="organisasi_id" id="pkk" value="4" @foreach($organisasis as $row) @if($row->organisasi_id == "4") checked @endif @endforeach> PKK<br>
-                           
-
-                                    {{-- <select name="organisasi_id" value="{{ $user->organisasi_id }}" class="form-control @error('organisasi_id') is-invalid @enderror" 
-                                    id="exampleFormControlSelect">
-                                        <option value="1" @foreach($organisasis as $row) @if($row->organisasi_id == "1") selected @endif @endforeach>Sekaa Teruna</option>
-                                        <option value="2" @foreach($organisasis as $row) @if($row->organisasi_id == "2") selected @endif @endforeach>Sekaa Gong</option>
-                                        <option value="3" @foreach($organisasis as $row) @if($row->organisasi_id == "3") selected @endif @endforeach>Sekaa Santi</option>
-                                        <option value="4" @foreach($organisasis as $row) @if($row->organisasi_id == "4") selected @endif @endforeach>PKK</option>
-                                    </select> --}}
-
+                                    <input type="checkbox" class="check_all" name="organisasi_id[]" id="sekaateruna" value="1" onclick="myFunction()"  @if($user->organisasi_id == "1") checked @endif > Sekaa Teruna<br>
+                                    <input type="checkbox" class="check_all" name="organisasi_id[]" id="sekaagong" value="2" onclick="myFunction()"  @if($user->organisasi_id == "2") checked @endif> Sekaa Gong<br>
+                                    <input type="checkbox" class="check_all" name="organisasi_id[]" id="sekaasanti" value="3" onclick="myFunction()"  @if($user->organisasi_id == "3") checked @endif> Sekaa Santi<br>
+                                    <input type="checkbox" class="check_all" name="organisasi_id[]" id="pkk" value="4" onclick="myFunction()"  @if($user->organisasi_id == "4") checked @endif> PKK<br>
                                 </div>
 
                                 <div class="form-group">
@@ -355,3 +340,21 @@
 </div>
                
 @endsection
+
+@push('script')
+    <script>
+        function myFunction() {
+        // Get the checkbox
+        var checkBox = document.getElementById("myCheck");
+        // Get the output text
+        var text = document.getElementById("text");
+
+        // If the checkbox is checked, display the output text
+        if (checkBox.checked == true){
+            text.style.display = "block";
+        } else {
+            text.style.display = "none";
+        }
+    }
+
+    </script>

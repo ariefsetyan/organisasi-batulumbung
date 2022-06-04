@@ -63,4 +63,13 @@ class PemasukanController extends Controller
         $pemasukan = DB::table('pemasukan')->where('id',$request->id)->update($data);
         return redirect('pemasukan');
     }
+
+    public function indexAnggota()
+    {
+        $data = DB::table('pemasukan as p')->select('p.id','jenis','jmlh_pemasukan','tanggal','sumber_dana','keterangan')
+            ->leftJoin('organisasi as o','p.organisasi_id','=','o.id')
+            ->get();
+        $organisasi = DB::table('organisasi')->get();
+        return view('anggota.pemasukan_anggota',compact('data','organisasi'));
+    }
 }

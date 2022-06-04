@@ -88,4 +88,10 @@ class PengeluaranController extends Controller
             $pdf = PDF::loadview('pengurus.pengeluaran.view',['data1'=>$data1,'data'=>$data]);
             return $pdf->download('pengeluaran.pdf');
     }
+
+    public function indexAnggota()
+    {
+        $data = Pengeluaran::Get_data();
+        return view('anggota.pengeluaran_anggota',compact('data'));
+    }
 }

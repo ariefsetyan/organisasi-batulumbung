@@ -76,9 +76,21 @@ class KegiatanController extends Controller
             'image'         => 'image|file|mimes:jpg,jpeg,png|max:1024'
         ]);
 
-        if($request->file('image')) {
-            $validateData['image'] =  $request->image->move(public_path('images'));
-        }
+        // if($request->file('image')) {
+        //     $validateData['image'] =  $request->image->move(public_path('images'));
+        // }
+        $imageName = time().'.'.$request->image->extension();
+        $request->image->move(public_path('images'), $imageName);
+        $validateData = array(
+            'nama_kegiatan' =>$request->nama_kegiatan,
+            'tanggal'       =>$request->tanggal,
+            'waktu'         =>$request->waktu,
+            'tempat'        =>$request->tempat,
+            'organisasi_id' =>$request->organisasi_id,
+            'deskripsi'     =>$request->deskripsi,
+            'image'         =>$imageName,
+            
+        );
 
         Kegiatan::create($validateData);
         

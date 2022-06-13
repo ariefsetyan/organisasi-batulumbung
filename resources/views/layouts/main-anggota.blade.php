@@ -134,8 +134,15 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/kegiatan"
                                 aria-expanded="false">
-                                <i class="bi bi-calendar-week-fill" aria-hidden></i>
+                                <i class="bi bi-calendar2-check-fill" aria-hidden="true"></i>
                                 <span class="hide-menu">Kegiatan</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/event"
+                                aria-expanded="false">
+                                <i class="bi bi-calendar2-week-fill" aria-hidden="true"></i>
+                                <span class="hide-menu">Event</span>
                             </a>
                         </li>
                         <li class="sidebar-item">

@@ -15,7 +15,7 @@ class CreateExcelAbsensiTable extends Migration
     {
         Schema::create('excel_absensi', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->foreignId('anggota_id');
+            $table->foreignId('user_id');
             $table->string('nama');
             $table->string('status');
             $table->timestamps();

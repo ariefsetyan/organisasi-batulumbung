@@ -102,4 +102,22 @@ class EventController extends Controller
 
         return redirect('/event/event')-> with('status', 'Data Event Berhasil Dihapus!');
     }
+
+    public function indexAnggota()
+    {
+        $event = Event::paginate(10);
+        return view('anggota/event', [
+            "event" => "All Event", 
+            "event"=> Event::latest()->get()
+        ]);
+    }
+
+    public function cariEventAnggota(Request $request)
+	{
+		return view('anggota/event', [
+            "active" => "event", 
+            "event" => Event::latest()->filter(request(['cari']))->paginate(10)->withQueryString()
+        ]);
+ 
+    }
 }

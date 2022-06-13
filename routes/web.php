@@ -166,12 +166,14 @@ use App\Models\Absensi;
 
      Route::get('/pengumuman', 'App\Http\Controllers\PengumumanController@indexAnggota');
 
+     Route::get('/event', 'App\Http\Controllers\EventController@indexAnggota');
      Route::get('/kegiatan', 'App\Http\Controllers\KegiatanController@indexAnggota');
      Route::get('/absensi', 'App\Http\Controllers\AbsensiController@indexAnggota');
      Route::get('/pemasukan_anggota', 'App\Http\Controllers\PemasukanController@indexAnggota');
      Route::get('/pengeluaran_anggota', 'App\Http\Controllers\PengeluaranController@indexAnggota');
      Route::get('/pengumuman/cariPengumumanAnggota','App\Http\Controllers\PengumumanController@cariPengumumanAnggota')->name('cariPengumumanAnggota');
      Route::get('/kegiatan/cariKegiatanAnggota','App\Http\Controllers\KegiatanController@cariKegiatanAnggota')->name('cariKegiatanAnggota');
+     Route::get('/event/cariEventAnggota','App\Http\Controllers\EventController@cariEventAnggota')->name('cariEventAnggota');
 
 
      // Logout

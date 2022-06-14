@@ -173,7 +173,7 @@
 
                             </figure>
 {{--                            <div id="ct-visits" style="height: 405px;">--}}
-{{--                                <div class="chartist-tooltip" style="top: -17px; left: -12px;"><span--}}
+{{--                                <div class="chartist-tooltip" style="top: -17px; left: -12px;"><span>--}}
 {{--                                        class="chartist-tooltip-value">6</span>--}}
 {{--                                </div>--}}
 {{--                            </div>--}}
@@ -253,10 +253,15 @@
                             <div class="card-body">
                                 @foreach ($event as $events)
                                     <div class="card-body bg-success mb-2">
-                                        <h4 class="card-title text-dark" style="font-weight:800" >{{$events->nama_event}}</h4>
+                                        <h4 class="card-title" style="font-weight:800">{{$events->nama_event}}</h4>
                                         <ul class="list-inline two-part d-flex align-items-center mb-0">
                                             <li>
-                                                <span  class="card-text text-dark">Tanggal : {{$events->tanggal}}</span>
+                                                <span class="card-text ms-auto">{{$events->tanggal}}</span>
+                                            </li>
+                                        </ul>
+                                        <ul>
+                                            <li>
+                                                <span class="card-text ms-auto">{{$events->judul}}</span>
                                             </li>
                                             <li class="ms-auto">
                                                 <a href="\event\event\{{ $events->id }}" class="btn btn-danger text-light"><i class="bi bi-eye-fill m-r-5"></i>Detail</a>

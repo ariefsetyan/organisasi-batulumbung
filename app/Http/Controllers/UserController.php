@@ -30,16 +30,22 @@ class UserController extends Controller
 
     public function indexPengurus()
     {
-        $user = User::where('level', '=', 'Ketua')->select('user.id','user.nik','nama','level',DB::raw("GROUP_CONCAT(jenis) as jenis"))
+        $user = User::where('level', '=', 'Ketua')
+        ->orWhere('level', '=', 'Wakil Ketua')
+        ->orWhere('level', '=', 'Sekretaris')
+        ->orWhere('level', '=', 'Bendahara')
+        ->selectRaw('GROUP_CONCAT(kode) as kode_orga')
+        ->select('user.id','nik','nama','level',DB::raw("GROUP_CONCAT(jenis) as jenis"),DB::raw("GROUP_CONCAT(kode) as kode_orga"))
         ->leftJoin('detail_user','user.id','=','detail_user.user_id')
         ->leftJoin('organisasi','detail_user.organisasi_id','=','organisasi.id')
-                ->orWhere('level', '=', 'Wakil Ketua')
-                ->orWhere('level', '=', 'Sekretaris')
-                ->orWhere('level', '=', 'Bendahara')
-                ->groupBy('user.id','user.nik','nama','level')->paginate(10);
-                // dd($user);
+        ->groupBy('user.id','user.nik','nama','level')
+         ->paginate(10);
+        // $user = User::where('level', '=', 'Anggota')->paginate(10);
+        // $jenis = DetailUser::where('user_id', $user->id)->get();
+        $jenis = DetailUser::all();
         $organisasi = Organisasi::all();
-        return view('pengurus/pengurus-crud/pengurus', compact('user', 'organisasi'));
+        
+        return view('pengurus/pengurus-crud/pengurus', compact(['user', 'organisasi', 'jenis']));
     }
 
     public function cariAnggota(Request $request)
@@ -157,37 +163,38 @@ class UserController extends Controller
         ];
 
         $request->validate([
-            'nama'            => 'required',
-            'nik'             => 'required|unique',
-            'tempat_lahir'    => 'required',
-            'tgl_lahir'       => 'required',
-            'email'           => 'required|unique',
-            'password'        => 'required|min:5|max:10',
-            'konfirmpassword' => 'required|min:5|max:10',
-            'no_telp'         => 'required',
-            'jenis_kelamin'   => 'required',
-            'pekerjaan'       => 'required',
-            'alamat'          => 'required',
-            'level'           => 'required',
-            'status'          => 'required'
+            'nama'             => 'required',
+           'nik'               => 'required|unique:user',
+           'tempat_lahir'      => 'required',
+           'tgl_lahir'         => 'required',
+           'email'             => 'required',
+           'password'          => 'required|min:5|max:10',
+           'konfirmpassword'   => 'required|min:5|max:10',
+           'no_telp'           => 'required',
+           'jenis_kelamin'     => 'required',
+           'pekerjaan'         => 'required',
+           'alamat'            => 'required',
+           'level'             => 'required',
+            'status'           => 'required'
         ], $message);
 
 
 
-        $user = User::create([
-            'nama'            => $request->nama,
-            'nik'             => $request->nik,
-            'tempat_lahir'    => $request->tempat_lahir,
-            'tgl_lahir'       => $request->tgl_lahir,
-            'email'           => $request->email,
-            'password'        => Hash::make($request->password),
-            'no_telp'         => $request->no_telp,
-            'jenis_kelamin'   => $request->jenis_kelamin,
-            'pekerjaan'       => $request->pekerjaan,
-            'alamat'          => $request->alamat,
-            'level'           => $request->level,
-            'status'          => $request->status
+        $user = User :: create([
+            'nama'              => $request->nama,
+            'nik'               => $request->nik,
+            'tempat_lahir'      => $request->tempat_lahir,
+            'tgl_lahir'         => $request->tgl_lahir,
+            'email'             => $request->email,
+            'password'          => Hash::make($request->password),
+            'no_telp'           => $request->no_telp,
+            'jenis_kelamin'     => $request->jenis_kelamin,
+            'pekerjaan'         => $request->pekerjaan,
+            'alamat'            => $request->alamat,
+            'level'             => $request->level,
+            'status'            => $request->status
         ]);
+
 
         $organisasi = collect($request->organisasi_id);
         $indeks = count($organisasi);

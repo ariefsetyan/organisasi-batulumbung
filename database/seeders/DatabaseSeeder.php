@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
             'alamat'          => 'Br. Batulumbung, Gulingan',
             'no_telp'         => '08567809809',
             'pekerjaan'       => 'Mahasiswa',
-            'status'          => 'Aktif',
+            'status'          => '1',
         ]);
 
         Organisasi::create([

@@ -24,8 +24,9 @@ use App\Models\Absensi;
 // });
 
     Route::get('/', function () {
-        return view('pengurus/login');
+        return view('pengurus/index');
     });
+    Route::get('pengurus/index', 'App\Http\Controllers\LoginController@index');
 
 // Route::get('/', function () {
 //     return view('pengurus/dashboard');
@@ -35,6 +36,8 @@ use App\Models\Absensi;
     // Login
     Route::get('pengurus/login', 'App\Http\Controllers\LoginController@indexPengurus');
     Route::post('pengurus/login', 'App\Http\Controllers\LoginController@prosesLogin')->name('loginPost');
+
+    
 
     // Logout
     Route::get('/logout', 'App\Http\Controllers\LoginController@logout');

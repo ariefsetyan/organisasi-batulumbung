@@ -209,11 +209,6 @@
                                     <div class="form-group">
                                         <label for="exampleFormControlSelect">Jabatan</label>
                                         <select name="level" value="{{ old ('level') }}" class="form-control @error ('level') is-invalid @enderror" id="exampleFormControlSelect">
-                                            <option value="">--Pilih--</option>
-                                            <option value="Ketua">Ketua</option>
-                                            <option value="Wakil Ketua">Wakil Ketua</option>
-                                            <option value="Sekretaris">Sekretaris</option>
-                                            <option value="Bendahara">Bendahara</option>
                                             <option value="Anggota">Anggota</option>
                                         </select>
                                         @error ('level')
@@ -227,8 +222,8 @@
                                         <label for="exampleFormControlSelect">Status</label>
                                         <select name="status" value="{{ old ('status') }}" class="form-control @error ('status') is-invalid @enderror" id="exampleFormControlSelect">
                                             <option value="">--Pilih--</option>
-                                            <option value="Aktif">Aktif</option>
-                                            <option value="Tidak Aktif">Tidak Aktif</option>
+                                            <option value="1">Aktif</option>
+                                            <option value="0">Tidak Aktif</option>
                                         </select>
                                         @error ('status')
                                         <div class="invalid-feedback">
@@ -265,7 +260,7 @@
                                 <tr>
                                     <th scope="row">{{ $result + $user->firstItem() }}</th>
                                     <td> 
-                                        {{$users->kode_orga}}
+                                        {{$users->kode_orga}}{{$users->id}}
                                     </td>
                                     <td>{{$users->nik}}</td>
                                     <td>{{$users->nama}}</td>

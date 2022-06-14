@@ -187,6 +187,15 @@ class LoginController extends Controller
     //     return redirect('/anggota/login');
     // }
 
+    public function index(Request $request)
+    {
+        $kegiatan = Kegiatan::whereYear('tanggal', date('Y'))->whereMonth('tanggal', date('m'))->get();
+        $organisasi = Organisasi::all();
+        $pengumuman = Pengumuman::whereYear('tanggal', date('Y'))->whereMonth('tanggal', date('m'))->get();
+        $event = Event::whereYear('tanggal', date('Y'))->whereMonth('tanggal', date('m'))->get();
 
+        return view('/pengurus/index', compact(['kegiatan', 'organisasi', 'pengumuman', 'event']));
 
+    }
+    
 }

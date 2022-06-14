@@ -228,8 +228,8 @@
                                             <label for="exampleFormControlSelect">Status</label>
                                             <select name="status" value="{{ old ('status') }}" class="form-control @error ('status') is-invalid @enderror" id="exampleFormControlSelect">
                                                 <option value="">--Pilih--</option>
-                                                <option value="Aktif">Aktif</option>
-                                                <option value="Tidak Aktif">Tidak Aktif</option>
+                                                <option value="1">Aktif</option>
+                                                <option value="0">Tidak Aktif</option>
                                             </select>
                                             @error ('status')
                                             <div class="invalid-feedback">
@@ -264,13 +264,14 @@
                             <tbody>
                             @forelse($user as $result => $users)
                                 <tr>
-                                    <th scope="row">{{ $result + $user->firstItem() }}</th>
-                                    <td>{{$users->id}}</td>
+                                <th scope="row">{{ $result + $user->firstItem() }}</th>
+                                    <td> 
+                                        {{$users->kode_orga}}{{$users->id}}
+                                    </td>
                                     <td>{{$users->nik}}</td>
                                     <td>{{$users->nama}}</td>
                                     <td>{{$users->level}}</td>
                                     <td>{{$users->jenis}}</td>
-                                    
                                     <td><a href="\pengurus-crud\pengurus\{{ $users->id }}" class="btn btn-primary"><i class="bi bi-eye-fill m-r-5"></i>Detail</a></td>
                                 </tr>
                                 @empty

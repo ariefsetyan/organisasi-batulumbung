@@ -21,6 +21,7 @@ class CreateAbsensiTable extends Migration
             $table->string('nama_kegiatan');
             $table->string('tanggal');
             $table->string('status');
+            $table->string('is_label');
             $table->timestamps();
         });
     }

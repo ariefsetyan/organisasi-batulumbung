@@ -10,7 +10,7 @@
 }
 
 @media (max-width: 992px) {
-    .custom_nav-container .nav_search-btn {
+    .custom_nav-container {
         background-position: center;
     }
 

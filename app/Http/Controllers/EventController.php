@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 use App\Models\Event;
+use App\Models\DetailUser;
 use App\Models\Organisasi;
+use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
 
@@ -10,9 +12,20 @@ class EventController extends Controller
 {
     public function index()
     {
-        $organisasi = Organisasi::all();
         $event = Event::latest()->paginate(10);
-        return view('pengurus/event/event', compact(['event', 'organisasi']));
+
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+        $q->where('user_id',Auth::id());
+        })->value('id');
+        // dd($auth);
+
+        $jenis = DetailUser::all();
+        $organisasi = Organisasi::all();
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('jenis');
+
+        return view('pengurus/event/event', compact(['event', 'jenis', 'organisasi', 'auth_id', 'auth']));
     }
 
     public function cariEvent(Request $request)
@@ -79,7 +92,6 @@ class EventController extends Controller
             'tanggal'       => 'required',
             'waktu'         => 'required',
             'tempat'        => 'required',
-            'organisasi_id' => 'required',
             'keterangan'     => 'required',
         ]);
 
@@ -89,7 +101,6 @@ class EventController extends Controller
                     'tanggal'       => $request->tanggal,
                     'waktu'         => $request->waktu,
                     'tempat'        => $request->tempat,
-                    'organisasi_id' => $request->organisasi_id,
                     'keterangan'    => $request->keterangan,
                 ]);
 

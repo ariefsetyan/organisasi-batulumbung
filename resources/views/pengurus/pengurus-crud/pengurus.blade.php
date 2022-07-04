@@ -19,16 +19,6 @@
                 <div class="white-box">
                 <form class="form mb-3" method="get" action="{{ route ('cariPengurus') }}">
                     <div class="row mb-3">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <select name="jenis" id="jenis" class="form-control" onchange="this.form.submit()" >
-                                    <option value="" selected>Filter Organisasi</option>
-                                    @foreach($organisasi as $organisasis)
-                                    <option value="{{$organisasis->id}}">{{$organisasis->jenis}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
                         <div class="col-md-6">    
                             <div class="form-group">
                                 <input type="text" name="cariPengurus" class="form-control w-75 d-inline" id="cariPengurus" value="{{ request('cariPengurus')}}" placeholder="Cari Nama ...">
@@ -196,10 +186,10 @@
 
                                         <div class="form-group">
                                             <label for="organisasi_id" class="form-label">Jenis Organisasi</label> <br>
-                                            <input type="checkbox" class="check_all" name="organisasi_id[]" id="sekaagong" value="1"> Sekaa Teruna<br>
-                                            <input type="checkbox" class="check_all" name="organisasi_id[]" id="sekaagong" value="2"> Sekaa Gong <br>
-                                            <input type="checkbox" class="check_all" name="organisasi_id[]" id="sekaasanti" value="3"> Sekaa Santi <br>
-                                            <input type="checkbox" class="check_all" name="organisasi_id[]" id="pkk" value="4"> PKK <br>
+                                            <input type="text"  value="{{$auth}}" class="form-control" readonly 
+                                            id="organisasi_id">
+                                            <input type="hidden" value="{{$auth_id}}" name="organisasi_id">
+                                            
                                             @error ('organisasi_id')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -215,7 +205,6 @@
                                                 <option value="Wakil Ketua">Wakil Ketua</option>
                                                 <option value="Sekretaris">Sekretaris</option>
                                                 <option value="Bendahara">Bendahara</option>
-                                                <option value="Anggota">Anggota</option>
                                             </select>
                                             @error ('level')
                                             <div class="invalid-feedback">
@@ -262,28 +251,26 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            @forelse($user as $result => $users)
-                                <tr>
-                                <th scope="row">{{ $result + $user->firstItem() }}</th>
+                           
+                            @forelse($user as $userr)
+                            <tr>
+                                    <td>{{$loop->iteration}}</td>
                                     <td> 
-                                        {{$users->kode_orga}}{{$users->id}}
+                                        {{$userr->kode_orga}}{{$userr->id}}
                                     </td>
-                                    <td>{{$users->nik}}</td>
-                                    <td>{{$users->nama}}</td>
-                                    <td>{{$users->level}}</td>
-                                    <td>{{$users->jenis}}</td>
-                                    <td><a href="\pengurus-crud\pengurus\{{ $users->id }}" class="btn btn-primary"><i class="bi bi-eye-fill m-r-5"></i>Detail</a></td>
-                                </tr>
-                                @empty
-                                <td colspan="8" class="table-active text-center">Tidak Ada Data</td>
+                                    <td>{{$userr->nik}}</td>
+                                    <td>{{$userr->nama}}</td>
+                                    <td>{{$userr->level}}</td>
+                                    <td>{{$auth}}</td>
+                                    <td><a href="\pengurus-crud\pengurus\{{ $userr->id }}" class="btn btn-primary"><i class="bi bi-eye-fill m-r-5"></i>Detail</a></td>
+                            </tr>
+                            @empty
+                            <td colspan="8" class="table-active text-center">Tidak Ada Data</td>
                             @endforelse
-                          
                             </tbody>
                         </table>
 
-                        <div class="d-flex center-content-start">
-                            {{$user->links()}}
-                        </div>
+                        
                       
                        
 

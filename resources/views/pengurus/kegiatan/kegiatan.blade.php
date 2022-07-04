@@ -20,32 +20,20 @@
                 <form action="{{ route ('filterTanggalKegiatan') }}" method="get">
                 @csrf
                     <div class="col-md-6">
-                        <div class="input-group mb-3" style="width:570px">
+                        <div class="input-group mb-3" style="width:500px">
                             <input type="text" class="form-control" name="dari" value="{{ isset($dari) ? $dari : old('dari')}}" onfocusin="(this.type='date')" outfocusin="(this.type='text)" placeholder="Tanggal Awal">
                             <input type="text" class="form-control" name="sampai" value="{{ isset($sampai) ? $sampai : old('sampai')}}"  onfocusin="(this.type='date')" outfocusin="(this.type='text)" placeholder="Tanggal Akhir">
-                            <button class="btn btn-primary" type="submit" style="width:80px"> Filter</button>
+                            <button class="btn btn-primary" type="submit" style="width:70px"> Filter</button>
                         </div>
                     </div>
                 </form>
                 <form class="form" method="get" action="{{route('cariKegiatan')}}">
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <select name="jenis" id="jenis" class="form-control" onchange="this.form.submit()" >
-                                    <option value="" selected>Filter Organisasi</option>
-                                    @foreach($organisasi as $organisasis)
-                                    <option value="{{$organisasis->jenis}}">{{$organisasis->jenis}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">    
-                            <div class="form-group">
-                                <input type="text" name="cariKegiatan" class="form-control w-75 d-inline" id="cariKegiatan" value="{{ request('cariKegiatan')}}" placeholder="Cari ...">
-                                <button type="submit" class="btn btn-primary mb-1 d-inline"><i class="fa fa-search"></i> Cari</button>
-                            </div>  
-                        </div>
-                    </div>                        
+                    <div class="col-md-6">    
+                        <div class="form-group">
+                            <input type="text" name="cariKegiatan" class="form-control w-75 d-inline" id="cariKegiatan" value="{{ request('cariKegiatan')}}" placeholder="Cari ...">
+                            <button type="submit" class="btn btn-primary mb-1 d-inline"><i class="fa fa-search"></i> Cari</button>
+                        </div>  
+                    </div>                  
                 </form>
 
                 <!-- Tambah Data -->
@@ -136,14 +124,16 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleFormControlSelect">Jenis Organisasi</label>
-                                        <select name="organisasi_id" class="form-control" id="exampleFormControlSelect">
-                                            <option value="">--Pilih--</option>
-                                            <option value="1">Sekaa Teruna</option>
-                                            <option value="2">Sekaa Gong</option>
-                                            <option value="3">Sekaa Santi</option>
-                                            <option value="4">PKK</option>
-                                        </select>
+                                        <label for="organisasi_id" class="form-label">Jenis Organisasi</label> <br>
+                                        <input type="text"  value="{{$auth}}" class="form-control" readonly 
+                                        id="organisasi_id">
+                                        <input type="hidden" value="{{$auth_id}}" name="organisasi_id">
+                                        
+                                        @error ('organisasi_id')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
                                     </div>
 
                                     <div class="form-group">
@@ -186,7 +176,7 @@
                                 <td>{{$kegiatans->id}}</td>
                                 <td>{{$kegiatans->nama_kegiatan}}</td>
                                 <td>{{$kegiatans->tanggal}}</td>
-                                <td>{{$kegiatans->organisasi->jenis}}</td>
+                                <td>{{$auth}}</td>
                                 <td><a href="\kegiatan\kegiatan\{{ $kegiatans->id }}" class="btn btn-primary"><i class="bi bi-eye-fill m-r-5"></i>Detail</a></td>
                             </tr>
                             @empty

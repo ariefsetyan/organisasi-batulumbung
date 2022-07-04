@@ -259,9 +259,9 @@
                                                 <span class="card-text ms-auto">{{$events->tanggal}}</span>
                                             </li>
                                         </ul>
-                                        <ul>
+                                        <ul class="list-inline two-part d-flex align-items-center mb-0"> 
                                             <li>
-                                                <span class="card-text ms-auto">{{$events->judul}}</span>
+                                                <span class="card-text ms-auto">{{$events->organisasi->jenis}}</span>
                                             </li>
                                             <li class="ms-auto">
                                                 <a href="\event\event\{{ $events->id }}" class="btn btn-danger text-light"><i class="bi bi-eye-fill m-r-5"></i>Detail</a>

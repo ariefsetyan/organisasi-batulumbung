@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\DetailUser;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Organisasi;
@@ -28,11 +29,74 @@ class DatabaseSeeder extends Seeder
             'no_telp'         => '085872300219',
             'jenis_kelamin'   => 'Perempuan',
             'alamat'          => 'Br. Batulumbung, Gulingan',
-            'no_telp'         => '08567809809',
+            'pekerjaan'       => 'Mahasiswa',
+            'status'          => '1',
+        ]);
+        User::create([
+            'nama'            => 'Ni Kadek Lia Mastika',
+            'nik'             => '51030243010500082',
+            'tempat_lahir'    => 'Denpasar',
+            'tgl_lahir'       => '2005-03-01',
+            'level'           => 'Sekretaris',
+            'email'           => 'liamastika@gmail.com',         
+            'password'        => bcrypt('12345'),
+            'no_telp'         => '085872300119',
+            'jenis_kelamin'   => 'Perempuan',
+            'alamat'          => 'Br. Batulumbung, Gulingan',
             'pekerjaan'       => 'Mahasiswa',
             'status'          => '1',
         ]);
 
+        User::create([
+            'nama'            => 'I Putu Febry Masprayoga',
+            'nik'             => '51030208020100009',
+            'tempat_lahir'    => 'Denpasar',
+            'tgl_lahir'       => '2001-08-08',
+            'level'           => 'Ketua',
+            'email'           => 'febry@@gmail.com',         
+            'password'        => bcrypt('12345'),
+            'no_telp'         => '08587221219',
+            'jenis_kelamin'   => 'Laki-Laki',
+            'alamat'          => 'Br. Batulumbung, Gulingan',
+            'pekerjaan'       => 'Mahasiswa',
+            'status'          => '1',
+        ]);
+
+        User::create([
+            'nama'            => 'Ni Putu Indah Ariandini',
+            'nik'             => '51030269300199992',
+            'tempat_lahir'    => 'Denpasar',
+            'tgl_lahir'       => '2000-01-29',
+            'level'           => 'Sekretaris',
+            'email'           => 'indahariandini@gmail.com',         
+            'password'        => bcrypt('12345'),
+            'no_telp'         => '08587230119',
+            'jenis_kelamin'   => 'Perempuan',
+            'alamat'          => 'Br. Batulumbung, Gulingan',
+            'pekerjaan'       => 'Mahasiswa',
+            'status'          => '1',
+        ]);
+
+        DetailUser::create([
+            'user_id'          => '1',
+            'organisasi_id'    => '1',
+        ]);
+
+        DetailUser::create([
+            'user_id'          => '2',
+            'organisasi_id'    => '2',
+        ]);
+
+        DetailUser::create([
+            'user_id'          => '3',
+            'organisasi_id'    => '3',
+        ]);
+
+        DetailUser::create([
+            'user_id'          => '4',
+            'organisasi_id'    => '4',
+        ]);
+        
         Organisasi::create([
             'kode' => 'ST',
             'jenis' => 'Sekaa Teruna'

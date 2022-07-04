@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Organisasi;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -14,19 +15,28 @@ class PemasukanController extends Controller
             ->leftJoin('organisasi as o','p.organisasi_id','=','o.id')
             ->get();
         $organisasi = DB::table('organisasi')->get();
+
         return view('pengurus.pemasukan.index',compact('data','organisasi'));
     }
 
     public function form()
     {
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id', Auth::id());
+        })->value('id');
+
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id', Auth::id());
+        })->value('jenis');
+
         $organisasi = DB::table('organisasi')->get();
-        return view('pengurus.pemasukan.form',compact('organisasi'));
+        return view('pengurus.pemasukan.form',compact('organisasi', 'auth', 'auth_id'));
     }
 
     public function simpan(Request $request)
     {
         $data = array(
-            "organisasi_id"=>$request->nama_kegiatan,
+            "organisasi_id"=>$request->organisasi_id,
             "jmlh_pemasukan"=>$request->jumlah_pemasukan,
             "tanggal"=>"$request->tanggal",
             "sumber_dana"=>"$request->sumber_dana",
@@ -53,7 +63,7 @@ class PemasukanController extends Controller
     public function update_pemasukan(Request $request)
     {
         $data = array(
-            "organisasi_id"=>$request->nama_kegiatan,
+           
             "jmlh_pemasukan"=>$request->jumlah_pemasukan,
             "tanggal"=>"$request->tanggal",
             "sumber_dana"=>"$request->sumber_dana",

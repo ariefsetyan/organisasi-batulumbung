@@ -1,6 +1,6 @@
 @extends('layouts.main-pengurus')
 
-@section('title', 'Absensi')
+@section('title', 'Pemasukan')
 
 @push('link')
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css">
@@ -36,16 +36,7 @@
 
                                     <label for="id">ID</label>
                                     <input type="text" name="id" class="form-control"
-                                           id="id" value="{{$data->id}}">
-                                    <div class="form-group">
-                                        <label for="nama_kegiatan">Organisasi</label>
-                                        <select name="nama_kegiatan" id="nama_kegiatan" class="form-control">
-                                            <option value="" selected>Pilih Organisasi</option>
-                                            @foreach($organisasi as $row)
-                                                <option value="{{$row->id}}">{{$row->jenis}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                                           id="id" value="{{$data->id}}" readonly>
                                     <div class="form-group">
                                         <label>Jumlah Pemasukan</label>
                                         <input type="number" name="jumlah_pemasukan" class="form-control"

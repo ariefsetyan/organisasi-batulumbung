@@ -1,6 +1,6 @@
 @extends('layouts.main-pengurus')
 
-@section('title', 'Laporan Keuangan')
+@section('title', 'Rekapan Keuangan')
 
 @section('content')
 <div class="page-wrapper">
@@ -8,7 +8,7 @@
     <div class="page-breadcrumb bg-white">
         <div class="row align-items-center">
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <h4 class="page-title">Daftar Laporan Keuangan</h4>
+                <h4 class="page-title">Daftar Rekapan Keuangan</h4>
             </div>
         </div>
     </div>
@@ -19,25 +19,15 @@
                 <div class="white-box">
                 <form action="{{ route ('filterTanggalKeuangan') }}" method="get">
                 @csrf
-                    <div class="input-group mb-3" style="width:570px">
+                    <div class="input-group mb-3" style="width:500px">
                         <input type="text" class="form-control" name="dari" onfocusin="(this.type='date')" value="{{ isset($dari) ? $dari : old('dari')}}" outfocusin="(this.type='text)" placeholder="Tanggal Awal">
                         <input type="text" class="form-control" name="sampai" onfocusin="(this.type='date')" value="{{ isset($sampai) ? $sampai : old('sampai')}}" outfocusin="(this.type='text)" placeholder="Tanggal Akhir">
-                        <button class="btn btn-primary" type="submit" style="width:80px">Filter</button>
+                        <button class="btn btn-primary" type="submit" style="width:70px">Filter</button>
                     </div>
                 </form>
 
                 <form class="form mb-3" method="get" action="{{ route ('cariLaporan') }}">
                     <div class="row mb-3">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <select name="jenis" id="jenis" class="form-control" onchange="this.form.submit()" >
-                                    <option value="" selected>Filter Organisasi</option>
-                                    @foreach($organisasi as $organisasis)
-                                    <option value="{{$organisasis->jenis}}">{{$organisasis->jenis}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
                         <div class="col-md-6">    
                             <div class="form-group">
                                 <input type="text" name="cariLaporan" class="form-control w-75 d-inline" id="cariLaporan" value="{{ request('cariLaporan')}}" placeholder="Cari ...">
@@ -46,27 +36,6 @@
                         </div>
                     </div>                    
                 </form>
-               
-                    <!-- Tambah Data -->
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahData">
-                    Tambah Data
-                    </button>
-                    <a href="{{ route ('export_laporan-keuangan') }}" class="btn btn-success my-3 text-light" target="_blank">Download Data</a>
-
-                    @if(session()->has('success'))
-                    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-                        {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                    @endif
-
-                    @if(session()->has('status'))
-                    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-                        {{ session('status') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                    @endif
 
                     <div class="table-responsive mt-3">
                         <table class="table table-striped">
@@ -76,25 +45,21 @@
                                     <th class="border-top-0">TANGGAL</th>
                                     <th class="border-top-0">PEMASUKAN</th>
                                     <th class="border-top-0">PENGELUARAN</th>
-                                    <th class="border-top-0">NAMA BARANG</th>
-                                    <th class="border-top-0">RINCIAN</th>
                                     <th class="border-top-0">JENIS ORGANISASI</th>
                                     <th class="border-top-0">SUMBER DANA</th>
                                     <th class="border-top-0">AKSI</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            @forelse($laporan as $laporans)
+                            @forelse($pengeluaran as $row)
                                 <tr>
                                     <th scope="row">{{ $loop->iteration}}</th>
-                                    <td>{{$laporans->tanggal}}</td>
-                                    <td>Rp {{ number_format($laporans->jmlh_pemasukan) }}</td>
-                                    <td>Rp {{ number_format($laporans->jmlh_pengeluaran) }}</td>
-                                    <td>{{$laporans->nama_barang}}</td>
-                                    <td>{{$laporans->jumlah}} * Rp {{ number_format($laporans->harga_satuan) }}</td>
-                                    <td>{{$laporans->organisasi->jenis}}</td>
-                                    <td>{{$laporans->sumber_dana}}</td>
-                                    <td><a href="\laporan\laporan-keuangan\{{ $laporans->id }}" class="btn btn-primary"><i class="bi bi-eye-fill m-r-5"></i>Detail</a></td>
+                                    <td>{{$row->tanggal}}</td>
+                                    <td>Rp {{ number_format($row->jmlh_pemasukan) }}</td>
+                                    <td>Rp {{ number_format($row->total) }}</td>
+                                    <td>{{$auth}}</td>
+                                    <td>{{$row->sumber_dana}}</td>
+                                    <td><a href="\rekapan\rekapan-keuangan\{{ $row->id }}" class="btn btn-primary"><i class="bi bi-eye-fill m-r-5"></i>Detail</a></td>
                                     
                                 </tr>
                                 @empty

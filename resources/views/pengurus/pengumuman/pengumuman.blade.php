@@ -19,16 +19,6 @@
                 <div class="white-box">
                 <form class="form mb-3" method="get" action="{{ route ('cariPengumuman') }}">
                     <div class="row mb-3">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <select name="jenis" id="jenis" class="form-control" onchange="this.form.submit()" >
-                                    <option value="" selected>Filter Organisasi</option>
-                                    @foreach($organisasi as $organisasis)
-                                    <option value="{{$organisasis->jenis}}">{{$organisasis->jenis}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
                         <div class="col-md-6 ms-auto">
                             <div class="form-group">
                                 <input type="text" name="cariPengumuman" class="form-control w-75 d-inline" value="{{ request('cariPengumuman')}}" id="cariPengumuman" placeholder="Cari ...">
@@ -104,14 +94,16 @@
                                         </div>
                                         
                                         <div class="form-group">
-                                            <label for="exampleFormControlSelect">Jenis Organisasi</label>
-                                            <select name="organisasi_id" class="form-control" id="exampleFormControlSelect">
-                                                <option value="">--Pilih--</option>
-                                                <option value="1">Sekaa Teruna</option>
-                                                <option value="2">Sekaa Gong</option>
-                                                <option value="3">Sekaa Santi</option>
-                                                <option value="4">PKK</option>
-                                            </select>
+                                            <label for="organisasi_id" class="form-label">Jenis Organisasi</label> <br>
+                                            <input type="text"  value="{{$auth}}" class="form-control" readonly 
+                                            id="organisasi_id">
+                                            <input type="hidden" value="{{$auth_id}}" name="organisasi_id">
+                                            
+                                            @error ('organisasi_id')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
                                         </div>
 
                                         <div class="form-group">
@@ -165,7 +157,7 @@
                                     <td>{{$pengumumans->id}}</td>
                                     <td>{{$pengumumans->judul}}</td>
                                     <td>{{$pengumumans->tanggal}}</td>
-                                    <td>{{$pengumumans->organisasi->jenis}}</td>
+                                    <td>{{$auth}}</td>
                                     <td><a href="\pengumuman\pengumuman\{{ $pengumumans->id }}" class="btn btn-primary"><i class="bi bi-eye-fill m-r-5"></i>Detail</a></td>
                                 </tr>
                                 @empty

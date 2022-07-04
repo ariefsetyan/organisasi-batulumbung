@@ -199,19 +199,24 @@
       <div class=" layout_padding2">
         <div class="card-deck">
           <div class="card">
-           
-            <div class="card-body">
-            <!--  -->
+            <div class="row">
+              <div class="card-body">
+              @forelse($pengumuman as $pengumumans)
+              <h5  style="font-weight: 800; ">
+                  {{$pengumumans->judul}} - {{$pengumumans->organisasi->jenis}}
+              </h5>
+              <h6>{{$pengumumans->tanggal}} | {{$pengumumans->waktu}}</h6>
+                <h6>{{$pengumumans->tempat}}</h6>
+                <h6>{{$pengumumans->isi}}</h6>
+                <h6><a href="{{route('file.download', $pengumumans->id)}}">Download File</a></h6>
+                <hr color="orange">
+              @empty
+              <span  style="font-weight: 800; ">Tidak Ada Data</span>
+              @endforelse
+              </div>
             </div>
-          
           </div>
         </div>
-         
-      <div class="d-flex justify-content-center">
-        <a href="" class="custom_dark-btn">
-          Read More
-        </a>
-      </div>
     </div>
   </section>
 
@@ -225,19 +230,23 @@
       <div class=" layout_padding2">
         <div class="card-deck">
           <div class="card">
-           
-            <div class="card-body">
-            <!--  -->
+            <div class="row">
+              <div class="card-body">
+                @forelse($kegiatan as $kegiatans)
+                <h5  style="font-weight: 800; ">
+                  {{$kegiatans->nama_kegiatan}} - {{$kegiatans->organisasi->jenis}}
+                </h5>
+                <h6>{{$kegiatans->tanggal}} | {{$kegiatans->waktu}}</h6>
+                <h6>{{$kegiatans->tempat}}</h6>
+                <h6>{!! $kegiatans->deskripsi !!}</h6>
+                <hr color="orange">
+                @empty
+                  <span  style="font-weight: 800; ">Tidak Ada Data</span>
+                @endforelse
+              </div>
             </div>
-          
           </div>
         </div>
-         
-      <div class="d-flex justify-content-center">
-        <a href="" class="custom_dark-btn">
-          Read More
-        </a>
-      </div>
     </div>
   </section>
 
@@ -245,84 +254,29 @@
 
   <!-- event section -->
 
-  <section class="fruit_section">
+  <section class="service_section layout_padding ">
     <div class="container" id="event">
       <h2 class="custom_heading">Event</h2>
-      <div class="row layout_padding2">
-        <div class="col-md-8">
-          
-          <div class="fruit_detail-box">
-            <h3>
-              
-            </h3>
-            <p class="mt-4 mb-5">
-              but the majority have suffered alteration in some form, by
-              injected humour, or randomised words which don't look even
-              slightly believable. If you are going to use a passage of Lorem
-              Ipsum, you need to be
-            </p>
-            <div>
-              <a href="" class="custom_dark-btn">
-                Buy Now
-              </a>
+      <div class=" layout_padding2">
+        <div class="card-deck">
+          <div class="card">
+            <div class="row">
+              <div class="card-body">
+                @forelse($event as $events)
+                <h5  style="font-weight: 800; ">
+                  {{$events->nama_event}}
+                </h5>
+                <h6 style="font-weight: 800; "  >{{$events->organisasi->jenis}} </h6>
+                <h6>{{$events->tanggal}} | {{$events->waktu}}</h6>
+                <h6>{{$events->tempat}}</h6>
+                <h6>{{$events->keterangan}}</h6>
+                <hr color="orange">
+                @empty
+                  <span  style="font-weight: 800; ">Tidak Ada Data</span>
+                @endforelse
+              </div>
             </div>
-          </div>
-          
-        </div>
-        <div class="col-md-4 d-flex justify-content-center align-items-center">
-          <div class="fruit_img-box d-flex justify-content-center align-items-center">
-            <img src="images/orange.png" alt="" class="" width="250px" />
-          </div>
-        </div>
-      </div>
-      <div class="row layout_padding2">
-        <div class="col-md-8">
-          <div class="fruit_detail-box">
-            <h3>
-              Best Fresh Grapes
-            </h3>
-            <p class="mt-4 mb-5">
-              but the majority have suffered alteration in some form, by
-              injected humour, or randomised words which don't look even
-              slightly believable. If you are going to use a passage of Lorem
-              Ipsum, you need to be
-            </p>
-            <div>
-              <a href="" class="custom_dark-btn">
-                Buy Now
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 d-flex justify-content-center align-items-center">
-          <div class="fruit_img-box d-flex justify-content-center ">
-            <img src="images/grapes.png" alt="" class="" width="100px" />
-          </div>
-        </div>
-      </div>
-      <div class="row layout_padding2-top layout_padding-bottom">
-        <div class="col-md-8">
-          <div class="fruit_detail-box">
-            <h3>
-              Best Fresh Gauva
-            </h3>
-            <p class="mt-4 mb-5">
-              but the majority have suffered alteration in some form, by
-              injected humour, or randomised words which don't look even
-              slightly believable. If you are going to use a passage of Lorem
-              Ipsum, you need to be
-            </p>
-            <div>
-              <a href="" class="custom_dark-btn">
-                Buy Now
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 d-flex justify-content-center align-items-center">
-          <div class="fruit_img-box d-flex justify-content-center align-items-center">
-            <img src="images/gauva.png" alt="" class="" width="250px" />
-          </div>
+          </div>         
         </div>
       </div>
     </div>

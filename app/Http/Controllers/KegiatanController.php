@@ -7,6 +7,7 @@ use App\Models\Organisasi;
 use Illuminate\Http\Request;
 use PDF;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class KegiatanController extends Controller
 {
@@ -17,9 +18,18 @@ class KegiatanController extends Controller
      */
     public function index()
     {
-        $organisasi = Organisasi::all();
+            
         $kegiatan = Kegiatan::latest()->paginate(10);
-        return view('pengurus/kegiatan/kegiatan', compact(['kegiatan', 'organisasi']));
+
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('id');
+
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('jenis');
+
+        return view('pengurus/kegiatan/kegiatan', compact(['kegiatan', 'auth_id', 'auth']));
     }
 
     public function cariKegiatan(Request $request)
@@ -128,7 +138,6 @@ class KegiatanController extends Controller
             'tanggal'       => 'required',
             'waktu'         => 'required',
             'tempat'        => 'required',
-            'organisasi_id' => 'required',
             'deskripsi'     => 'required',
             'image'         => 'required|file|mimes:jpg,jpeg,png|max:1024'
         ]);
@@ -157,7 +166,6 @@ class KegiatanController extends Controller
                     'tanggal'       =>$request->tanggal,
                     'waktu'         =>$request->waktu,
                     'tempat'        =>$request->tempat,
-                    'organisasi_id' =>$request->organisasi_id,
                     'deskripsi'     =>$request->deskripsi,
                     'image'         =>$imageName,
                 ]);

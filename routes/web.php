@@ -26,7 +26,9 @@ use App\Models\Absensi;
     Route::get('/', function () {
         return view('pengurus/index');
     });
-    Route::get('pengurus/index', 'App\Http\Controllers\LoginController@index');
+    Route::get('/', 'App\Http\Controllers\LoginController@homePage');
+    
+    Route::get('/index/download/{id}', 'App\Http\Controllers\LoginController@downloadPengumuman')->name('file.download');
 
 // Route::get('/', function () {
 //     return view('pengurus/dashboard');
@@ -133,58 +135,24 @@ use App\Models\Absensi;
     // Route::post('/absensi/absensi', 'App\Http\Controllers\AbsensiController@import_excel');
     Route::get('/absensi/export_absensi', 'App\Http\Controllers\AbsensiController@export_excel')->name('export_absensi');
     Route::get('/absensi/daftar_absensi', 'App\Http\Controllers\AbsensiController@daftarAbsensi')->name('daftar_absensi');
+    Route::get('/absensi/rekapan-absensi', 'App\Http\Controllers\AbsensiController@rekapanAbsensi')->name('rekapan-absensi');
     Route::get('/absensi/cariAbsensi','App\Http\Controllers\AbsensiController@cariAbsensi')->name('cariAbsensi');
     Route::get('/absensi/filterTanggal','App\Http\Controllers\AbsensiController@filterTanggal')->name('filterTanggalAbsensi');
     Route::get('/absensi/cariOrganisasi','App\Http\Controllers\AbsensiController@cariOrganisasi')->name('cariOrganisasi');
 
-    // Laporan Keuangan
-    Route::get('/laporan/laporan-keuangan', 'App\Http\Controllers\LaporanKeuanganController@index');
-    Route::delete('/laporan/laporan-keuangan/{laporan}', 'App\Http\Controllers\LaporanKeuanganController@destroy');
-    Route::get('/laporan/laporan-keuangan/{laporan}', 'App\Http\Controllers\LaporanKeuanganController@show');
-    Route::post('/pengurus/laporan/laporan-keuangan', 'App\Http\Controllers\LaporanKeuanganController@store')->name('tambahLaporan');
-    Route::delete('/laporan/laporan-keuangan/{laporan-keuangan}', 'App\Http\Controllers\LaporanKeuanganController@destroy')->name('hapusLaporan');
-    Route::put('/laporan/laporan-keuangan/{id}', 'App\Http\Controllers\LaporanKeuanganController@update')->name('editLaporan');
-    Route::get('/laporan-keuangan/export_laporan-keuangan', 'App\Http\Controllers\LaporanKeuanganController@export_excel')->name('export_laporan-keuangan');
-    Route::get('/laporan-keuangan/filterTanggal','App\Http\Controllers\LaporanKeuanganController@filterTanggal')->name('filterTanggalKeuangan');
-    // Route::get('/laporan-keuangan-pdf/{laporan-keuangan}', 'App\Http\Controllers\LaporanKeuanganController@exportPDF')->name('exportPDF');
-    Route::get('/laporan/cariLaporan','App\Http\Controllers\LaporanKeuanganController@cariLaporan')->name('cariLaporan');
-    Route::get('/laporan-keuangan/laporan_keuangan_pdf/{id}', 'App\Http\Controllers\LaporanKeuanganController@exportPDFKeuangan')->name('exportPDFKeuangan');
-
-
-    //=====================================ANGGOTA================================
-    // Route::get('/', function () {
-    //     return view('anggota/dashboard-anggota');
-    // });
-
-     // Login
-     Route::get('anggota/login', 'App\Http\Controllers\LoginController@indexAnggota');
-     Route::post('anggota/login', 'App\Http\Controllers\LoginController@prosesLoginAnggota')->name('loginPostAnggota');
-     Route::get('/dashboard-anggota', 'App\Http\Controllers\LoginController@dashboardAnggota');
-     Route::patch('/dashboard-anggota/{anggota}', 'App\Http\Controllers\UserController@updateProfilAnggota')->name('updateProfilAnggota');
-     Route::patch('/dashboard-anggota', 'App\Http\Controllers\UserController@updatePasswordAnggota')->name('update_password_anggota');
-
-    //Register
-    Route::get('/register', 'App\Http\Controllers\RegisterController@index');
-    Route::post('/register/store', 'App\Http\Controllers\RegisterController@store')->name('register');
-
-     Route::get('/pengumuman', 'App\Http\Controllers\PengumumanController@indexAnggota');
-
-     Route::get('/event', 'App\Http\Controllers\EventController@indexAnggota');
-     Route::get('/kegiatan', 'App\Http\Controllers\KegiatanController@indexAnggota');
-     Route::get('/absensi', 'App\Http\Controllers\AbsensiController@indexAnggota');
-     Route::get('/pemasukan_anggota', 'App\Http\Controllers\PemasukanController@indexAnggota');
-     Route::get('/pengeluaran_anggota', 'App\Http\Controllers\PengeluaranController@indexAnggota');
-     Route::get('/pengumuman/cariPengumumanAnggota','App\Http\Controllers\PengumumanController@cariPengumumanAnggota')->name('cariPengumumanAnggota');
-     Route::get('/kegiatan/cariKegiatanAnggota','App\Http\Controllers\KegiatanController@cariKegiatanAnggota')->name('cariKegiatanAnggota');
-     Route::get('/event/cariEventAnggota','App\Http\Controllers\EventController@cariEventAnggota')->name('cariEventAnggota');
-
-
-     // Logout
-    //  Route::get('/logout', 'App\Http\Controllers\LoginController@logoutAnggota');
-
-
-    // Route::get('/kegiatan/{kegiatan}', 'App\Http\Controllers\KegiatanController@show')->name('showKegiatan');
-
+    // Rekapan Keuangan
+    Route::get('/rekapan/rekapan-keuangan', 'App\Http\Controllers\LaporanKeuanganController@index');
+    Route::delete('/rekapan/rekapan-keuangan/{laporan}', 'App\Http\Controllers\LaporanKeuanganController@destroy');
+    Route::get('/rekapan/rekapan-keuangan/{laporan}', 'App\Http\Controllers\LaporanKeuanganController@show');
+    Route::post('/pengurus/rekapan/rekapan-keuangan', 'App\Http\Controllers\LaporanKeuanganController@store')->name('tambahLaporan');
+    Route::delete('/rekapan/rekapan-keuangan/{laporan-keuangan}', 'App\Http\Controllers\LaporanKeuanganController@destroy')->name('hapusLaporan');
+    Route::put('/rekapan/rekapan-keuangan/{id}', 'App\Http\Controllers\LaporanKeuanganController@update')->name('editLaporan');
+    Route::get('/rekapan-keuangan/export_laporan-keuangan', 'App\Http\Controllers\LaporanKeuanganController@export_excel')->name('export_laporan-keuangan');
+    Route::get('/rekapan-keuangan/filterTanggal','App\Http\Controllers\LaporanKeuanganController@filterTanggal')->name('filterTanggalKeuangan');
+    // // Route::get('/laporan-keuangan-pdf/{laporan-keuangan}', 'App\Http\Controllers\LaporanKeuanganController@exportPDF')->name('exportPDF');
+    Route::get('/rekapan/cariLaporan','App\Http\Controllers\LaporanKeuanganController@cariLaporan')->name('cariLaporan');
+    // Route::get('/laporan-keuangan/laporan_keuangan_pdf/{id}', 'App\Http\Controllers\LaporanKeuanganController@exportPDFKeuangan')->name('exportPDFKeuangan');
+    
     Route::get('absensi/get_kegiatan/{id}','App\Http\Controllers\AbsensiController@get_kegiatan');
     Route::get('absensi/get_absen/{id}','App\Http\Controllers\AbsensiController@get_absen');
     Route::get('absensi/hapus_absen/{id}','App\Http\Controllers\AbsensiController@hapus');
@@ -207,3 +175,38 @@ use App\Models\Absensi;
     Route::get('detil/{id}','App\Http\Controllers\PengeluaranController@detil');
     Route::get('download/{id}','App\Http\Controllers\PengeluaranController@download');
 
+
+
+    //=====================================ANGGOTA================================
+    // Route::get('/', function () {
+    //     return view('anggota/dashboard-anggota');    
+    // });
+
+     // Login
+     Route::get('anggota/login', 'App\Http\Controllers\LoginController@indexAnggota');
+     Route::post('anggota/login', 'App\Http\Controllers\LoginController@prosesLoginAnggota')->name('loginPostAnggota');
+     Route::get('/dashboard-anggota', 'App\Http\Controllers\LoginController@dashboardAnggota');
+     Route::patch('/dashboard-anggota/{anggota}', 'App\Http\Controllers\UserController@updateProfilAnggota')->name('updateProfilAnggota');
+     Route::patch('/dashboard-anggota', 'App\Http\Controllers\UserController@updatePasswordAnggota')->name('update_password_anggota');
+
+    //Register 
+    Route::get('/register', 'App\Http\Controllers\RegisterController@index');
+    Route::post('/register/store', 'App\Http\Controllers\RegisterController@store')->name('register');
+
+     Route::get('/pengumuman', 'App\Http\Controllers\PengumumanController@indexAnggota');
+
+     Route::get('/event', 'App\Http\Controllers\EventController@indexAnggota');
+     Route::get('/kegiatan', 'App\Http\Controllers\KegiatanController@indexAnggota');
+     Route::get('/absensi', 'App\Http\Controllers\AbsensiController@indexAnggota');
+     Route::get('/pemasukan_anggota', 'App\Http\Controllers\PemasukanController@indexAnggota');
+     Route::get('/pengeluaran_anggota', 'App\Http\Controllers\PengeluaranController@indexAnggota');
+     Route::get('/pengumuman/cariPengumumanAnggota','App\Http\Controllers\PengumumanController@cariPengumumanAnggota')->name('cariPengumumanAnggota');
+     Route::get('/kegiatan/cariKegiatanAnggota','App\Http\Controllers\KegiatanController@cariKegiatanAnggota')->name('cariKegiatanAnggota');
+     Route::get('/event/cariEventAnggota','App\Http\Controllers\EventController@cariEventAnggota')->name('cariEventAnggota');
+
+
+     // Logout
+    //  Route::get('/logout', 'App\Http\Controllers\LoginController@logoutAnggota'); 
+
+
+    // Route::get('/kegiatan/{kegiatan}', 'App\Http\Controllers\KegiatanController@show')->name('showKegiatan');    

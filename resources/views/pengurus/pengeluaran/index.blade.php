@@ -1,6 +1,6 @@
 @extends('layouts.main-pengurus')
 
-@section('title', 'Absensi')
+@section('title', 'Pengeluaran')
 
 @push('link')
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css">
@@ -61,7 +61,7 @@
                                     <td>{{$row->jenis}}</td>
                                     <td>{{$row->tanggal}}</td>
                                     <td>{{$row->sumber_dana}}</td>
-                                    <td>Rp {{ number_format ($row->total)}}</td>
+                                    <td>Rp {{number_format ($row->total)}}</td>
                                     <td>{{$row->keterangan}}</td>
                                     <td>
                                         <a href="view/{{$row->id}}" id="btn-update" class="btn btn-primary"><i class="bi bi-eye-fill m-r-5"></i></a> |

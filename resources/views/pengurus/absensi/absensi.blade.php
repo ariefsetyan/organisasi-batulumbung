@@ -102,20 +102,18 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleFormControlSelect">Jenis Organisasi</label>
-                                        <select name="organisasi_id" class="form-control @error('organisasi_id') is-invalid @enderror" id="exampleFormControlSelect">
-                                            <option value="">--Pilih--</option>
-                                            <option value="1">Sekaa Teruna</option>
-                                            <option value="2">Sekaa Gong</option>
-                                            <option value="3">Sekaa Santi</option>
-                                            <option value="4">PKK</option>
-                                        </select>
+                                        <label for="organisasi_id" class="form-label">Jenis Organisasi</label> <br>
+                                        <input type="text"  value="{{$auth}}" class="form-control" readonly 
+                                        id="organisasi_id">
+                                        <input type="hidden" value="{{$auth_id}}" name="organisasi_id">
+                                        
                                         @error ('organisasi_id')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                         @enderror
                                     </div>
+                                    
                                     <div class="form-group">
                                         <label for="file" class="form-label">Pilih File Excel</label>
                                         <input type="file" name="file" class="form-control @error('file') is-invalid @enderror"
@@ -165,7 +163,7 @@
                                     <td>{{$absen->nama_kegiatan}}</td>
                                     <td>{{ \Carbon\Carbon::parse($absen->tanggal)->format('Y-m-d')}}</td>
                                     <!-- carbon format (y-m-d) -->
-                                    <td>{{$absen->organisasi->jenis}}</td>
+                                    <td>{{$auth}}</td>
                                     <td>{{$absen->status}}</td>
                                     <td>
                                         <button value="{{$absen->id}}" onclick="form_edit({{$absen->id}})" class="btn btn-primary" data-toggle="modal" data-target="#edit"><i class="bi bi-pencil-square"></i></button> |

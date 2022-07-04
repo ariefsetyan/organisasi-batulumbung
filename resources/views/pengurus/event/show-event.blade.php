@@ -124,17 +124,6 @@
                         </div>
 
                         <div class="form-group">
-                        <label for="exampleFormControlSelect">Jenis Organisasi</label>
-                            <select name="organisasi_id" value="{{ $event->organisasi_id }}" class="form-control @error('organisasi_id') is-invalid @enderror" 
-                            id="exampleFormControlSelect">
-                                <option value="1" @if($event->organisasi_id == "1") selected @endif>Sekaa Teruna</option>
-                                <option value="2" @if($event->organisasi_id == "2") selected @endif>Sekaa Gong</option>
-                                <option value="3" @if($event->organisasi_id == "3") selected @endif>Sekaa Santi</option>
-                                <option value="4" @if($event->organisasi_id == "4") selected @endif>PKK</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
                             <button type="button" class="btn btn-danger text-light" data-bs-dismiss="modal">Batal</button>
                             <button type="submit" class="btn btn-primary">Simpan</button>
                         </div>

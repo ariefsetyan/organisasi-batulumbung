@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Pengumuman;
 use App\Models\Organisasi;
+use App\Models\DetailUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class PengumumanController extends Controller
 {
@@ -17,9 +19,19 @@ class PengumumanController extends Controller
      */
     public function index()
     {
-        $organisasi = Organisasi::all();
+       
+        $jenis = DetailUser::all();
         $pengumuman = Pengumuman::latest()->paginate(10);
-        return view('pengurus/pengumuman/pengumuman', compact('pengumuman', 'organisasi'));
+
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('id');
+
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('jenis');
+
+        return view('pengurus/pengumuman/pengumuman', compact('pengumuman', 'jenis', 'auth_id', 'auth'));
     }
 
     public function cariPengumuman(Request $request)
@@ -112,7 +124,6 @@ class PengumumanController extends Controller
             'judul'             => 'required|max:255',
             'tanggal'           => 'required',
             'waktu'             => 'required',
-            'organisasi_id'     => 'required',
             'isi'               => 'required',
             'file'              => 'file|nullable|mimes:pdf|max:1024'
         ]);
@@ -121,7 +132,6 @@ class PengumumanController extends Controller
             'judul'             => $request->judul,
             'tanggal'           => $request->tanggal,
             'waktu'             => $request->waktu,
-            'organisasi_id'     => $request->organisasi_id,
             'isi'               => $request->isi,
         ];
 

@@ -28,8 +28,16 @@ class AbsensiController extends Controller
         $organisasi = Organisasi::all();
         $kegiatan = Kegiatan::all();
 
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('id');
+
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('jenis');
+
         // dd($absensi);
-        return view('pengurus.absensi.absensi', compact('absensi', 'organisasi', 'kegiatan'));
+        return view('pengurus.absensi.absensi', compact('absensi', 'organisasi', 'kegiatan', 'auth', 'auth_id'));
     }
 
     public function daftarAbsensi(Absensi $absensi)
@@ -38,8 +46,34 @@ class AbsensiController extends Controller
         $organisasi = Organisasi::all();
         $kegiatan = Kegiatan::all();
 
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('id');
+
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('jenis');
+
         // dd($absensi);
-        return view('pengurus/absensi/daftar_absensi', compact('absensi', 'organisasi', 'kegiatan'));
+        return view('pengurus/absensi/daftar_absensi', compact('absensi', 'organisasi', 'kegiatan', 'auth', 'auth_id'));
+    }
+
+    public function rekapanAbsensi(Absensi $absensi)
+    {
+        $absensi = Absensi::latest()->paginate(10);
+        $organisasi = Organisasi::all();
+        $kegiatan = Kegiatan::all();
+        
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('id');
+
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('jenis');
+
+        // dd($absensi);
+        return view('pengurus/absensi/rekapan-absensi', compact('absensi', 'organisasi', 'kegiatan', 'auth', 'auth_id'));
     }
 
     public function cariAbsensi(Request $request)

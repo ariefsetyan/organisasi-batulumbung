@@ -212,15 +212,6 @@
                     </div>
 
                     <div class="form-group">
-                        
-                        <label for="exampleFormControlSelect">Jenis Organisasi</label> <br>
-                        <input type="checkbox" class="check_all" name="organisasi_id" id="sekaateruna" value="1" @foreach($organisasis as $row) @if($row->organisasi_id == "1") checked @endif @endforeach> Sekaa Teruna<br>
-                        <input type="checkbox" class="check_all" name="organisasi_id" id="sekaagong" value="2" @foreach($organisasis as $row) @if($row->organisasi_id == "2") checked @endif @endforeach> Sekaa Gong<br>
-                        <input type="checkbox" class="check_all" name="organisasi_id" id="sekaasanti" value="3" @foreach($organisasis as $row) @if($row->organisasi_id == "3") checked @endif @endforeach> Sekaa Santi<br>
-                        <input type="checkbox" class="check_all" name="organisasi_id" id="pkk" value="4" @foreach($organisasis as $row) @if($user->organisasi_id == "4") checked @endif @endforeach> PKK<br>
-                    </div>
-
-                    <div class="form-group">
                         <label for="exampleFormControlSelect">Status</label>
                         <select name="status" value="{{ $user->status }}" class="form-control @error('status') is-invalid @enderror" 
                         id="exampleFormControlSelect">

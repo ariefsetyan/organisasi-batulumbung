@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pengeluaran;
+use App\Models\Organisasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +20,16 @@ class PengeluaranController extends Controller
     {
         $sumber_dana = Pengeluaran::Get_sumber_dana();
         $organisasi = Pengeluaran::Get_organisasi();
-        return view('pengurus.pengeluaran.form',compact('organisasi','sumber_dana'));
+
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('id');
+
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('jenis');
+
+        return view('pengurus.pengeluaran.form',compact('organisasi','sumber_dana', 'auth', 'auth_id'));
     }
 
     public function simpan(Request $request)
@@ -28,7 +38,7 @@ class PengeluaranController extends Controller
         for ($i = 0;$i<count($request->post('nama_barang')); $i++){
             $nama_barang = $request->nama_barang[$i];
             $data = array(
-                "organisasi_id"=>$request->nama_kegiatan,
+                "organisasi_id"=>$request->organisasi_id,
                 "user_id"=>Auth::user()->id,
                 "total"=>$request->sum,
                 "tanggal"=>"$request->tanggal",

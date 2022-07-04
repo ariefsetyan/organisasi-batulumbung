@@ -37,13 +37,10 @@
                                     {{ csrf_field() }}
 
                                     <div class="form-group">
-                                        <label for="nama_kegiatan">Organisasi</label>
-                                        <select name="nama_kegiatan" id="nama_kegiatan" class="form-control" required>
-                                            <option value="" selected>Pilih Organisasi</option>
-                                            @foreach($organisasi as $row)
-                                                <option value="{{$row->id}}">{{$row->jenis}}</option>
-                                            @endforeach
-                                        </select>
+                                        <label for="organisasi_id" class="form-label">Jenis Organisasi</label> <br>
+                                            <input type="text"  value="{{$auth}}" class="form-control" readonly 
+                                            id="organisasi_id">
+                                            <input type="hidden" value="{{$auth_id}}" name="organisasi_id">
                                     </div>
 
                                     <div class="form-group">
@@ -79,7 +76,7 @@
                                         <select name="sumber_dana" id="sumber_dana" class="form-control" required>
                                             <option value="" selected>Pilih Sumber Dana</option>
                                             @foreach($sumber_dana as $row)
-                                                <option value="{{$row->id}}">{{$row->sumber_dana}}</option>
+                                                <option value="{{$row->sumber_dana}}">{{$row->sumber_dana}}</option>
                                             @endforeach
                                         </select>
 

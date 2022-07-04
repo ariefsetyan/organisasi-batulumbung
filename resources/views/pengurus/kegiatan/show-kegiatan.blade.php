@@ -135,17 +135,6 @@
                         </div>
 
                         <div class="form-group">
-                        <label for="exampleFormControlSelect">Jenis Organisasi</label>
-                            <select name="organisasi_id" value="{{ $kegiatan->organisasi_id }}" class="form-control @error('organisasi_id') is-invalid @enderror" 
-                            id="exampleFormControlSelect">
-                                <option value="1" @if($kegiatan->organisasi_id == "1") selected @endif>Sekaa Teruna</option>
-                                <option value="2" @if($kegiatan->organisasi_id == "2") selected @endif>Sekaa Gong</option>
-                                <option value="3" @if($kegiatan->organisasi_id == "3") selected @endif>Sekaa Santi</option>
-                                <option value="4" @if($kegiatan->organisasi_id == "4") selected @endif>PKK</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
                             <label for="image" class="form-label">Image</label>
                             <label type="hidden" name="old" value="{{$kegiatan->image}}"></label>
                                 @if($kegiatan->image)

@@ -187,15 +187,28 @@ class LoginController extends Controller
     //     return redirect('/anggota/login');
     // }
 
-    public function index(Request $request)
+    public function homePage(Request $request)
     {
-        $kegiatan = Kegiatan::whereYear('tanggal', date('Y'))->whereMonth('tanggal', date('m'))->get();
+        $kegiatan = Kegiatan::all();
         $organisasi = Organisasi::all();
-        $pengumuman = Pengumuman::whereYear('tanggal', date('Y'))->whereMonth('tanggal', date('m'))->get();
+        $pengumuman = Pengumuman::all();
+        // dd($pengumuman);
         $event = Event::whereYear('tanggal', date('Y'))->whereMonth('tanggal', date('m'))->get();
 
         return view('/pengurus/index', compact(['kegiatan', 'organisasi', 'pengumuman', 'event']));
-
     }
+
+    function downloadPengumuman($id)
+    {
+        $pengumuman = Pengumuman::findOrFail($id);
+        $pathToFile = public_path('files_pengumuman/' . $pengumuman->file);
+        
+        if(!File::exists($pathToFile)){
+            return redirect('pengurus/index'.$id)->with('file_404', 'Berkas/file tidak ditemukan');
+        }
+
+        return response()->download($pathToFile, $pengumuman->file_name);
+    }      
+
     
 }

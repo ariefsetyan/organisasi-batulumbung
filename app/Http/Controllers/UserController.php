@@ -8,44 +8,54 @@ use App\Models\DetailUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use DB;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
     public function indexAnggota()
     {
-        $user = User::where('level', '=', 'Anggota')
-        ->selectRaw('GROUP_CONCAT(kode) as kode_orga')
-        ->select('user.id','nik','nama','level',DB::raw("GROUP_CONCAT(jenis) as jenis"),DB::raw("GROUP_CONCAT(kode) as kode_orga"))
-        ->leftJoin('detail_user','user.id','=','detail_user.user_id')
-        ->leftJoin('organisasi','detail_user.organisasi_id','=','organisasi.id')
-        ->groupBy('user.id','user.nik','nama','level')
-         ->paginate(10);
+
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('id');
+
+        $level = User::where('level','Anggota')->pluck('id');
+         $user = User::whereHas('detail_user', function($q) use($auth_id){
+             $q->where('organisasi_id',$auth_id);
+         })->whereIn('id',$level)->get();
+       
         // $user = User::where('level', '=', 'Anggota')->paginate(10);
         // $jenis = DetailUser::where('user_id', $user->id)->get();
         $jenis = DetailUser::all();
         $organisasi = Organisasi::all();
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('jenis');
 
-        return view('pengurus/anggota/anggota', compact(['user', 'organisasi', 'jenis']));
+
+        return view('pengurus/anggota/anggota', compact(['user', 'organisasi', 'jenis','auth','auth_id']));
     }
 
     public function indexPengurus()
     {
-        $user = User::where('level', '=', 'Ketua')
-        ->orWhere('level', '=', 'Wakil Ketua')
-        ->orWhere('level', '=', 'Sekretaris')
-        ->orWhere('level', '=', 'Bendahara')
-        ->selectRaw('GROUP_CONCAT(kode) as kode_orga')
-        ->select('user.id','nik','nama','level',DB::raw("GROUP_CONCAT(jenis) as jenis"),DB::raw("GROUP_CONCAT(kode) as kode_orga"))
-        ->leftJoin('detail_user','user.id','=','detail_user.user_id')
-        ->leftJoin('organisasi','detail_user.organisasi_id','=','organisasi.id')
-        ->groupBy('user.id','user.nik','nama','level')
-         ->paginate(10);
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('id');
+
+        $level = User::where('level','Anggota')->pluck('id');
+         $user = User::whereHas('detail_user', function($q) use($auth_id){
+             $q->where('organisasi_id',$auth_id);
+         })->whereNotIn('id',$level)->get();
+       
         // $user = User::where('level', '=', 'Anggota')->paginate(10);
         // $jenis = DetailUser::where('user_id', $user->id)->get();
         $jenis = DetailUser::all();
         $organisasi = Organisasi::all();
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('jenis');
         
-        return view('pengurus/pengurus-crud/pengurus', compact(['user', 'organisasi', 'jenis']));
+        return view('pengurus/pengurus-crud/pengurus', compact(['user', 'organisasi', 'jenis', 'auth', 'auth_id']));
     }
 
     public function cariAnggota(Request $request)
@@ -196,15 +206,12 @@ class UserController extends Controller
         ]);
 
 
-        $organisasi = collect($request->organisasi_id);
-        $indeks = count($organisasi);
 
-        for($i=0;$i<$indeks;$i++){
             DetailUser::create([
                 'user_id' => $user->id,
-                'organisasi_id' => $organisasi[$i],
+                'organisasi_id' => $request->organisasi_id,
             ]);
-        }
+        
 
         if($user->level == "Anggota"){
             return redirect('/anggota/anggota')-> with('success', 'Data Anggota Berhasil Ditambahkan!');
@@ -245,17 +252,17 @@ class UserController extends Controller
         User::where('id', $user->id)
         ->update($validateData);
 
-        $organisasi = collect($request->organisasi_id);
-        $indeks = count($organisasi);
+        // $organisasi = collect($request->organisasi_id);
+        // $indeks = count($organisasi);
 
-        for($i=0;$i<$indeks;$i++){
-            DetailUser::where('user_id',$user->id)->delete();
-            DetailUser::updateOrCreate([
-                'user_id' => $user->id,
-                'organisasi_id' => $organisasi[$i],
-            ]);
+        // for($i=0;$i<$indeks;$i++){
+        //     DetailUser::where('user_id',$user->id)->delete();
+        //     DetailUser::updateOrCreate([
+        //         'user_id' => $user->id,
+        //         'organisasi_id' => $organisasi[$i],
+        //     ]);
 
-        }
+        // }
 
         if($user->level == "Anggota"){
             return redirect('/anggota/anggota')-> with('success', 'Data Anggota Berhasil Diubah!');

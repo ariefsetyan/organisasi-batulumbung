@@ -19,9 +19,9 @@ class CreatePengeluaranTable extends Migration
             $table->foreignId('user_id');
             $table->string('total');
             $table->date('tanggal');
-            $table->date('nama_barang');
-            $table->date('jmlh_barang');
-            $table->date('satuan_harga');
+            $table->string('nama_barang');
+            $table->string('jmlh_barang');
+            $table->string('satuan_harga');
             $table->string('sumber_dana');
             $table->string('keterangan');
             $table->timestamps();

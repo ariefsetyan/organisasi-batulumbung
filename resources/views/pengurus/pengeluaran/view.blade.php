@@ -16,7 +16,6 @@
     <div class="card-body">
 @foreach($data1 as $x)
         <p>ID Pengeluaran: {{$x->id}}</p>
-        <p>ID Pengurus :  1</p>
         <table>
             <tr align="center">
                 <th>Nama Barang</th>
@@ -36,7 +35,7 @@
 <br>
         <p>Subtotal : Rp {{number_format($x->total)}}</p>
         <p>Sumber Dana :  {{$x->sumber_dana}}</p>
-        <p>Organisasi :  {{$x->jenis}}</p>
+        <p>Jenis Organisasi :  {{$x->jenis}}</p>
         <p>Keterangan : {{$x->keterangan}}</p>
         
 

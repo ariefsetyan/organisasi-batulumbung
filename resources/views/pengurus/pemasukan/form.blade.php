@@ -1,6 +1,6 @@
 @extends('layouts.main-pengurus')
 
-@section('title', 'Absensi')
+@section('title', 'Pemasukan')
 
 @push('link')
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css">
@@ -41,13 +41,10 @@
                                     {{ csrf_field() }}
 
                                     <div class="form-group">
-                                        <label for="nama_kegiatan">Organisasi</label>
-                                        <select name="nama_kegiatan" id="nama_kegiatan" class="form-control">
-                                            <option value="" selected>Pilih Organisasi</option>
-                                            @foreach($organisasi as $row)
-                                                <option value="{{$row->id}}">{{$row->jenis}}</option>
-                                            @endforeach
-                                        </select>
+                                    <label for="organisasi_id" class="form-label">Jenis Organisasi</label> <br>
+                                            <input type="text"  value="{{$auth}}" class="form-control" readonly 
+                                            id="organisasi_id">
+                                            <input type="hidden" value="{{$auth_id}}" name="organisasi_id">
                                     </div>
                                     <div class="form-group">
                                         <label>Jumlah Pemasukan</label>

@@ -178,35 +178,34 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/absensi/absensi"
-                                aria-expanded="false">
+                            <div class="dropdown">
+                                <a class="dropdown-toggle sidebar-link waves-effect waves-dark sidebar-link" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-list-check" aria-hidden="true"></i>
-                                <span class="hide-menu">Absensi</span>
-                            </a>
+                                <span class="hide-menu">Absensi</span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="/absensi/absensi">Daftar Absensi</a></li>
+                                    <li><a class="dropdown-item" href="/absensi/rekapan-absensi">Rekapan</a></li>
+                                </ul>
+                            </div>
                         </li>
-                       
+                        <li class="sidebar-item">
+                            <div class="dropdown">
+                                <a class="dropdown-toggle sidebar-link waves-effect waves-dark sidebar-link" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-cash-coin" aria-hidden="true"></i>
+                                <span class="hide-menu">Keuangan</span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="/pemasukan">Pemasukan</a></li>
+                                    <li><a class="dropdown-item" href="/pengeluaran">Pengeluaran</a></li>
+                                    <li><a class="dropdown-item" href="/rekapan/rekapan-keuangan">Rekapan</a></li>
+                                </ul>
+                            </div>
+                        </li>
 
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/verifikasi-akun"
                                aria-expanded="false">
                                <i class="bi bi-check-square-fill"></i>
                                 <span class="hide-menu">Verifikasi</span>
-                            </a>
-                        </li>
-
-                        <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/pemasukan"
-                               aria-expanded="false">
-                               <i class="bi bi-clipboard-plus"></i>
-                                <span class="hide-menu">Pemasukan</span>
-                            </a>
-                        </li>
-
-                        <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/pengeluaran"
-                               aria-expanded="false">
-                               <i class="bi bi-clipboard-minus"></i>
-                                <span class="hide-menu">Pengeluaran</span>
                             </a>
                         </li>
 

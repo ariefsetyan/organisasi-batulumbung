@@ -42,17 +42,18 @@ class AbsensiController extends Controller
 
     public function daftarAbsensi(Absensi $absensi)
     {
-        $absensi = Absensi::latest()->paginate(10);
         $organisasi = Organisasi::all();
         $kegiatan = Kegiatan::all();
-
+        
         $auth_id = Organisasi::whereHas('detailUser',function($q){
             $q->where('user_id',Auth::id());
-        })->value('id');
-
+        })->pluck('id');
+        
         $auth = Organisasi::whereHas('detailUser',function($q){
             $q->where('user_id',Auth::id());
         })->value('jenis');
+        
+        $absensi = Absensi::whereIn('organisasi_id',$auth_id)->latest()->paginate(10);
 
         // dd($absensi);
         return view('pengurus/absensi/daftar_absensi', compact('absensi', 'organisasi', 'kegiatan', 'auth', 'auth_id'));
@@ -60,29 +61,59 @@ class AbsensiController extends Controller
 
     public function rekapanAbsensi(Absensi $absensi)
     {
-        $absensi = Absensi::latest()->paginate(10);
         $organisasi = Organisasi::all();
         $kegiatan = Kegiatan::all();
         
         $auth_id = Organisasi::whereHas('detailUser',function($q){
             $q->where('user_id',Auth::id());
-        })->value('id');
-
+        })->pluck('id');
+        
         $auth = Organisasi::whereHas('detailUser',function($q){
             $q->where('user_id',Auth::id());
         })->value('jenis');
-
+        
+        $absensi = Absensi::whereIn('organisasi_id',$auth_id)->paginate(10);
         // dd($absensi);
         return view('pengurus/absensi/rekapan-absensi', compact('absensi', 'organisasi', 'kegiatan', 'auth', 'auth_id'));
     }
 
     public function cariAbsensi(Request $request)
     {
-        $organisasi = Organisasi::all();
-        $absensi = Absensi::latest()->filter(request(['cariAbsensi', 'jenis']))->paginate(10)->withQueryString();
+        
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->pluck('id');
+        
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('jenis');
+
+        $absensi = Absensi::whereIn('organisasi_id',$auth_id)->latest()->filter(request(['cariAbsensi', 'status']))->paginate(10)->withQueryString();
         $kegiatan = Kegiatan::all();
 
-        return view('pengurus/absensi/daftar_absensi', compact('organisasi', 'absensi','kegiatan'));
+        return view('pengurus/absensi/rekapan-absensi', compact('absensi','kegiatan', 'auth_id', 'auth'));
+    }
+
+    public function cariStatus(Request $request)
+    {
+        
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->pluck('id');
+        
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('jenis');
+
+        $absensi = Absensi::where('status', $request->jenis)
+        ->whereHas('user',  function($q) use($auth_id){
+           $q->where('organisasi_id',$auth_id);
+       })->get();
+
+        // $absensi = Absensi::whereIn('organisasi_id',$auth_id)->latest()->filter(request(['cariStatus']))->paginate(10)->withQueryString();
+        $kegiatan = Kegiatan::all();
+
+        return view('pengurus/absensi/rekapan-absensi', compact('absensi','kegiatan', 'auth_id', 'auth'));
     }
 
     public function filterTanggal(Request $request)
@@ -92,7 +123,7 @@ class AbsensiController extends Controller
         $sampai = $request->sampai;
 
         if($request->dari == '' && $request->sampai == ''){
-            return redirect('absensi/absensi');
+            return redirect('absensi/rekapan-absensi');
         }
 
         if($request->dari == ''){
@@ -108,10 +139,19 @@ class AbsensiController extends Controller
         }
 
         $absensi = Absensi::whereBetween('tanggal', [$dari, $sampai])->latest()->paginate(10);
-        $organisasi = Organisasi::all();
+        // $organisasi = Organisasi::all();
         $kegiatan = Kegiatan::all();
 
-        return view('/pengurus/absensi/absensi', ['absensi' => $absensi, 'dari' => $request->dari, 'sampai' => $request->sampai, 'organisasi' => $organisasi,'kegiatan'=>$kegiatan]);
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('jenis');
+
+          
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->pluck('id');
+
+        return view('/pengurus/absensi/rekapan-absensi', ['absensi' => $absensi, 'dari' => $request->dari, 'sampai' => $request->sampai, 'auth' => $auth, 'auth_id' => $auth_id, 'kegiatan'=>$kegiatan]);
     }
 
     // public function import_excel(Request $request)
@@ -139,11 +179,19 @@ class AbsensiController extends Controller
     //     return redirect('/absensi/absensi');
     // }
 
-    public function export_excel()
+    public function cetakAbsensi()
     {
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id', Auth::id());
+        })->pluck('id');
 
-        $nama_file = 'absensi' . date('Y-m-d_H-i-s') . '.xlsx';
-        return Excel::download(new AbsensiExport, $nama_file);
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id', Auth::id());
+        })->value('jenis');
+
+        $absensi = Absensi::whereIn('organisasi_id',$auth_id)->get();
+
+        return view('pengurus.absensi.cetak-absensi',compact(['auth_id', 'auth', 'absensi']));
     }
 
     /**

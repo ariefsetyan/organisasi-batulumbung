@@ -18,30 +18,74 @@ class PengumumanController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-       
-        $jenis = DetailUser::all();
-        $pengumuman = Pengumuman::latest()->paginate(10);
-
+    {     
         $auth_id = Organisasi::whereHas('detailUser',function($q){
             $q->where('user_id',Auth::id());
-        })->value('id');
-
+        })->pluck('id');
+        
         $auth = Organisasi::whereHas('detailUser',function($q){
             $q->where('user_id',Auth::id());
         })->value('jenis');
+        
+        $jenis = DetailUser::all();
+        $pengumuman = Pengumuman::whereIn('organisasi_id',$auth_id)->latest()->paginate(10);
 
-        return view('pengurus/pengumuman/pengumuman', compact('pengumuman', 'jenis', 'auth_id', 'auth'));
+        return view('pengurus/pengumuman/pengumuman', compact(['pengumuman', 'jenis', 'auth']) , ['auth_id' => $auth_id[0]]);
     }
 
     public function cariPengumuman(Request $request)
 	{
-		$organisasi = Organisasi::all();
-        $pengumuman = Pengumuman::latest()->filter(request(['cariPengumuman', 'jenis']))->paginate(10)->withQueryString();
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->pluck('id');
+        // dd($auth);
+        
+        $jenis = DetailUser::all();
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('jenis');
+        
+        $pengumuman = Pengumuman::whereIn('organisasi_id',$auth_id)->latest()->filter(request(['cariPengumuman', 'jenis']))->paginate(10)->withQueryString();
        
-		return view('pengurus/pengumuman/pengumuman', compact('organisasi', 'pengumuman'));
- 
- 
+		return view('pengurus/pengumuman/pengumuman', compact('auth_id', 'auth', 'pengumuman'));
+    }
+
+    public function filterTanggal(Request $request)
+    {
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->pluck('id');
+        // dd($auth);
+        
+        $jenis = DetailUser::all();
+        $organisasi = Organisasi::all();
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('jenis');
+
+        $dari = $request->dari .'.'. '00:00:00';
+        $sampai = $request->sampai .'.'. '23:59:59';
+
+        if($request->dari == '' && $request->sampai == ''){
+            return redirect('kegiatan/kegiatan');
+        }
+
+        if($request->dari == ''){
+            return redirect()->back()->withInput()->with('status', 'Tanggal awal filter harus diisi');
+        }
+
+        if($request->sampai == ''){
+            return redirect()->back()->withInput()->with('status', 'Tanggal akhir filter harus diisi');
+        }
+        
+        if($request->dari > $request->sampai){
+            return redirect()->back()->withInput()->with('status', 'Tanggal awal tidak boleh lebih dari tanggal akhir filter');
+        }
+
+        $pengumuman = Pengumuman::whereBetween('tanggal', [$dari, $sampai])->latest()->paginate(10);
+        $organisasi = Organisasi::all();
+
+        return view ('/pengurus/pengumuman/pengumuman', ['auth' => $auth, 'auth_id' => $auth_id, 'pengumuman' => $pengumuman, 'dari' => $request->dari, 'sampai' => $request->sampai, 'organisasi' => $organisasi]);
     }
 
     /**
@@ -189,16 +233,36 @@ class PengumumanController extends Controller
     public function indexAnggota()
     {   
         
-        $pengumuman = Pengumuman::latest()->paginate(10);
-        return view('anggota/pengumuman', compact('pengumuman'));
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->pluck('id');
+        // dd($auth);
+        
+        $jenis = DetailUser::all();
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('jenis');
+        
+        $pengumuman = Pengumuman::whereIn('organisasi_id',$auth_id)->latest()->paginate(10);
+
+        return view ('anggota/pengumuman', compact(['auth_id', 'auth', 'pengumuman']));
     }
 
     public function cariPengumumanAnggota(Request $request)
 	{
-		return view('anggota/pengumuman', [
-            "active" => "pengumuman", 
-            "pengumuman" => Pengumuman::latest()->filter(request(['cari']))->paginate(10)->withQueryString()
-        ]);
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->pluck('id');
+        // dd($auth);
+        
+        $jenis = DetailUser::all();
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('jenis');
+        
+        $pengumuman = Pengumuman::whereIn('organisasi_id',$auth_id)->latest()->filter(request(['cariPengumumanAnggota']))->paginate(10)->withQueryString();
+       
+		return view('anggota/pengumuman', compact('auth_id', 'auth', 'pengumuman'));
  
     }
 

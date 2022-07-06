@@ -15,19 +15,19 @@
 
     <div class="container-fluid">
         <div class="row ">
-            <div class="card bg-purple" style="width: 100rem;">
-                <div class="card-body bg-purple">
+            <div class="card bg-light" style="width: 100rem;">
+                <div class="card-body bg-light">
                     <div class="table-responsive mt-3">
-                        <table class="table table-striped">
+                        <table class="table table-info table-striped">
                             <thead>
                                 <tr>
-                                    <th class="text-white" style="font-weight: 800">NO</th>
-                                    <th class="text-white" style="font-weight: 800">ID ANGGOTA</th>
-                                    <th class="text-white" style="font-weight: 800">NAMA ANGGOTA</th>
-                                    <th class="text-white" style="font-weight: 800">NAMA KEGIATAN</th>
-                                    <th class="text-white" style="font-weight: 800">TANGGAL KEGIATAN</th>
-                                    <th class="text-white" style="font-weight: 800">JENIS ORGANISASI</th>
-                                    <th class="text-white" style="font-weight: 800">STATUS</th>
+                                    <th style="font-weight: 800">NO</th>
+                                    <th style="font-weight: 800">ID ANGGOTA</th>
+                                    <th style="font-weight: 800">NAMA ANGGOTA</th>
+                                    <th style="font-weight: 800">NAMA KEGIATAN</th>
+                                    <th style="font-weight: 800">TANGGAL KEGIATAN</th>
+                                    <th style="font-weight: 800">JENIS ORGANISASI</th>
+                                    <th style="font-weight: 800">STATUS</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -38,17 +38,17 @@
 
                             @forelse ($data_absensi as $absen)
                                 <tr>
-                                    <th scope="row" class="text-white">{{ ++$no }}</th>
-                                    <td class="text-white">{{$absen->user_id}}</td>
-                                    <td class="text-white">{{$absen->nama}}</td>
-                                    <td class="text-white">{{$absen->nama_kegiatan}}</td>
-                                    <td class="text-white">{{ \Carbon\Carbon::parse($absen->tanggal)->format('d/m/Y')}}</td> 
+                                    <th scope="row">{{ ++$no }}</th>
+                                    <td>{{$absen->user_id}}</td>
+                                    <td>{{$absen->nama}}</td>
+                                    <td>{{$absen->nama_kegiatan}}</td>
+                                    <td>{{ \Carbon\Carbon::parse($absen->tanggal)->format('d/m/Y')}}</td> 
                                     <!-- carbon format (y-m-d) -->
-                                    <td class="text-white">{{$absen->organisasi->jenis}}</td>
-                                    <td class="text-white">{{$absen->status}}</td>
+                                    <td>{{$absen->organisasi->jenis}}</td>
+                                    <td>{{$absen->status}}</td>
                                 </tr>
                                 @empty
-                                <td colspan="8" class="table-active text-center text-white">Tidak Ada Data</td>
+                                <td colspan="8" class="table-active text-center">Tidak Ada Data</td>
                                 @endforelse
                             </tbody>
                         </table>  

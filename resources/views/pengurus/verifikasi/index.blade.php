@@ -1,6 +1,6 @@
 @extends('layouts.main-pengurus')
 
-@section('title', 'Anggota')
+@section('title', 'Verifikasi Anggota')
 
 @section('content')
     <div class="page-wrapper">
@@ -8,7 +8,7 @@
         <div class="page-breadcrumb bg-white">
             <div class="row align-items-center">
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                    <h4 class="page-title">Daftar registrasi</h4>
+                    <h4 class="page-title">Daftar Verifikasi</h4>
                 </div>
             </div>
         </div>
@@ -38,7 +38,7 @@
                                         <td>{{$users->nik}}</td>
                                         <td>{{$users->nama}}</td>
                                         <td>{{$users->level}}</td>
-                                        <td>{{$users->jenis}}</td>
+                                        <td>{{$auth}}</td>
                                         <td><a href="\proses-verif\{{ $users->id }}" class="btn btn-primary"><i class="bi bi-check2"></i> Accept</a></td>
                                     </tr>
                                 @empty

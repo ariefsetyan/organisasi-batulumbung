@@ -12,33 +12,53 @@ class EventController extends Controller
 {
     public function index()
     {
-        $event = Event::latest()->paginate(10);
-
+        
         $auth_id = Organisasi::whereHas('detailUser',function($q){
-        $q->where('user_id',Auth::id());
-        })->value('id');
-        // dd($auth);
-
+            $q->where('user_id',Auth::id());
+        })->pluck('id');
+        // dd($auth_id);
+        
         $jenis = DetailUser::all();
         $organisasi = Organisasi::all();
         $auth = Organisasi::whereHas('detailUser',function($q){
             $q->where('user_id',Auth::id());
         })->value('jenis');
+        
+        $event = Event::whereIn('organisasi_id',$auth_id)->latest()->paginate(10);
 
-        return view('pengurus/event/event', compact(['event', 'jenis', 'organisasi', 'auth_id', 'auth']));
+        return view('pengurus/event/event', compact(['event', 'organisasi', 'jenis', 'auth']), ['auth_id' => $auth_id[0]]);
     }
 
     public function cariEvent(Request $request)
 	{
-        $organisasi = Organisasi::all();
-        $event = Event::latest()->filter(request(['cariEvent', 'jenis']))->paginate(10)->withQueryString();
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->pluck('id');
+        // dd($auth);
+        
+        $jenis = DetailUser::all();
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('jenis');
+
+        $event = Event::whereIn('organisasi_id',$auth_id)->latest()->filter(request(['cariEvent']))->paginate(10)->withQueryString();
        
-		return view('pengurus/event/event', compact(['organisasi', 'event']));
+		return view('pengurus/event/event', compact(['auth', 'auth_id', 'event']));
  
     }
 
     public function filterTanggal(Request $request)
     {
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->pluck('id');
+        // dd($auth);
+        
+        $jenis = DetailUser::all();
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('jenis');
+
         $dari = $request->dari .'.'. '00:00:00';
         $sampai = $request->sampai .'.'. '23:59:59';
 
@@ -59,14 +79,13 @@ class EventController extends Controller
         }
 
         $event = Event::whereBetween('tanggal', [$dari, $sampai])->latest()->paginate(10);
-        $organisasi = Organisasi::all();
 
-        return view ('/pengurus/event/event', ['event' => $event, 'dari' => $request->dari, 'sampai' => $request->sampai, 'organisasi' => $organisasi]);
+        return view ('/pengurus/event/event', ['event' => $event, 'auth' => $auth, 'auth_id' => $auth_id, 'dari' => $request->dari, 'sampai' => $request->sampai, 'organisasi' => $organisasi]);
     }
 
     public function store(Request $request)
     {
-       $validateData = $request->validate([
+       $request->validate([
             'nama_event'    => 'required',
             'tanggal'       => 'required',
             'waktu'         => 'required',
@@ -75,8 +94,20 @@ class EventController extends Controller
             'keterangan'    => 'required',
         ]);
 
-        Event::create($validateData);
+        // dd($request);
         
+        Event::create([
+            'nama_event'    => $request->nama_event,
+            'tanggal'       => $request->tanggal,
+            'waktu'         => $request->waktu,
+            'tempat'        => $request->tempat,
+            'organisasi_id' => $request->organisasi_id,
+            'keterangan'    => $request->keterangan,
+            
+            ]);
+            
+            
+            
         return redirect('/event/event')-> with('success', 'Data Event Berhasil Ditambahkan!');
     }
 
@@ -116,19 +147,37 @@ class EventController extends Controller
 
     public function indexAnggota()
     {
-        $event = Event::paginate(10);
-        return view('anggota/event', [
-            "event" => "All Event", 
-            "event"=> Event::latest()->get()
-        ]);
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->pluck('id');
+        // dd($auth);
+        
+        // $jenis = DetailUser::all();
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('jenis');
+
+        $event = Event::whereIn('organisasi_id',$auth_id)->latest()->paginate(10);
+
+        return view ('anggota/event', compact([ 'event', 'auth_id', 'auth']));
     }
 
     public function cariEventAnggota(Request $request)
 	{
-		return view('anggota/event', [
-            "active" => "event", 
-            "event" => Event::latest()->filter(request(['cari']))->paginate(10)->withQueryString()
-        ]);
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->pluck('id');
+        // dd($auth);
+        
+        $jenis = DetailUser::all();
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('jenis');
+
+        $event = Event::whereIn('organisasi_id',$auth_id)->latest()->filter(request(['cariEventAnggota']))->paginate(10)->withQueryString();
+       
+		return view('anggota/event', compact(['auth', 'auth_id', 'event']));
+ 
  
     }
 }

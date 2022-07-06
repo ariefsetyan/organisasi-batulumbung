@@ -7,6 +7,7 @@ use App\Models\Organisasi;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\LaporanKeuanganExport;
+use App\Models\Pemasukan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -20,28 +21,49 @@ class LaporanKeuanganController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $organisasi = Organisasi::all();
-        $pengeluaran = Pengeluaran::latest()->paginate(10);
-        $pemasukan = DB::table('pemasukan as p')->select('p.id','jenis','jmlh_pemasukan','tanggal','sumber_dana','keterangan');
-
-        $auth_id = Organisasi::whereHas('detailUser',function($q){
+    { $auth_id = Organisasi::whereHas('detailUser',function($q){
             $q->where('user_id', Auth::id());
-        })->value('id');
+        })->pluck('id');
 
         $auth = Organisasi::whereHas('detailUser',function($q){
             $q->where('user_id', Auth::id());
         })->value('jenis');
-        return view('pengurus.rekapan.rekapan-keuangan', compact(['pengeluaran', 'organisasi', 'pemasukan', 'auth', 'auth_id'])); 
+
+        $organisasi = Organisasi::all();
+        $pengeluaran = Pengeluaran::whereIn('organisasi_id',$auth_id)->get();
+        //$pemasukan = DB::table('pemasukan as p')->select('p.id','jenis','jmlh_pemasukan','tanggal','sumber_dana','keterangan');
+        $pemasukan = Pemasukan::whereIn('organisasi_id',$auth_id)->get();
+
+        $rekapan = $pemasukan->merge($pengeluaran)->sortByDesc('tanggal');
+
+        $total_pemasukan = Pemasukan::whereIn('organisasi_id',$auth_id)->selectRaw('sum(jmlh_pemasukan) as total_pemasukan')->value('total_pemasukan');
+        $total_pengeluaran = Pengeluaran::whereIn('organisasi_id',$auth_id)->selectRaw('sum(total) as total_pengeluaran')->value('total_pengeluaran');
+        //$pdf = PDF::loadview('pengurus/rekapan/cetak-keuangan', compact('rekapan'));
+   
+        return view('pengurus.rekapan.rekapan-keuangan', compact(['rekapan', 'organisasi', 'pemasukan', 'auth', 'auth_id','total_pemasukan','total_pengeluaran'])); 
     }
 
     public function cariLaporan(Request $request)
 	{
-        // dd($request->jenis);
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id', Auth::id());
+        })->pluck('id');
+
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id', Auth::id());
+        })->value('jenis');
+
         $organisasi = Organisasi::all();
-        $rekapan = LaporanKeuangan::latest()->filter(request(['cariLaporan', 'jenis']))->paginate(10)->withQueryString();
-       
-		return view('pengurus/rekapan/rekapan-keuangan', compact('organisasi', 'rekapan'));
+        $pengeluaran = Pengeluaran::whereIn('organisasi_id',$auth_id)->filter(request(['cariLaporan']))->paginate(10)->withQueryString();
+        //$pemasukan = DB::table('pemasukan as p')->select('p.id','jenis','jmlh_pemasukan','tanggal','sumber_dana','keterangan');
+        $pemasukan = Pemasukan::whereIn('organisasi_id',$auth_id)->filter(request(['cariLaporan']))->paginate(10)->withQueryString();
+
+        $rekapan = $pemasukan->merge($pengeluaran)->sortByDesc('tanggal');
+
+        $total_pemasukan = Pemasukan::whereIn('organisasi_id',$auth_id)->selectRaw('sum(jmlh_pemasukan) as total_pemasukan')->value('total_pemasukan');
+        $total_pengeluaran = Pengeluaran::whereIn('organisasi_id',$auth_id)->selectRaw('sum(total) as total_pengeluaran')->value('total_pengeluaran');
+        
+		return view('pengurus/rekapan/rekapan-keuangan', compact('organisasi', 'rekapan', 'auth', 'auth_id', 'total_pemasukan', 'total_pengeluaran'));
     }
 
     public function filterTanggal(Request $request)
@@ -65,24 +87,48 @@ class LaporanKeuanganController extends Controller
             return redirect()->back()->withInput()->with('status', 'Tanggal awal tidak boleh lebih dari tanggal akhir filter');
         }
 
-        $rekapan = LaporanKeuangan::whereBetween('tanggal', [$dari, $sampai])->latest()->paginate(10);
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id', Auth::id());
+        })->pluck('id');
+
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id', Auth::id());
+        })->value('jenis');
+
+        $organisasi = Organisasi::all();
+        $pengeluaran = Pengeluaran::whereIn('organisasi_id',$auth_id)->whereBetween('tanggal', [$dari, $sampai])->get();
+        //$pemasukan = DB::table('pemasukan as p')->select('p.id','jenis','jmlh_pemasukan','tanggal','sumber_dana','keterangan');
+        $pemasukan = Pemasukan::whereIn('organisasi_id',$auth_id)->whereBetween('tanggal', [$dari, $sampai])->get();
+
+        $rekapan = $pemasukan->merge($pengeluaran)->sortByDesc('tanggal');
         $organisasi = Organisasi::all();
 
-        return view ('/pengurus/rekapan/rekapan-keuangan', ['rekapan' => $rekapan, 'dari' => $request->dari, 'sampai' => $request->sampai, 'organisasi' => $organisasi]);
-    }
+        $total_pemasukan = Pemasukan::whereIn('organisasi_id',$auth_id)->selectRaw('sum(jmlh_pemasukan) as total_pemasukan')->value('total_pemasukan');
+        $total_pengeluaran = Pengeluaran::whereIn('organisasi_id',$auth_id)->selectRaw('sum(total) as total_pengeluaran')->value('total_pengeluaran');
+        //$pdf = PDF::loadview('pengurus/rekapan/cetak-keuangan', compact('rekapan'));
 
-    public function export_excel()
-	{
-        $nama_file = 'laporan_keuangan'.date('Y-m-d_H-i-s').'.xlsx';
-		return Excel::download(new LaporanKeuanganExport, $nama_file);
+        return view ('/pengurus/rekapan/rekapan-keuangan', ['rekapan' => $rekapan, 'dari' => $request->dari, 'sampai' => $request->sampai, 'organisasi' => $organisasi, 'auth' => $auth, 'total_pemasukan' =>  $total_pemasukan,'total_pengeluaran' => $total_pengeluaran]);
     }
     
-    public function exportPDFKeuangan(Request $request, $id) {
-        $data = LaporanKeuangan::Where('id', $id)->firstOrFail();
+    public function cetakKeuangan(Request $request) {
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id', Auth::id());
+        })->pluck('id');
 
-        $pdf = PDF::loadview('pengurus/laporan/laporan_keuangan_pdf', compact('data'));
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id', Auth::id());
+        })->value('jenis');
+
+        $pengeluaran = Pengeluaran::whereIn('organisasi_id',$auth_id)->get();
+        //$pemasukan = DB::table('pemasukan as p')->select('p.id','jenis','jmlh_pemasukan','tanggal','sumber_dana','keterangan');
+        $pemasukan = Pemasukan::whereIn('organisasi_id',$auth_id)->get();
+
+        $rekapan = $pemasukan->merge($pengeluaran)->sortByDesc('tanggal');
+        $total_pemasukan = Pemasukan::whereIn('organisasi_id',$auth_id)->selectRaw('sum(jmlh_pemasukan) as total_pemasukan')->value('total_pemasukan');
+        $total_pengeluaran = Pengeluaran::whereIn('organisasi_id',$auth_id)->selectRaw('sum(total) as total_pengeluaran')->value('total_pengeluaran');
+        //$pdf = PDF::loadview('pengurus/rekapan/cetak-keuangan', compact('rekapan'));
                
-        return $pdf->stream('laporan-keuangan.pdf');
+        return view('pengurus.rekapan.cetak-keuangan',compact(['rekapan','auth','total_pemasukan','total_pengeluaran']));
     }
 
     

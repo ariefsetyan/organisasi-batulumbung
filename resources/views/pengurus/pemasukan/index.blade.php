@@ -61,7 +61,7 @@
                                     <td>Rp {{number_format ($row->jmlh_pemasukan) }}</td>
                                     <td>{{$row->tanggal}}</td>
                                     <td>{{$row->sumber_dana}}</td>
-                                    <td>{{$row->jenis}}</td>
+                                    <td>{{$auth}}</td>
                                     <td>{{$row->keterangan}}</td>
                                     <td>
                                         <a href="form-edit-pemasukan/{{$row->id}}" value="{{$row->id}}" id="btn-update" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a> |

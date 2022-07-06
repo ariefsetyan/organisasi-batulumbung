@@ -37,35 +37,56 @@
                     </div>                    
                 </form>
 
+                <a href="/rekapan/cetak-keuangan" target="_blank" class="btn btn-danger text-light"> CETAK</a>
+
                     <div class="table-responsive mt-3">
                         <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th class="border-top-0">NO</th>
                                     <th class="border-top-0">TANGGAL</th>
-                                    <th class="border-top-0">PEMASUKAN</th>
-                                    <th class="border-top-0">PENGELUARAN</th>
+                                    <th class="border-top-0">JUMLAH (RP)</th>
+                                    <th class="border-top-0">JENIS TRANSAKSI</th>
                                     <th class="border-top-0">JENIS ORGANISASI</th>
                                     <th class="border-top-0">SUMBER DANA</th>
-                                    <th class="border-top-0">AKSI</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            @forelse($pengeluaran as $row)
+                            @forelse($rekapan as $row)
                                 <tr>
                                     <th scope="row">{{ $loop->iteration}}</th>
                                     <td>{{$row->tanggal}}</td>
-                                    <td>Rp {{ number_format($row->jmlh_pemasukan) }}</td>
+                                    @if(!$row->jmlh_pemasukan)
                                     <td>Rp {{ number_format($row->total) }}</td>
+                                    <td>Pengeluaran</td>
+                                    @else
+                                    <td>Rp {{ number_format($row->jmlh_pemasukan) }}</td>
+                                    <td>Pemasukan</td>
+                                    @endif
                                     <td>{{$auth}}</td>
                                     <td>{{$row->sumber_dana}}</td>
-                                    <td><a href="\rekapan\rekapan-keuangan\{{ $row->id }}" class="btn btn-primary"><i class="bi bi-eye-fill m-r-5"></i>Detail</a></td>
-                                    
                                 </tr>
                                 @empty
-                                <td colspan="9" class="table-active text-center">Tidak Ada Data</td>
+                                <td colspan="6" class="table-active text-center">Tidak Ada Data</td>
                             @endforelse
                             <tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="3"></th>
+                                        <th>Pemasukan</th>
+                                        <th>Pengeluaran</th>
+                                        <th>Sisa</th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3"></td>
+                                        <td>Rp {{number_format($total_pemasukan,0)}}</td>
+                                        <td>Rp {{number_format($total_pengeluaran,0)}}</td>
+                                        @php
+                                        $total = $total_pemasukan - $total_pengeluaran;
+                                        @endphp
+                                        <td>Rp {{number_format($total,0)}}</td>
+                                    </tr>
+                                </tfoot>
                         </table> 
                     </div>
 

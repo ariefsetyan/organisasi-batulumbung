@@ -10,35 +10,50 @@
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                 <h4 class="page-title">Pemasukan</h4>
             </div>
+            <div class="col-md-6 ms-auto">
+                <form class="form mb-3" method="get" action="{{ route ('cariPemasukanAnggota') }}">
+                    <div class="col-md-6 ms-auto">
+                        <input type="text" name="cari" class="form-control w-75 d-inline" value="{{ request('cari')}}" id="cari" placeholder="Cari ...">
+                        <button type="submit" class="btn btn-primary mb-1"><i class="fa fa-search"></i> Cari</button>  
+                    </div>                    
+                </form>
+            </div>
         </div>
     </div>
 
     <div class="container-fluid">
-        <div class="row">
-            @forelse($data as $row)
-            <div class="card bg-purple" style="width: 30rem; margin-left: 25px; font-size:large">
-                <div class="card-body" style="color:white">
-                    <h4 class="card-title" style="font-weight: 800; text-align:center">{{$row->jenis}}</h4>
-                    <table style="width: 30rem;">
-                        <tr>
-                            <th>Jumlah Pemasukan </th>
-                            <td style="text-align: left;"> Rp {{number_format ($row->jmlh_pemasukan) }}</td>
-                        </tr>
-                        <tr>
-                            <th>Sumber Dana</th>
-                            <td style="text-align: left;">{{$row->sumber_dana}}</td>
-                        </tr>
-                        <tr>
-                            <th>Tanggal Masuk</th>
-                            <td style="text-align: left;">{{$row->tanggal}}</td>
-                        </tr>
-                   </table>
-                        <p style="text-align: left;">{!! $row->keterangan !!}</p>    
+        <div class="col-lg-6 col-md-12 col-sm-12">
+                <div class="card white-box p-0">
+                    <div class="card-body">
+                        @forelse ($pemasukan as $pemasukans)
+                            <div class="card-body bg-light mb-2"> 
+                                <h4 class="card-title" style="font-weight:900; text-align:center" >{{$auth}}</h4>
+                                <table>
+                                    <tr>
+                                        <td style="width: 160px; "><b>Tanggal</td>
+                                        <td>{{$pemasukans->tanggal}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 160px; "><b>Jumlah Pemasukan</td>
+                                        <td>Rp {{number_format($pemasukans->jmlh_pemasukan)}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Sumber Dana</td>
+                                        <td>{{$pemasukans->sumber_dana}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Keterangan</td>
+                                        <td>{{$pemasukans->keterangan}}</td>
+                                    </tr>
+                                </table>
+                                <p align="right" style="font-size: 12px">Diposting : {!! $pemasukans->created_at !!}</p>
+                            </div>
+                            @empty
+                            <div class="card-body bg-light"  style="font-weight: 500; text-align:center; font-size:15px">Tidak Ada Data</div>
+                        @endforelse
+                    </div>
                 </div>
             </div>
-            @empty
-        <div class="card-body bg-purple"  style="font-weight: 800; color:white; text-align:center; font-size:30px">Tidak Ada Data</div>
-        @endforelse
         </div>                 
     </div>       
   

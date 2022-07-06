@@ -66,7 +66,12 @@
             </tr>
             <tr>
                 <th>Status</th>
-                <td>{{$user->status}}</td>
+                <td>@if($user->status=="1")
+                        Aktif 
+                    @else
+                        Tidak Aktif
+                    @endif
+                </td>
             </tr>
         </table>                
                 <a href ="{{ $user->id }}/edit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editPengurus">Edit</a>
@@ -200,14 +205,6 @@
                                 {{ $message }}
                             </div>
                             @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="exampleFormControlSelect">Jenis Organisasi</label> <br>
-                            <input type="checkbox" class="check_all" name="organisasi_id" id="sekaateruna" value="1" @foreach($organisasis as $row) @if($row->organisasi_id == "1") checked @endif @endforeach> Sekaa Teruna<br>
-                            <input type="checkbox" class="check_all" name="organisasi_id" id="sekaagong" value="2" @foreach($organisasis as $row) @if($row->organisasi_id == "2") checked @endif @endforeach> Sekaa Gong<br>
-                            <input type="checkbox" class="check_all" name="organisasi_id" id="sekaasanti" value="3" @foreach($organisasis as $row) @if($row->organisasi_id == "3") checked @endif @endforeach> Sekaa Santi<br>
-                            <input type="checkbox" class="check_all" name="organisasi_id" id="pkk" value="4" @foreach($organisasis as $row) @if($row->organisasi_id == "4") checked @endif @endforeach> PKK<br>
                         </div>
 
                         <div class="form-group">

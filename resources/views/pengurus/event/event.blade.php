@@ -115,6 +115,13 @@
                                     </div>
 
                                     <div class="form-group">
+                                        <label for="organisasi_id" class="form-label">Jenis Organisasi</label> <br>
+                                        <input type="text"  value="{{$auth}}" class="form-control" readonly 
+                                        id="organisasi_id">
+                                        <input type="hidden" value="{{$auth_id}}" name="organisasi_id">
+                                    </div>
+
+                                    <div class="form-group">
                                         <label for="keterangan" class="form-label">Keterangan</label>
                                         <input type="keterangan" name="keterangan" value="{{ old ('keterangan') }}" class="form-control @error('keterangan') is-invalid @enderror" 
                                         id="keterangan" placeholder="Masukkan Keterangan event">
@@ -124,20 +131,6 @@
                                         </div>
                                         @enderror
                                     </div>
-
-                                    <div class="form-group">
-                                            <label for="organisasi_id" class="form-label">Jenis Organisasi</label> <br>
-                                            <input type="text"  value="{{$auth}}" class="form-control" readonly 
-                                            id="organisasi_id">
-                                            <input type="hidden" value="{{$auth_id}}" name="organisasi_id">
-                                            
-                                            @error ('organisasi_id')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                            @enderror
-                                        </div>
-
                                     <div class="form-group">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                         <button type="submit" class="btn btn-primary">Tambah</button>

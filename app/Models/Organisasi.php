@@ -39,9 +39,9 @@ class Organisasi extends Model
         return $this->HasMany(Pengumuman::class);
     }
 
-    public function laporanKeuangan()
+    public function pemasukan()
     {
-        return $this->HasMany(LaporanKeuangan::class);
+        return $this->HasMany(pemasukan::class);
     }
 }
 

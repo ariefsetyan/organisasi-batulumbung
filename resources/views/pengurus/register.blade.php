@@ -175,7 +175,7 @@
             <div class="login100-form">
                 <label for="level" class="form-label">Jabatan</label> <br/>
                 <input type="text" name="level" value="Anggota" class="form-control @error('level') is-invalid @enderror" 
-                id="level">
+                id="level" readonly>
             </div>`
 
             {{-- <div class="login100-form">

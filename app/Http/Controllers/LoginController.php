@@ -85,18 +85,28 @@ class LoginController extends Controller
 
     public function dashboardPengurus(Request $request)
     {
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id', Auth::id());
+        })->pluck('id');
+
+
         $id = $request->session()->get('idlogin');
-        $semua = User::where('id', $id)->get();
-        $kegiatan = Kegiatan::whereYear('tanggal', date('Y'))->whereMonth('tanggal', date('m'))->get();
+        $semua = User::whereHas('detail_user',function($q) use($auth_id){
+            $q->where('organisasi_id',$auth_id);
+        })->where('id', $id)->get();
+
+        $kegiatan = Kegiatan::whereIn('organisasi_id',$auth_id)->whereYear('tanggal', date('Y'))->whereMonth('tanggal', date('m'))->get();
         $organisasi = Organisasi::all();
-        $pengumuman = Pengumuman::whereYear('tanggal', date('Y'))->whereMonth('tanggal', date('m'))->get();
-        $event = Event::whereYear('tanggal', date('Y'))->whereMonth('tanggal', date('m'))->get();
+        $pengumuman = Pengumuman::whereIn('organisasi_id',$auth_id)->whereYear('tanggal', date('Y'))->whereMonth('tanggal', date('m'))->get();
+        $event = Event::whereIn('organisasi_id',$auth_id)->whereYear('tanggal', date('Y'))->whereMonth('tanggal', date('m'))->get();
 
         //hitung
-        $hitunganggota= User::where('level', 'Anggota')->count();
-        $hitungevent = Event::all()->count();
-        $hitungkegiatan = Kegiatan::all()->count();
-        $hitungpengumuman = Pengumuman::all()->count();
+        $hitunganggota= User::where('level', 'Anggota')->whereHas('detail_user',function($q) use($auth_id){
+            $q->whereIn('organisasi_id',$auth_id);
+        })->count();
+        $hitungevent = count($event);
+        $hitungkegiatan = count($kegiatan);
+        $hitungpengumuman = count($pengumuman);
 
         $grafik = DB::table('absensi as a')
             ->select('jenis','a.nama_kegiatan',DB::raw('count(*) as jumlah'))
@@ -189,11 +199,11 @@ class LoginController extends Controller
 
     public function homePage(Request $request)
     {
-        $kegiatan = Kegiatan::all();
+        $kegiatan = Kegiatan::latest()->paginate(5);
         $organisasi = Organisasi::all();
-        $pengumuman = Pengumuman::all();
+        $pengumuman = Pengumuman::latest()->paginate(5);
         // dd($pengumuman);
-        $event = Event::whereYear('tanggal', date('Y'))->whereMonth('tanggal', date('m'))->get();
+        $event = Event::whereYear('tanggal', date('Y'))->whereMonth('tanggal', date('m'))->latest()->paginate(5);
 
         return view('/pengurus/index', compact(['kegiatan', 'organisasi', 'pengumuman', 'event']));
     }

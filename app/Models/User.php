@@ -42,11 +42,11 @@ class User extends Authenticatable
             ->orWhere('alamat', 'like', '%' . $cariAnggota . '%');
         });
 
-        $query->when($filters['jenis'] ?? false, function($query, $organisasi) {
-            return $query->whereHas('detail_user', function($query) use ($organisasi) {
-                $query->where('jenis', $organisasi);
-            });
-        });
+        // $query->when($filters['jenis'] ?? false, function($query, $organisasi) {
+        //     return $query->whereHas('detail_user', function($query) use ($organisasi) {
+        //         $query->where('jenis', $organisasi);
+        //     });
+        // });
 
         $query->when($filters['cariPengurus'] ?? false, function($query, $cariPengurus) {
             return $query->where('nama', 'like', '%' . $cariPengurus . '%')
@@ -54,17 +54,34 @@ class User extends Authenticatable
             ->orWhere('alamat', 'like', '%' . $cariPengurus . '%');
         });
 
-        $query->when($filters['jenis'] ?? false, function($query, $organisasi) {
-            return $query->whereHas('organisasi', function($query) use ($organisasi) {
-                $query->where('jenis', $organisasi);
-            });
-        });
+        // $query->when($filters['cariPengurus'] ?? false, function($query, $cariPengurus) {
+        //     return $query->where('status', function($query) use ($cariPengurus) {
+        //                 $query->where('status', $cariPengurus);
+        //             });
+        //         });
+        
+
+        // $query->when($filters['jenis'] ?? false, function($query, $organisasi) {
+        //     return $query->whereHas('organisasi', function($query) use ($organisasi) {
+        //         $query->where('jenis', $organisasi);
+        //     });
+        // });
 
     }
 
     public function detail_user()
     {
         return $this->hasMany(DetailUser::class);
+    }  
+
+    public function absensi()
+    {
+        return $this->hasMany(Absensi::class);
+    }  
+
+    public function pemasukan()
+    {
+        return $this->hasMany(Pemaasukan::class);
     }   
 
 

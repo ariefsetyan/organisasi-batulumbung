@@ -18,7 +18,7 @@
         <table class="table table-light table-borderless">
             <tr>
                 <th width ="200px">ID Anggota</th>
-                <td></td>
+                <td>{{$user->id}}</td>
             </tr>
 
             <tr>
@@ -76,8 +76,11 @@
             
             <tr>
                 <th>Status</th>
-                <td>{{ $user->status }}</td>
-                <td></td>
+                <td>@if($user->status=="1")
+                        Aktif 
+                    @else
+                        Tidak Aktif
+                    @endif</td>
             </tr>
         </table>
 
@@ -163,13 +166,8 @@
 
                     <div class="form-group">
                         <label for="exampleFormControlSelect">Jabatan</label>
-                        <select name="level" class="form-control @error('level') is-invalid @enderror" id="exampleFormControlSelect">
-                            <option value="Ketua" @if($user->level == "Ketua") selected @endif>Ketua</option>
-                            <option value="Wakil Ketua" @if($user->level == "Wakil Ketua") selected @endif>Wakil Ketua</option>
-                            <option value="Sekretaris"  @if($user->level == "Sekretaris") selected @endif>Sekretaris</option>
-                            <option value="Bendahara"  @if($user->level == "Bendahara") selected @endif>Bendahara</option>
-                            <option value="Anggota"  @if($user->level == "Anggota") selected @endif>Anggota</option>
-                        </select>
+                        <input name="level" value="Anggota" class="form-control @error('level') is-invalid @enderror" id="exampleFormControlSelect" readonly>
+                            
                     </div>
 
                     <div class="form-group">
@@ -183,10 +181,14 @@
                         @enderror
                     </div>
 
+                    
                     <div class="form-group">
-                        <label for="exampleFormControlSelect">Jenis Kelamin</label> <br>
-                        <input type="radio" name="jenis_kelamin" id="laki-laki" value="Laki-Laki" @if($user->jenis_kelamin == "Laki-Laki") checked @endif> Laki-Laki
-                        <input type="radio" name="jenis_kelamin" id="perempuan" value="Perempuan" @if($user->jenis_kelamin == "Perempuan") checked @endif> Perempuan 
+                        <label for="exampleFormControlSelect">Jenis Kelamin</label>
+                        <select name="jenis_kelamin" class="form-control @error('jenis_kelamin') is-invalid @enderror" 
+                        id="exampleFormControlSelect">
+                            <option value="Laki-Laki" @if($user->jenis_kelamin == "Laki-Laki") selected @endif>Laki-Laki</option>
+                            <option valie="Perempuan" @if($user->jenis_kelamin == "Perempuan") selected @endif>Perempuan</option>
+                        </select>
                     </div>
 
                     <div class="form-group">

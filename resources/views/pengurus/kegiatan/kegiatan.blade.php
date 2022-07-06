@@ -128,12 +128,6 @@
                                         <input type="text"  value="{{$auth}}" class="form-control" readonly 
                                         id="organisasi_id">
                                         <input type="hidden" value="{{$auth_id}}" name="organisasi_id">
-                                        
-                                        @error ('organisasi_id')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
                                     </div>
 
                                     <div class="form-group">

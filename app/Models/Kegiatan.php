@@ -27,6 +27,12 @@ class Kegiatan extends Model
             ->orWhere('deskripsi', 'like', '%' . $cariKegiatan . '%');        
         });
 
+        $query->when($filters['cariKegiatanAnggota'] ?? false, function($query, $cariKegiatanAnggota) {
+            return $query->where('nama_kegiatan', 'like', '%' . $cariKegiatanAnggota . '%')
+            ->orWhere('tempat', 'like', '%' . $cariKegiatanAnggota . '%')
+            ->orWhere('deskripsi', 'like', '%' . $cariKegiatanAnggota . '%');        
+        });
+
         $query->when($filters['jenis'] ?? false, function($query, $organisasi) {
             return $query->whereHas('organisasi', function($query) use ($organisasi) {
                 $query->where('jenis', $organisasi);

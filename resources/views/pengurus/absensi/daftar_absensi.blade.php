@@ -55,8 +55,6 @@
                         </div>
                     </form>
 
-                    <a href="{{ route ('export_absensi') }}" class="btn btn-success my-3 text-light" target="_blank">EXPORT ABSENSI</a>
-
                     <div class="table-responsive mt-3">
                         <table class="table table-striped">
                             <thead>

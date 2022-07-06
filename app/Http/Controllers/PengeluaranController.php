@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pengeluaran;
 use App\Models\Organisasi;
+use App\Models\DetailUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -13,8 +14,19 @@ class PengeluaranController extends Controller
 {
     public function index()
     {
-        $data = Pengeluaran::Get_data();
-        return view('pengurus.pengeluaran.index',compact('data'));
+        // $data = Pengeluaran::Get_data();
+
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->pluck('id');
+        
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('jenis');
+
+        $data = Pengeluaran::whereIn('organisasi_id',$auth_id)->latest()->paginate(10);
+
+        return view('pengurus.pengeluaran.index',compact('data', 'auth', 'auth_id'));
     }
     public function form_pengeluaran()
     {
@@ -102,13 +114,34 @@ class PengeluaranController extends Controller
     public function indexAnggota()
     {
         
-        $data1 = DB::table('pengeluaran as p')
-            ->select('o.jenis','p.total', 'ps.sumber_dana', 'p.keterangan','p.tanggal',DB::raw("GROUP_CONCAT(p.id) as id"))
-            ->leftJoin('organisasi as o','p.organisasi_id','=','o.id')
-            ->leftJoin('pemasukan as ps','p.sumber_dana', '=', 'ps.id')
-            ->groupBy('o.jenis','p.total', 'ps.sumber_dana', 'p.keterangan','p.tanggal')
-            ->get();
-        $data = DB::table('pengeluaran')->get();
-        return view('anggota.pengeluaran_anggota',compact('data1', 'data'));
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->pluck('id');
+        
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('jenis');
+
+        $pengeluaran = Pengeluaran::whereIn('organisasi_id',$auth_id)->latest()->paginate(10);
+
+        return view('anggota.pengeluaran_anggota',compact('pengeluaran', 'auth', 'auth_id'));
+    }
+
+    public function cariPengeluaranAnggota(Request $request)
+	{
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->pluck('id');
+        // dd($auth);
+        
+        $jenis = DetailUser::all();
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('jenis');
+        
+        $pengeluaran = Pengeluaran::whereIn('organisasi_id',$auth_id)->latest()->filter(request(['cariPengeluaranAnggota']))->paginate(10)->withQueryString();
+       
+		return view('anggota/pengeluaran_anggota', compact('auth_id', 'auth', 'pengeluaran'));
+ 
     }
 }

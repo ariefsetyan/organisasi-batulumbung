@@ -58,7 +58,7 @@
                                 @foreach($data as $row)
                                 <tr>
                                     <td>{{$no++}}</td>
-                                    <td>{{$row->jenis}}</td>
+                                    <td>{{$auth}}</td>
                                     <td>{{$row->tanggal}}</td>
                                     <td>{{$row->sumber_dana}}</td>
                                     <td>Rp {{number_format ($row->total)}}</td>

@@ -27,6 +27,19 @@ class Pengeluaran extends Model
         return $data;
     }
 
+    public function scopeFilter($query, array $filters) {
+
+        $query->when($filters['cariPengeluaranAnggota'] ?? false, function($query, $cariPengeluaranAnggota) {
+            return $query->where('sumber_dana', 'like', '%' . $cariPengeluaranAnggota . '%')
+            ->orWhere('keterangan', 'like', '%' . $cariPengeluaranAnggota . '%');        
+        });
+
+        $query->when($filters['cariLaporan'] ?? false, function($query, $cariLaporan) {
+            return $query->where('sumber_dana', 'like', '%' . $cariLaporan . '%')
+            ->orWhere('keterangan', 'like', '%' . $cariLaporan . '%');        
+        });
+    }
+
     public function scopeGet_sumber_dana(){
         return $sumber_dana = DB::table('pemasukan')->get();
     }

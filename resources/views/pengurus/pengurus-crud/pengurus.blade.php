@@ -17,15 +17,24 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="white-box">
-                <form class="form mb-3" method="get" action="{{ route ('cariPengurus') }}">
-                    <div class="row mb-3">
-                        <div class="col-md-6">    
-                            <div class="form-group">
-                                <input type="text" name="cariPengurus" class="form-control w-75 d-inline" id="cariPengurus" value="{{ request('cariPengurus')}}" placeholder="Cari Nama ...">
-                                <button type="submit" class="btn btn-primary mb-1 d-inline"><i class="fa fa-search"></i> Cari</button>
-                            </div>  
+                <form class="form mb-3" method="get" action="{{ route ('cariStatusPengurus') }}">
+                    <div class="col-md-6">
+                        <div class="form-group" style="width:515px">
+                            <select name="jenis" id="jenis" class="form-control" onchange="this.form.submit()" >
+                                <option value="" selected>Filter Status</option>
+                                <option value="1">Aktif</option>
+                                <option value="0">Tidak Aktif</option>
+                            </select>
                         </div>
-                    </div>                    
+                    </div>
+                </form>
+                <form class="form" method="get" action="{{route('cariPengurus')}}">
+                    <div class="col-md-6">    
+                        <div class="form-group">
+                            <input type="text" name="cariPengurus" class="form-control w-75 d-inline" id="cariPengurus" value="{{ request('cariPengurus')}}" placeholder="Cari Nama ...">
+                            <button type="submit" class="btn btn-primary mb-1 d-inline"><i class="fa fa-search"></i> Cari</button>
+                        </div>  
+                    </div>                  
                 </form>
 
              
@@ -247,6 +256,7 @@
                                     <th class="border-top-0">NAMA</th>
                                     <th class="border-top-0">JABATAN</th>
                                     <th class="border-top-0">JENIS ORGANISASI</th>
+                                    <th class="border-top-0">STATUS</th>
                                     <th class="border-top-0">AKSI</th>
                                 </tr>
                             </thead>
@@ -256,12 +266,17 @@
                             <tr>
                                     <td>{{$loop->iteration}}</td>
                                     <td> 
-                                        {{$userr->kode_orga}}{{$userr->id}}
+                                        {{$userr->id}}
                                     </td>
                                     <td>{{$userr->nik}}</td>
                                     <td>{{$userr->nama}}</td>
                                     <td>{{$userr->level}}</td>
                                     <td>{{$auth}}</td>
+                                    <td>@if($userr->status=="1")
+                                            Aktif 
+                                        @else
+                                            Tidak Aktif
+                                        @endif</td>
                                     <td><a href="\pengurus-crud\pengurus\{{ $userr->id }}" class="btn btn-primary"><i class="bi bi-eye-fill m-r-5"></i>Detail</a></td>
                             </tr>
                             @empty

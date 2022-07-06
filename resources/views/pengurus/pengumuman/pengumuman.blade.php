@@ -17,15 +17,25 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="white-box">
-                <form class="form mb-3" method="get" action="{{ route ('cariPengumuman') }}">
-                    <div class="row mb-3">
-                        <div class="col-md-6 ms-auto">
-                            <div class="form-group">
-                                <input type="text" name="cariPengumuman" class="form-control w-75 d-inline" value="{{ request('cariPengumuman')}}" id="cariPengumuman" placeholder="Cari ...">
-                                <button type="submit" class="btn btn-primary mb-1"><i class="fa fa-search"></i> Cari</button>  
-                            </div>
+                <form action="{{ route ('filterTanggalPengumuman') }}" method="get">
+                @csrf
+                    <div class="col-md-6">
+                        <div class="input-group mb-3" style="width:500px">
+                            <input type="text" class="form-control" name="dari" value="{{ isset($dari) ? $dari : old('dari')}}" onfocusin="(this.type='date')" outfocusin="(this.type='text)" placeholder="Tanggal Awal">
+                            <input type="text" class="form-control" name="sampai" value="{{ isset($sampai) ? $sampai : old('sampai')}}"  onfocusin="(this.type='date')" outfocusin="(this.type='text)" placeholder="Tanggal Akhir">
+                            <button class="btn btn-primary" type="submit" style="width:70px"> Filter</button>
                         </div>
-                    </div>                    
+                    </div>
+                </form>
+                <form class="form" method="get" action="{{route('cariPengumuman')}}">
+                    <div class="row mb-3">
+                        <div class="col-md-6">    
+                            <div class="form-group">
+                                <input type="text" name="cariPengumuman" class="form-control w-75 d-inline" id="cariPengumuman" value="{{ request('cariPengumuman')}}" placeholder="Cari ...">
+                                <button type="submit" class="btn btn-primary mb-1 d-inline"><i class="fa fa-search"></i> Cari</button>
+                            </div>  
+                        </div>
+                    </div>                        
                 </form>
              
                 @if(session()->has('success'))

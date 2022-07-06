@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kegiatan;
 use App\Models\Organisasi;
+use App\Models\DetailUser;
 use Illuminate\Http\Request;
 use PDF;
 use Illuminate\Support\Facades\Storage;
@@ -18,31 +19,53 @@ class KegiatanController extends Controller
      */
     public function index()
     {
-            
-        $kegiatan = Kegiatan::latest()->paginate(10);
 
         $auth_id = Organisasi::whereHas('detailUser',function($q){
             $q->where('user_id',Auth::id());
-        })->value('id');
-
+        })->pluck('id');
+        // dd($auth_id);
+        
+        $jenis = DetailUser::all();
+        $organisasi = Organisasi::all();
         $auth = Organisasi::whereHas('detailUser',function($q){
             $q->where('user_id',Auth::id());
         })->value('jenis');
+        
+        $kegiatan = Kegiatan::whereIn('organisasi_id',$auth_id)->latest()->paginate(10);
 
-        return view('pengurus/kegiatan/kegiatan', compact(['kegiatan', 'auth_id', 'auth']));
+        return view('pengurus/kegiatan/kegiatan', compact(['kegiatan', 'organisasi', 'jenis', 'auth']) , ['auth_id' => $auth_id[0]]);
     }
 
     public function cariKegiatan(Request $request)
 	{
-        $organisasi = Organisasi::all();
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->pluck('id');
+        // dd($auth);
+        
+        $jenis = DetailUser::all();
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('jenis');
+        
         $kegiatan = Kegiatan::latest()->filter(request(['cariKegiatan', 'jenis']))->paginate(10)->withQueryString();
        
-		return view('pengurus/kegiatan/kegiatan', compact(['organisasi', 'kegiatan']));
+		return view('pengurus/kegiatan/kegiatan', compact(['auth', 'auth_id', 'kegiatan']));
  
     }
 
     public function filterTanggal(Request $request)
     {
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->pluck('id');
+        // dd($auth);
+        
+        $organisasi = Organisasi::all();
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('jenis');
+
         $dari = $request->dari .'.'. '00:00:00';
         $sampai = $request->sampai .'.'. '23:59:59';
 
@@ -65,7 +88,7 @@ class KegiatanController extends Controller
         $kegiatan = Kegiatan::whereBetween('tanggal', [$dari, $sampai])->latest()->paginate(10);
         $organisasi = Organisasi::all();
 
-        return view ('/pengurus/kegiatan/kegiatan', ['kegiatan' => $kegiatan, 'dari' => $request->dari, 'sampai' => $request->sampai, 'organisasi' => $organisasi]);
+        return view ('/pengurus/kegiatan/kegiatan', ['auth' => $auth, 'auth_id' => $auth_id, 'kegiatan' => $kegiatan, 'dari' => $request->dari, 'sampai' => $request->sampai, 'organisasi' => $organisasi]);
     }
 
     /**
@@ -203,11 +226,19 @@ class KegiatanController extends Controller
 
     public function indexAnggota()
     {
-        $kegiatan = Kegiatan::paginate(10);
-        return view('anggota/kegiatan', [
-            "kegiatan" => "All Kegiatan", 
-            "kegiatan"=> Kegiatan::latest()->get()
-        ]);
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->pluck('id');
+        // dd($auth);
+        
+        $jenis = DetailUser::all();
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('jenis');
+        
+        $kegiatan = Kegiatan::whereIn('organisasi_id',$auth_id)->latest()->paginate(10);
+
+        return view ('anggota/kegiatan', compact(['auth_id', 'auth', 'kegiatan']));
     }
 
     public function cariKegiatanAnggota(Request $request)

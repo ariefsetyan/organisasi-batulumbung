@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
 
         User::create([
             'nama'            => 'Ni Putu Windi Masyundari',
-            'nik'             => '510302608200005',
+            'nik'             => '5103026908200005',
             'tempat_lahir'    => 'Denpasar',
             'tgl_lahir'       => '2000-08-29',
             'level'           => 'Sekretaris',
@@ -32,9 +32,25 @@ class DatabaseSeeder extends Seeder
             'pekerjaan'       => 'Mahasiswa',
             'status'          => '1',
         ]);
+       
+        User::create([
+            'nama'            => 'I Putu Febry Masprayoga',
+            'nik'             => '5103020802010009',
+            'tempat_lahir'    => 'Denpasar',
+            'tgl_lahir'       => '2001-01-08',
+            'level'           => 'Ketua',
+            'email'           => 'febrymasprayoga@gmail.com',         
+            'password'        => bcrypt('12345'),
+            'no_telp'         => '08587221219',
+            'jenis_kelamin'   => 'Laki-Laki',
+            'alamat'          => 'Br. Batulumbung, Gulingan',
+            'pekerjaan'       => 'Mahasiswa',
+            'status'          => '1',
+        ]);
+
         User::create([
             'nama'            => 'Ni Kadek Lia Mastika',
-            'nik'             => '51030243010500082',
+            'nik'             => '5103024301050082',
             'tempat_lahir'    => 'Denpasar',
             'tgl_lahir'       => '2005-03-01',
             'level'           => 'Sekretaris',
@@ -48,23 +64,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::create([
-            'nama'            => 'I Putu Febry Masprayoga',
-            'nik'             => '51030208020100009',
-            'tempat_lahir'    => 'Denpasar',
-            'tgl_lahir'       => '2001-08-08',
-            'level'           => 'Ketua',
-            'email'           => 'febry@@gmail.com',         
-            'password'        => bcrypt('12345'),
-            'no_telp'         => '08587221219',
-            'jenis_kelamin'   => 'Laki-Laki',
-            'alamat'          => 'Br. Batulumbung, Gulingan',
-            'pekerjaan'       => 'Mahasiswa',
-            'status'          => '1',
-        ]);
-
-        User::create([
             'nama'            => 'Ni Putu Indah Ariandini',
-            'nik'             => '51030269300199992',
+            'nik'             => '5103026901990002',
             'tempat_lahir'    => 'Denpasar',
             'tgl_lahir'       => '2000-01-29',
             'level'           => 'Sekretaris',

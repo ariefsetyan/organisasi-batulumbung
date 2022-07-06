@@ -17,15 +17,24 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="white-box">
-                <form class="form mb-3" method="get" action="{{ route ('cariAnggota') }}">
-                    <div class="row mb-3">
-                        <div class="col-md-6 ms-auto">
-                            <div class="form-group">
-                                <input type="text" name="cariAnggota" class="form-control w-75 d-inline" value="{{ request('cariAnggota')}}" id="cariAnggota" placeholder="Cari ...">
-                                <button type="submit" class="btn btn-primary mb-1"><i class="fa fa-search"></i> Cari</button>  
-                            </div>
+                <form class="form mb-3" method="get" action="{{ route ('cariStatusAnggota') }}">
+                    <div class="col-md-6">
+                        <div class="form-group" style="width:515px">
+                            <select name="jenis" id="jenis" class="form-control" onchange="this.form.submit()" >
+                                <option value="" selected>Filter Status</option>
+                                <option value="1">Aktif</option>
+                                <option value="0">Tidak Aktif</option>
+                            </select>
                         </div>
-                    </div>                    
+                    </div>
+                </form>
+                <form class="form" method="get" action="{{route('cariAnggota')}}">
+                    <div class="col-md-6">    
+                        <div class="form-group">
+                            <input type="text" name="cariAnggota" class="form-control w-75 d-inline" id="cariAnggota" value="{{ request('cariAnggota')}}" placeholder="Cari Nama ...">
+                            <button type="submit" class="btn btn-primary mb-1 d-inline"><i class="fa fa-search"></i> Cari</button>
+                        </div>  
+                    </div>                  
                 </form>
 
                 <!-- Button trigger modal -->
@@ -198,8 +207,8 @@
 
                                     <div class="form-group">
                                         <label for="exampleFormControlSelect">Jabatan</label>
-                                        <select name="level" value="{{ old ('level') }}" class="form-control @error ('level') is-invalid @enderror" id="exampleFormControlSelect">
-                                            <option value="Anggota">Anggota</option>
+                                        <select name="level" value="{{ old ('level') }}" class="form-control @error ('level') is-invalid @enderror" id="exampleFormControlSelect" readonly>
+                                            <option value="Anggota" readonly>Anggota</option>
                                         </select>
                                         @error ('level')
                                         <div class="invalid-feedback">
@@ -242,6 +251,7 @@
                                     <th class="border-top-0">NAMA</th>
                                     <th class="border-top-0">JABATAN</th>
                                     <th class="border-top-0">JENIS ORGANISASI</th>
+                                    <th class="border-top-0">STATUS</th>
                                     <th class="border-top-0">AKSI</th>
                                 </tr>
                             </thead>
@@ -249,13 +259,16 @@
                             @forelse($user as $userr)
                             <tr>
                                     <td>{{$loop->iteration}}</td>
-                                    <td> 
-                                        {{$userr->kode_orga}}{{$userr->id}}
-                                    </td>
+                                    <td>{{$userr->id}}</td>
                                     <td>{{$userr->nik}}</td>
                                     <td>{{$userr->nama}}</td>
                                     <td>{{$userr->level}}</td>
                                     <td>{{$auth}}</td>
+                                    <td>@if($userr->status=="1")
+                                            Aktif 
+                                        @else
+                                            Tidak Aktif
+                                        @endif</td>
                                     <td><a href="\pengurus-crud\pengurus\{{ $userr->id }}" class="btn btn-primary"><i class="bi bi-eye-fill m-r-5"></i>Detail</a></td>
                             </tr>
                             @empty

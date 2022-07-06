@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Organisasi;
+use App\Models\DetailUser;
+use App\Models\Pemasukan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -11,12 +13,19 @@ class PemasukanController extends Controller
 {
     public function index()
     {
-        $data = DB::table('pemasukan as p')->select('p.id','jenis','jmlh_pemasukan','tanggal','sumber_dana','keterangan')
-            ->leftJoin('organisasi as o','p.organisasi_id','=','o.id')
-            ->get();
-        $organisasi = DB::table('organisasi')->get();
+        // $organisasi = DB::table('organisasi')->get();
 
-        return view('pengurus.pemasukan.index',compact('data','organisasi'));
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->pluck('id');
+        
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('jenis');
+
+        $data = Pemasukan::whereIn('organisasi_id',$auth_id)->latest()->paginate(10);
+
+        return view('pengurus.pemasukan.index',compact('data', 'auth', 'auth_id'));
     }
 
     public function form()
@@ -76,10 +85,36 @@ class PemasukanController extends Controller
 
     public function indexAnggota()
     {
-        $data = DB::table('pemasukan as p')->select('p.id','jenis','jmlh_pemasukan','tanggal','sumber_dana','keterangan')
-            ->leftJoin('organisasi as o','p.organisasi_id','=','o.id')
-            ->get();
         $organisasi = DB::table('organisasi')->get();
-        return view('anggota.pemasukan_anggota',compact('data','organisasi'));
+
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->pluck('id');
+        
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('jenis');
+
+        $pemasukan = Pemasukan::whereIn('organisasi_id',$auth_id)->latest()->paginate(10);
+        
+        return view('anggota.pemasukan_anggota',compact('auth', 'auth_id', 'pemasukan'));
+    }
+
+    public function cariPemasukanAnggota(Request $request)
+	{
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->pluck('id');
+        // dd($auth);
+        
+        $jenis = DetailUser::all();
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('jenis');
+        
+        $pemasukan = Pemasukan::whereIn('organisasi_id',$auth_id)->latest()->filter(request(['cariPemasukanAnggota']))->paginate(10)->withQueryString();
+       
+		return view('anggota/pemasukan_anggota', compact('auth_id', 'auth', 'pemasukan'));
+ 
     }
 }

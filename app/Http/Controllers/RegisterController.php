@@ -9,6 +9,7 @@ use App\Models\DetailUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -43,14 +44,12 @@ class RegisterController extends Controller
     {
         $message = [
             'required' => 'Wajib diisi!',
-            'min'      => 'Wajib diisi minimal : 5, maksimal : 10  karakter!',
-            'max'      => 'Wajib diisi minimal : 5, maksimal : 10 karakter!',
             'unique'   => 'NIK sudah terdaftar'
         ];
 
        $request->validate([
            'nama'              => 'required',
-           'nik'               => 'required|unique:user',
+           'nik'               => 'required|unique:user|min:16|max:16',
            'tempat_lahir'      => 'required',
            'tgl_lahir'         => 'required',
            'email'             => 'required',
@@ -95,6 +94,14 @@ class RegisterController extends Controller
 
     public function verifikasi_akun()
     {
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('id');
+
+         $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('jenis');
+
          $user = User::where('status', '=', '0')
         ->selectRaw('GROUP_CONCAT(kode) as kode_orga')
         ->select('user.id','nik','nama','level',DB::raw("GROUP_CONCAT(jenis) as jenis"),DB::raw("GROUP_CONCAT(kode) as kode_orga"))
@@ -102,10 +109,11 @@ class RegisterController extends Controller
         ->leftJoin('organisasi','detail_user.organisasi_id','=','organisasi.id')
         ->groupBy('user.id','user.nik','nama','level')
          ->paginate(10);
-         $jenis = DetailUser::all();
-         $organisasi = Organisasi::all();
+
+        //  $jenis = DetailUser::all();
+        //  $organisasi = Organisasi::all();
         // $data_user = DB::table('user')->where('status','=','0')->get();
-        return view('pengurus.verifikasi.index',compact('user', 'organisasi'));
+        return view('pengurus.verifikasi.index',compact('user', 'auth', 'auth_id'));
     }
 
     public function update_akun($id)

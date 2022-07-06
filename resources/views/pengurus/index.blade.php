@@ -209,6 +209,7 @@
                 <h6>{{$pengumumans->tempat}}</h6>
                 <h6>{{$pengumumans->isi}}</h6>
                 <h6><a href="{{route('file.download', $pengumumans->id)}}">Download File</a></h6>
+                <p align="right" style="font-size: 12px">Diposting : {!! $pengumumans->created_at !!}</p>
                 <hr color="orange">
               @empty
               <span  style="font-weight: 800; ">Tidak Ada Data</span>
@@ -239,6 +240,7 @@
                 <h6>{{$kegiatans->tanggal}} | {{$kegiatans->waktu}}</h6>
                 <h6>{{$kegiatans->tempat}}</h6>
                 <h6>{!! $kegiatans->deskripsi !!}</h6>
+                <p align="right" style="font-size: 12px">Diposting : {!! $kegiatans->created_at !!}</p>
                 <hr color="orange">
                 @empty
                   <span  style="font-weight: 800; ">Tidak Ada Data</span>
@@ -270,6 +272,7 @@
                 <h6>{{$events->tanggal}} | {{$events->waktu}}</h6>
                 <h6>{{$events->tempat}}</h6>
                 <h6>{{$events->keterangan}}</h6>
+                <p align="right" style="font-size: 12px">Diposting : {!! $events->created_at !!}</p>
                 <hr color="orange">
                 @empty
                   <span  style="font-weight: 800; ">Tidak Ada Data</span>
@@ -287,8 +290,7 @@
   <!-- footer section -->
   <section class="container-fluid footer_section">
     <p>
-      Copyright &copy; 2019 All Rights Reserved By
-      <a href="https://html.design/">Free Html Templates</a>
+      2021 &copy; Organisasi Banjar Batulumbung
     </p>
   </section>
   <!-- footer section -->

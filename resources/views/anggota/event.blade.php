@@ -13,7 +13,7 @@
             <div class="col-md-6 ms-auto">
                 <form class="form mb-3" method="get" action="{{ route ('cariEventAnggota') }}">
                     <div class="col-md-6 ms-auto">
-                        <input type="text" name="cari" class="form-control w-75 d-inline" value="{{ request('cari')}}" id="cari" placeholder="Cari ...">
+                        <input type="text" name="cariEventAnggota" class="form-control w-75 d-inline" value="{{ request('cariEventAnggota')}}" id="cariEventAnggota" placeholder="Cari ...">
                         <button type="submit" class="btn btn-primary mb-1"><i class="fa fa-search"></i> Cari</button>  
                     </div>                    
                 </form>
@@ -46,9 +46,9 @@
                                     </tr>
                                 </table>
                                 
-                                    <a href ="{{$events->id}}/detail" class="btn btn-danger text-light m-t-10" data-bs-toggle="modal" data-bs-target="#detailEvent">Detail</a>
+                                    <a href ="{{$events->id}}/detail" class="btn btn-danger text-light m-t-10" data-bs-toggle="modal" data-bs-target="#detailEvent{{$events->id}}">Detail</a>
                                         <!-- Modal -->
-                                        <div class="modal fade" id="detailEvent" tabindex="-1" role="dialog" aria-labelledby="detailEventTitle" aria-hidden="true">
+                                        <div class="modal fade" id="detailEvent{{$events->id}}" tabindex="-1" role="dialog" aria-labelledby="detailEventTitle" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -56,9 +56,8 @@
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        @foreach ($event as $data)
                                                         <div class="card-body bg-light mb-2"> 
-                                                            <h4 class="card-title" style="font-weight:900; text-align:center" >{{$data->nama_event}}</h4>
+                                                            <h4 class="card-title" style="font-weight:900; text-align:center" >{{$events->nama_event}}</h4>
                                                             <table class="table table-success table-striped">
                                                                 <tr>
                                                                     <td style="width: 120px"><b>Tanggal</b></td>
@@ -87,7 +86,6 @@
                                                                 </tr>
                                                             </table>
                                                         </div>
-                                                        @endforeach
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

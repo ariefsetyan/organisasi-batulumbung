@@ -17,6 +17,7 @@ class CreateDetailUserTable extends Migration
             $table->bigIncrements('id');
             $table->foreignId('user_id');
             $table->foreignId('organisasi_id');
+            $table->string('status')->default(false);
             $table->timestamps();
         });
     }

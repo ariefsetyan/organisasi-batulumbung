@@ -50,7 +50,7 @@ class LoginController extends Controller
             //dd('password salah');
             return redirect()->back()->with('status', 'Password salah');
         }
-
+       
         $loginpengurus = Auth::guard('web')->attempt(['email' => $request->email, 'password' => $request->password,'status'=>"1"]);
         if($loginpengurus == false)
         {
@@ -87,34 +87,33 @@ class LoginController extends Controller
     {
         $auth_id = Organisasi::whereHas('detailUser',function($q){
             $q->where('user_id', Auth::id());
-        })->pluck('id');
-
+        })->value('id');
 
         $id = $request->session()->get('idlogin');
         $semua = User::whereHas('detail_user',function($q) use($auth_id){
             $q->where('organisasi_id',$auth_id);
         })->where('id', $id)->get();
 
-        $kegiatan = Kegiatan::whereIn('organisasi_id',$auth_id)->whereYear('tanggal', date('Y'))->whereMonth('tanggal', date('m'))->get();
+        $kegiatan = Kegiatan::where('organisasi_id',$auth_id)->whereYear('tanggal', date('Y'))->whereMonth('tanggal', date('m'))->get();
         $organisasi = Organisasi::all();
-        $pengumuman = Pengumuman::whereIn('organisasi_id',$auth_id)->whereYear('tanggal', date('Y'))->whereMonth('tanggal', date('m'))->get();
-        $event = Event::whereIn('organisasi_id',$auth_id)->whereYear('tanggal', date('Y'))->whereMonth('tanggal', date('m'))->get();
+        $pengumuman = Pengumuman::where('organisasi_id',$auth_id)->whereYear('tanggal', date('Y'))->whereMonth('tanggal', date('m'))->get();
+        $event = Event::where('organisasi_id',$auth_id)->whereYear('tanggal', date('Y'))->whereMonth('tanggal', date('m'))->get();
 
         //hitung
         $hitunganggota= User::where('level', 'Anggota')->whereHas('detail_user',function($q) use($auth_id){
-            $q->whereIn('organisasi_id',$auth_id);
+            $q->where('organisasi_id',$auth_id);
         })->count();
         $hitungevent = count($event);
         $hitungkegiatan = count($kegiatan);
         $hitungpengumuman = count($pengumuman);
 
-        $grafik = DB::table('absensi as a')
+        $grafik = DB::table('absensi as a')->where('a.organisasi_id', $auth_id)
             ->select('jenis','a.nama_kegiatan',DB::raw('count(*) as jumlah'))
             ->leftJoin('kegiatan as k','a.nama_kegiatan','=','k.nama_kegiatan')
             ->leftJoin('organisasi as o','a.organisasi_id','=','o.id')
             ->groupBy('a.nama_kegiatan','jenis')
             ->get();
-        $grafik1 = DB::table('absensi as a')
+        $grafik1 = DB::table('absensi as a')->where('a.organisasi_id', $auth_id)
             ->select('a.nama_kegiatan',DB::raw('count(*) as jumlah'))
             ->leftJoin('kegiatan as k','a.nama_kegiatan','=','k.nama_kegiatan')
             ->groupBy('a.nama_kegiatan')
@@ -181,11 +180,11 @@ class LoginController extends Controller
     {
         $id = $request->session()->get('idlogin');
         $semua = User::where('id', $id)->get();
-        $organisasis = DetailUser::where('user_id', $id)->get();
-        // dd($organisasis);
-        $or = Organisasi::all();
+        $organisasis = DetailUser::where('user_id', $id)
+                ->where('status', true)->get();
+        $organisasi = Organisasi::all();
 
-        return view('/anggota/dashboard-anggota', (compact(['semua', 'organisasis','or'])));
+        return view('/anggota/dashboard-anggota', (compact(['semua', 'organisasis','organisasi'])));
 
     }
 

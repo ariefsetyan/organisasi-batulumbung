@@ -65,7 +65,7 @@
                         </div>
                     </div>
                     
-                    <a href="{{ route ('cetak-absensi') }}" class="btn btn-success my-3 text-light" target="_blank">CETAK ABSENSI</a>
+                    <a href="{{ route ('cetak-absensi') }}" class="btn btn-success my-3 text-light">CETAK ABSENSI</a>
 
                     <div class="table-responsive mt-3">
                         <table class="table table-striped">

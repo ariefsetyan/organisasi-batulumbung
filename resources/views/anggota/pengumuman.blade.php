@@ -13,7 +13,7 @@
             <div class="col-md-6 ms-auto">
                 <form class="form mb-3" method="get" action="{{ route ('cariPengumumanAnggota') }}">
                     <div class="col-md-6 ms-auto">
-                        <input type="text" name="cari" class="form-control w-75 d-inline" value="{{ request('cari')}}" id="cari" placeholder="Cari ...">
+                        <input type="text" name="cariPengumumanAnggota" class="form-control w-75 d-inline" value="{{ request('cariPengumumanAnggota')}}" id="cariPengumumanAnggota" placeholder="Cari ...">
                         <button type="submit" class="btn btn-primary mb-1"><i class="fa fa-search"></i> Cari</button>  
                     </div>                    
                 </form>

@@ -80,7 +80,7 @@ class EventController extends Controller
 
         $event = Event::whereBetween('tanggal', [$dari, $sampai])->latest()->paginate(10);
 
-        return view ('/pengurus/event/event', ['event' => $event, 'auth' => $auth, 'auth_id' => $auth_id, 'dari' => $request->dari, 'sampai' => $request->sampai, 'organisasi' => $organisasi]);
+        return view ('/pengurus/event/event', ['event' => $event, 'auth' => $auth, 'auth_id' => $auth_id, 'dari' => $request->dari, 'sampai' => $request->sampai]);
     }
 
     public function store(Request $request)

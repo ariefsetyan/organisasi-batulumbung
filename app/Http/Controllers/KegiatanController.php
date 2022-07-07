@@ -243,10 +243,19 @@ class KegiatanController extends Controller
 
     public function cariKegiatanAnggota(Request $request)
 	{
-		return view('anggota/kegiatan', [
-            "active" => "kegiatan", 
-            "kegiatan" => Kegiatan::latest()->filter(request(['cari']))->paginate(10)->withQueryString()
-        ]);
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->pluck('id');
+        // dd($auth);
+        
+        $jenis = DetailUser::all();
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('jenis');
+
+        $kegiatan = Kegiatan::latest()->filter(request(['cariKegiatanAnggota']))->paginate(10)->withQueryString();
+       
+		return view('anggota/kegiatan', compact(['auth', 'auth_id', 'kegiatan']));
  
     }
 

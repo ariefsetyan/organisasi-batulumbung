@@ -102,13 +102,10 @@ class RegisterController extends Controller
             $q->where('user_id',Auth::id());
         })->value('jenis');
 
-         $user = User::where('status', '=', '0')
-        ->selectRaw('GROUP_CONCAT(kode) as kode_orga')
-        ->select('user.id','nik','nama','level',DB::raw("GROUP_CONCAT(jenis) as jenis"),DB::raw("GROUP_CONCAT(kode) as kode_orga"))
-        ->leftJoin('detail_user','user.id','=','detail_user.user_id')
-        ->leftJoin('organisasi','detail_user.organisasi_id','=','organisasi.id')
-        ->groupBy('user.id','user.nik','nama','level')
-         ->paginate(10);
+         $user = User::whereHas('detail_user', function($q) use($auth_id){
+             $q->where('status', false)
+             ->where('organisasi_id', $auth_id);
+         })->get();
 
         //  $jenis = DetailUser::all();
         //  $organisasi = Organisasi::all();
@@ -118,6 +115,15 @@ class RegisterController extends Controller
 
     public function update_akun($id)
     {
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('id');
+
+        DB::table('detail_user')
+            ->where('user_id','=',$id)
+            ->where('organisasi_id', $auth_id)
+            ->update(['status'=>'1']);
+
         DB::table('user')
             ->where('id','=',$id)
             ->update(['status'=>'1']);

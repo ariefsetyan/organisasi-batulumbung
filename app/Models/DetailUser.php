@@ -12,7 +12,8 @@ class DetailUser extends Model
 
     protected $fillable = [
         'user_id', 
-        'organisasi_id'
+        'organisasi_id',
+        'status'
     ];
 
     public function organisasi()

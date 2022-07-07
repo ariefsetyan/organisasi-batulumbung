@@ -10,6 +10,14 @@
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                 <h4 class="page-title">Daftar Absensi</h4>
             </div>
+            <div class="col-md-6 ms-auto">
+                <form class="form mb-3" method="get" action="{{ route ('cariAbsensiAnggota') }}">
+                    <div class="col-md-6 ms-auto">
+                        <input type="text" name="cariAbsensiAnggota" class="form-control w-75 d-inline" value="{{ request('cariAbsensiAnggota')}}" id="cariAbsensiAnggota" placeholder="Cari ...">
+                        <button type="submit" class="btn btn-primary mb-1"><i class="fa fa-search"></i> Cari</button>  
+                    </div>                    
+                </form>
+            </div>
         </div>
     </div>
 

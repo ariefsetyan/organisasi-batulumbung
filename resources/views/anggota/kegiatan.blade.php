@@ -13,7 +13,7 @@
             <div class="col-md-6 ms-auto">
                 <form class="form mb-3" method="get" action="{{ route ('cariKegiatanAnggota') }}">
                     <div class="col-md-6 ms-auto">
-                        <input type="text" name="cari" class="form-control w-75 d-inline" value="{{ request('cari')}}" id="cari" placeholder="Cari ...">
+                        <input type="text" name="cariKegiatanAnggota" class="form-control w-75 d-inline" value="{{ request('cariKegiatanAnggota')}}" id="cari" placeholder="Cari ...">
                         <button type="submit" class="btn btn-primary mb-1"><i class="fa fa-search"></i> Cari</button>  
                     </div>                    
                 </form>
@@ -27,6 +27,8 @@
             <div class="card bg-light" style="width: 100rem;">
                 <div class="card-body">
                     <h4 class="card-title" style="font-weight: 800; ">{{$kegiatan->nama_kegiatan}} - {{$auth}}</h4>
+                    <p class="card-text">{{$kegiatan->tanggal}} | {{$kegiatan->waktu}}</p>
+                    <p class="card-text">{{$kegiatan->tempat}}</p>
                     <p class="card-text">{!! $kegiatan->deskripsi !!}</p>
                     <a href="/kegiatan/kegiatan_pdf/{{$kegiatan->id}}" class="btn btn-danger text-white"><i class="bi bi-download"></i> Download</a>
                     <p align="right" style="font-size: 12px">Diposting : {!! $kegiatan->created_at !!}</p>

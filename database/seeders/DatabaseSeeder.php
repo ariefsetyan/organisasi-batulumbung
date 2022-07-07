@@ -81,21 +81,25 @@ class DatabaseSeeder extends Seeder
         DetailUser::create([
             'user_id'          => '1',
             'organisasi_id'    => '1',
+            'status'           => '1'
         ]);
 
         DetailUser::create([
             'user_id'          => '2',
             'organisasi_id'    => '2',
+            'status'           => '1'
         ]);
 
         DetailUser::create([
             'user_id'          => '3',
             'organisasi_id'    => '3',
+            'status'           => '1'
         ]);
 
         DetailUser::create([
             'user_id'          => '4',
             'organisasi_id'    => '4',
+            'status'           => '1'
         ]);
         
         Organisasi::create([

@@ -21,7 +21,8 @@ class CreatePemasukanTable extends Migration
             $table->date('tanggal');
             $table->string('sumber_dana');
             $table->string('keterangan');
-            $table->timestamps();
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });
     }
 

@@ -204,6 +204,7 @@ use App\Models\Absensi;
      Route::get('/kegiatan', 'App\Http\Controllers\KegiatanController@indexAnggota');
      Route::get('/cariKegiatanAnggota','App\Http\Controllers\KegiatanController@cariKegiatanAnggota')->name('cariKegiatanAnggota');
      Route::get('/absensi', 'App\Http\Controllers\AbsensiController@indexAnggota');
+     Route::get('/cariAbsensiAnggota','App\Http\Controllers\AbsensiController@cariAbsensiAnggota')->name('cariAbsensiAnggota');
      Route::get('/pemasukan_anggota', 'App\Http\Controllers\PemasukanController@indexAnggota');
      Route::get('/cariPemasukanAnggota','App\Http\Controllers\PemasukanController@cariPemasukanAnggota')->name('cariPemasukanAnggota');
      Route::get('/pengeluaran_anggota', 'App\Http\Controllers\PengeluaranController@indexAnggota');

@@ -57,7 +57,7 @@ class PengeluaranController extends Controller
                 "nama_barang"=>$nama_barang,
                 "jmlh_barang"=>$request->jumlah_barang[$i],
                 "satuan_harga"=>$request->harga_barang[$i],
-                "sumber_dana"=>$request->sumber_dana,
+                "sumber_dana"=>"$request->sumber_dana",
                 "keterangan"=>"$request->keterangan"
             );
 //            $pemasukan = Pengeluaran::Insert_pemasukan($data);

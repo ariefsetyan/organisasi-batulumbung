@@ -257,8 +257,6 @@ class UserController extends Controller
         else{
             return redirect('/pengurus-crud/pengurus')-> with('success', 'Data Pengurus Berhasil Diubah!');
         }
-
-
     }
 
     public function destroyUser(User $user)

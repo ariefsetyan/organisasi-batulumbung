@@ -23,82 +23,81 @@
 
     <div class="container-fluid">
         <div class="col-lg-6 col-md-12 col-sm-12">
-                <div class="card white-box p-0">
-                    <div class="card-body">
-                        @forelse ($event as $events)
-                            <div class="card-body bg-light mb-2"> 
-                                <h4 class="card-title" style="font-weight:900; text-align:center" >{{$events->nama_event}}</h4>
-                                <table>
-                                    <tr>
-                                        <td style="width: 120px"><b>Tanggal</b></td>
-                                        <td style="width: 10px">:</td>
-                                        <td>{{$events->tanggal}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Jenis Organisasi</b></td>
-                                        <td>:</td>
-                                        <td>{{$auth}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Keterangan</b></td>
-                                        <td>:</td>
-                                        <td>{{$events->keterangan}}</td>
-                                    </tr>
-                                </table>
+            <div class="card white-box p-0">
+                <div class="card-body">
+                    @forelse ($event as $events)
+                        <div class="card-body mb-2" style="background-color: lightblue"> 
+                            <h4 class="card-title" style="font-weight:900; text-align:center" >{{$events->nama_event}}</h4>
+                            <table>
+                                <tr>
+                                    <td style="width: 120px"><b>Tanggal</b></td>
+                                    <td style="width: 10px">:</td>
+                                    <td>{{$events->tanggal}}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Jenis Organisasi</b></td>
+                                    <td>:</td>
+                                    <td>{{$auth}}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Keterangan</b></td>
+                                    <td>:</td>
+                                    <td>{{$events->keterangan}}</td>
+                                </tr>
+                            </table>
                                 
-                                    <a href ="{{$events->id}}/detail" class="btn btn-danger text-light m-t-10" data-bs-toggle="modal" data-bs-target="#detailEvent{{$events->id}}">Detail</a>
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="detailEvent{{$events->id}}" tabindex="-1" role="dialog" aria-labelledby="detailEventTitle" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="detailEventTitle">Detail Event</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="card-body bg-light mb-2"> 
-                                                            <h4 class="card-title" style="font-weight:900; text-align:center" >{{$events->nama_event}}</h4>
-                                                            <table class="table table-success table-striped">
-                                                                <tr>
-                                                                    <td style="width: 120px"><b>Tanggal</b></td>
-                                                                    <td style="width: 10px">:</td>
-                                                                    <td>{{$events->tanggal}}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td><b>Waktu</b></td>
-                                                                    <td>:</td>
-                                                                    <td>{{$events->waktu}}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td><b>Tempat</b></td>
-                                                                    <td>:</td>
-                                                                    <td>{{$events->tempat}}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td><b>Jenis Organisasi</b></td>
-                                                                    <td>:</td>
-                                                                    <td>{{$auth}}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td><b>Keterangan</b></td>
-                                                                    <td>:</td>
-                                                                    <td>{{$events->keterangan}}</td>
-                                                                </tr>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    </div>
+                            <a href ="{{$events->id}}/detail" class="btn btn-danger text-light m-t-10" data-bs-toggle="modal" data-bs-target="#detailEvent{{$events->id}}">Detail</a>
+                                <!-- Modal -->
+                                <div class="modal fade" id="detailEvent{{$events->id}}" tabindex="-1" role="dialog" aria-labelledby="detailEventTitle" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="detailEventTitle">Detail Event</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="card-body bg-light mb-2"> 
+                                                    <h4 class="card-title" style="font-weight:900; text-align:center" >{{$events->nama_event}}</h4>
+                                                    <table class="table table-success table-striped">
+                                                        <tr>
+                                                            <td style="width: 120px"><b>Tanggal</b></td>
+                                                            <td style="width: 10px">:</td>
+                                                            <td>{{$events->tanggal}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b>Waktu</b></td>
+                                                            <td>:</td>
+                                                            <td>{{$events->waktu}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b>Tempat</b></td>
+                                                            <td>:</td>
+                                                            <td>{{$events->tempat}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b>Jenis Organisasi</b></td>
+                                                            <td>:</td>
+                                                            <td>{{$auth}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b>Keterangan</b></td>
+                                                            <td>:</td>
+                                                            <td>{{$events->keterangan}}</td>
+                                                        </tr>
+                                                    </table>
                                                 </div>
                                             </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            </div>
                                         </div>
-                                   
+                                    </div>
+                                </div>
                                 <br>
                                 <p align="right" style="font-size: 12px">Diposting : {!! $events->created_at !!}</p>
                             </div>
                             @empty
-                            <div class="card-body bg-light"  style="font-weight: 500; text-align:center; font-size:15px">Tidak Ada Data</div>
+                            <div class="card-body"  style="font-weight: 500; text-align:center; font-size:15px; background-color: lightblue">Tidak Ada Data</div>
                         @endforelse
                     </div>
                 </div>

@@ -33,11 +33,12 @@ body {
 .custom_dark-btn,
 .custom_orange-btn {
   display: inline-block;
-  padding: 10px 0;
+  padding: 5px 0;
   text-align: center;
-  width: 145px;
+  width: 100px;
   outline: none;
   color: #f7f7f7;
+  border-radius: 7px;
   border: 1px solid transparent;
 }
 
@@ -97,7 +98,6 @@ body {
   color: #343434;
   text-align: center;
   background-color: #f7f7f7;
-  
 }
 
 a,
@@ -194,6 +194,7 @@ a:focus {
 
 .slider_item-box .container {
   height: 100%;
+  margin-top: 6%;
 }
 
 .slider_img-box {

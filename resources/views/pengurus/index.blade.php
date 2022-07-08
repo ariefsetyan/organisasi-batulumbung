@@ -47,7 +47,7 @@
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <div class="d-flex ml-auto flex-column flex-lg-row align-items-center">
-              <ul class="navbar-nav  ">
+              <ul class="navbar-nav ">
                 <li class="nav-item active">
                   <a class="nav-link" href="#home">Home<span class="sr-only">(current)</span></a>
                 </li>
@@ -60,6 +60,12 @@
                 <li class="nav-item">
                   <a class="nav-link" href="#event">Event</a>
                 </li>
+                <li>
+                  <a href="pengurus/login" class="text-uppercase custom_orange-btn mr-3">
+                    LOGIN
+                  </a>
+                </li>
+                           
               </ul>
             </div>
           </nav>
@@ -67,7 +73,7 @@
       </header>
     <!-- end header section -->
     <!-- slider section -->
-    <section class=" slider_section position-relative">
+    <section class="slider_section position-relative">
       <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active">
@@ -85,11 +91,7 @@
                           <p>
                             Menampilkan informasi mengenai Organisasi yang terdapat di Banjar Batulumbung
                           </p>
-                          <div class="d-flex">
-                            <a href="pengurus/login" class="text-uppercase custom_orange-btn mr-3">
-                              LOGIN
-                            </a>
-                          </div>
+                      
                         </div>
                       </div>
                     </div>
@@ -121,11 +123,7 @@
                             Menampilkan informasi mengenai Organisasi yang terdapat di Banjar Batulumbung
                           </p>
                       
-                          <div class="d-flex">
-                            <a href="pengurus/login" class="text-uppercase custom_orange-btn mr-3">
-                              LOGIN
-                            </a>
-                          </div>
+                         
                         </div>
                       </div>
                     </div>
@@ -156,11 +154,7 @@
                           <p>
                             Menampilkan informasi mengenai Organisasi yang terdapat di Banjar Batulumbung
                           </p>
-                          <div class="d-flex">
-                            <a href="pengurus/login" class="text-uppercase custom_orange-btn mr-3">
-                              LOGIN
-                            </a>
-                          </div>
+      
                         </div>
                       </div>
                     </div>
@@ -225,7 +219,7 @@
 
    <!-- kegiatan section -->
 
-   <section class="service_section layout_padding ">
+   <section class="service_section layout_padding">
     <div class="container" id="kegiatan">
       <h2 class="custom_heading">Kegiatan</h2>
       <div class=" layout_padding2">

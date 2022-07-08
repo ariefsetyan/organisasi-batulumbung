@@ -182,9 +182,12 @@ class LoginController extends Controller
         $semua = User::where('id', $id)->get();
         $organisasis = DetailUser::where('user_id', $id)
                 ->where('status', true)->get();
-        $organisasi = Organisasi::all();
+        // $organisasi = Organisasi::all
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('jenis');
 
-        return view('/anggota/dashboard-anggota', (compact(['semua', 'organisasis','organisasi'])));
+        return view('/anggota/dashboard-anggota', (compact(['semua', 'organisasis','auth'])));
 
     }
 

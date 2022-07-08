@@ -46,11 +46,11 @@
                 </div>
                 @endif
 
-                <div class="card bg-light" style="width: 100rem">
+                <div class="card" style="background-color: lightblue">
                     <div class="card-body">
-                        <table class="table bg-light table-borderless">
+                        <table class="table table-borderless">
                         @foreach($semua as $user)
-                               <tr>
+                            <tr>
                                 <th style="width:200px">Nama</th>
                                 <th>:</th>
                                 <td>{{ $user->nama}}</td>
@@ -84,9 +84,7 @@
                                 <th>Jenis Organisasi</th>
                                 <th>:</th>
                                 <td>  
-                                    @foreach( $organisasis as $organisasi)
-                                        {{ $organisasi->organisasi->jenis }},
-                                    @endforeach
+                                    {{$auth}}
                                 </td>
                             </tr>
                             
@@ -107,6 +105,7 @@
                         </table>  
                     </div>
                 </div>
+            
                 <div>
                     <a href="{{ $user->id }}/edit" class="btn btn-primary text-light" data-bs-toggle="modal" data-bs-target="#editProfil">Edit Profil</a>
                     <a href="{{ $user->id}}/edit-password" class="btn btn-danger text-light" data-bs-toggle="modal" data-bs-target="#editPassword">Edit Password</a>

@@ -26,7 +26,7 @@
                 <div class="card white-box p-0">
                     <div class="card-body">
                         @forelse ($pemasukan as $pemasukans)
-                            <div class="card-body bg-light mb-2"> 
+                            <div class="card-body mb-2" style="background-color: lightblue"> 
                                 <h4 class="card-title" style="font-weight:900; text-align:center" >{{$auth}}</h4>
                                 <table>
                                     <tr>
@@ -49,7 +49,7 @@
                                 <p align="right" style="font-size: 12px">Diposting : {!! $pemasukans->created_at !!}</p>
                             </div>
                             @empty
-                            <div class="card-body bg-light"  style="font-weight: 500; text-align:center; font-size:15px">Tidak Ada Data</div>
+                            <div class="card-body"  style="font-weight: 500; text-align:center; font-size:15px; background-color: lightblue">Tidak Ada Data</div>
                         @endforelse
                     </div>
                 </div>

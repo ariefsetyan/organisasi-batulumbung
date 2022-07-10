@@ -72,9 +72,13 @@
                                         </tfoot>
                                     </table>
                                     <div class="form-group">
-                                    <label>Sumber Dana</label>
-                                    <input type="text" name="text" class="form-control" required
-                                               id="sumber_dana" placeholder="Masukkan Sumber Dana">
+                                        <label>Sumber Dana</label>
+                                        <select name="sumber_dana" id="sumber_dana" class="form-control" required>
+                                            <option value="" selected>Pilih Sumber Dana</option>
+                                            @foreach($sumber_dana as $row)
+                                                <option value="{{$row->sumber_dana}}">{{$row->sumber_dana}}</option>
+                                            @endforeach
+                                        </select>
 
                                     </div>
 

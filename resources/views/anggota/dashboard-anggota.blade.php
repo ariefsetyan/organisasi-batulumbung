@@ -233,24 +233,6 @@
                                     </div>
                                     @enderror
                                 </div>
-
-                                <div class="form-group">
-                                    <label for="exampleFormControlSelect" >Jenis Organisasi</label> <br>
-                                    
-                                    <input type="checkbox" class="check_all" name="organisasi_id[]" id="sekaateruna" value="1" onclick="myFunction()"  @if($user->organisasi_id == "1") checked @endif > Sekaa Teruna<br>
-                                    <input type="checkbox" class="check_all" name="organisasi_id[]" id="sekaagong" value="2" onclick="myFunction()"  @if($user->organisasi_id == "2") checked @endif> Sekaa Gong<br>
-                                    <input type="checkbox" class="check_all" name="organisasi_id[]" id="sekaasanti" value="3" onclick="myFunction()"  @if($user->organisasi_id == "3") checked @endif> Sekaa Santi<br>
-                                    <input type="checkbox" class="check_all" name="organisasi_id[]" id="pkk" value="4" onclick="myFunction()"  @if($user->organisasi_id == "4") checked @endif> PKK<br>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="exampleFormControlSelect">Status</label>
-                                    <select name="status" value="{{ $user->status }}" class="form-control @error('status') is-invalid @enderror" 
-                                    id="exampleFormControlSelect">
-                                        <option value="Aktif" @if($user->status == "Aktif") selected @endif>Aktif</option>
-                                        <option value="Tidak Aktif" @if($user->status == "Tidak Aktif") selected @endif>Tidak Aktif</option>
-                                    </select>
-                                </div>
                                 <div class="form-group">
                                     <button type="button" class="btn btn-danger text-light" data-bs-dismiss="modal">Batal</button>
                                     <button type="submit" class="btn btn-primary">Simpan</button>

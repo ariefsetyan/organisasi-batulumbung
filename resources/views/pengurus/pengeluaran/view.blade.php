@@ -14,6 +14,7 @@
 </style>
 <div class="card">
     <div class="card-body">
+        <h4 align="center"><strong> Laporan Pengeluaran </strong></h4>
 @foreach($data1 as $x)
         <p>ID Pengeluaran: {{$x->id}}</p>
         <table>
@@ -35,7 +36,7 @@
 <br>
         <p>Subtotal : Rp {{number_format($x->total)}}</p>
         <p>Sumber Dana :  {{$x->sumber_dana}}</p>
-        <p>Jenis Organisasi :  {{$x->jenis}}</p>
+        <p>Jenis Organisasi :  {{$auth_id}}</p>
         <p>Keterangan : {{$x->keterangan}}</p>
         
 

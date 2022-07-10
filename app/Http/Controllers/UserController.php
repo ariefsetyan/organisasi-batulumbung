@@ -348,28 +348,19 @@ class UserController extends Controller
 
     public function updateProfilAnggota(Request $request, User $user)
     {
-        $message = [
-            'required' => 'Wajib diisi!',
-            'min'      => 'Wajib diisi minimal : 5, maksimal : 10  karakter!',
-            'max'      => 'Wajib diisi minimal : 5, maksimal : 10 karakter!',
-            'unique'   => 'Data sudah terdaftar'
-        ];
-
         $validateData = $request->validate([
             'nama'          => 'required',
             'tempat_lahir'  => 'required',
             'tgl_lahir'     => 'required',
-            'level'         => 'required',
             'email'         => 'required',
             'no_telp'       => 'required',
             'jenis_kelamin' => 'required',
             'pekerjaan'     => 'required',
-            'alamat'        => 'required',
-            'status'        => 'required'
+            'alamat'        => 'required'
         ]);
-        
+
         User::where('id', $user->id)
-                ->update($validateData);
+        ->update($validateData);
 
         // $organisasi = collect($request->organisasi_id);
         // $indeks = count($organisasi);

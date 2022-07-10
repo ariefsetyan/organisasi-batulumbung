@@ -30,9 +30,7 @@ class PengeluaranController extends Controller
     }
     public function form_pengeluaran()
     {
-        $sumber_dana = Pengeluaran::Get_sumber_dana();
-        $organisasi = Pengeluaran::Get_organisasi();
-
+      
         $auth_id = Organisasi::whereHas('detailUser',function($q){
             $q->where('user_id',Auth::id());
         })->value('id');
@@ -40,6 +38,9 @@ class PengeluaranController extends Controller
         $auth = Organisasi::whereHas('detailUser',function($q){
             $q->where('user_id',Auth::id());
         })->value('jenis');
+
+        $sumber_dana = Pengeluaran::where('organisasi_id', $auth_id)->get();
+        $organisasi = Pengeluaran::Get_organisasi();
 
         return view('pengurus.pengeluaran.form',compact('organisasi','sumber_dana', 'auth', 'auth_id'));
     }
@@ -57,7 +58,7 @@ class PengeluaranController extends Controller
                 "nama_barang"=>$nama_barang,
                 "jmlh_barang"=>$request->jumlah_barang[$i],
                 "satuan_harga"=>$request->harga_barang[$i],
-                "sumber_dana"=>"$request->sumber_dana",
+                "sumber_dana"=>$request->sumber_dana,
                 "keterangan"=>"$request->keterangan"
             );
 //            $pemasukan = Pengeluaran::Insert_pemasukan($data);
@@ -81,33 +82,51 @@ class PengeluaranController extends Controller
 
     public function detil($id)
     {
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('jenis');
+
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('id');
+
         $myarray = explode(',',$id);
-        $data1 = DB::table('pengeluaran as p')
-            ->select('o.jenis','p.total', 'ps.sumber_dana', 'p.keterangan','p.tanggal',DB::raw("GROUP_CONCAT(p.id) as id"))
-            ->leftJoin('organisasi as o','p.organisasi_id','=','o.id')
-            ->leftJoin('pemasukan as ps','p.sumber_dana', '=', 'ps.id')
-            ->whereIn('p.id',$myarray)
-            ->groupBy('o.jenis','p.total', 'ps.sumber_dana', 'p.keterangan','p.tanggal')
-            ->get();
+        // $data1 = DB::table('pengeluaran as p')
+        //     ->select('o.jenis','p.total', 'ps.sumber_dana', 'p.keterangan','p.tanggal',DB::raw("GROUP_CONCAT(p.id) as id"))
+        //     ->leftJoin('organisasi as o','p.organisasi_id','=','o.id')
+        //     ->leftJoin('pemasukan as ps','p.sumber_dana', '=', 'ps.id')
+        //     ->whereIn('p.id',$myarray)
+        //     ->groupBy('o.jenis','p.total', 'ps.sumber_dana', 'p.keterangan','p.tanggal')
+        //     ->get();
+
+        $data1 = Pengeluaran::where('id', $myarray)->get();
         $data = DB::table('pengeluaran')->orWhereIn('id',$myarray)->get();
-        return view('pengurus.pengeluaran.view',compact('data1','data'));
+        return view('pengurus.pengeluaran.view',compact('data1','data', 'auth_id'));
     }
 
     public function download($id)
     {
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('jenis');
+
+        $auth = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id',Auth::id());
+        })->value('id');
 
         $myarray = explode(',',$id);
-        $data1 = DB::table('pengeluaran as p')
-            ->select('o.jenis','p.total', 'ps.sumber_dana', 'p.keterangan','p.tanggal',DB::raw("GROUP_CONCAT(p.id) as id"))
-            ->leftJoin('organisasi as o','p.organisasi_id','=','o.id')
-            ->leftJoin('pemasukan as ps','p.sumber_dana', '=', 'ps.id')
-            ->whereIn('p.id',$myarray)
-            ->groupBy('o.jenis','p.total', 'ps.sumber_dana', 'p.keterangan','p.tanggal')
-            ->get();
+        // $data1 = DB::table('pengeluaran as p')
+        //     ->select('o.jenis','p.total', 'ps.sumber_dana', 'p.keterangan','p.tanggal',DB::raw("GROUP_CONCAT(p.id) as id"))
+        //     ->leftJoin('organisasi as o','p.organisasi_id','=','o.id')
+        //     ->leftJoin('pemasukan as ps','p.sumber_dana', '=', 'ps.id')
+        //     ->whereIn('p.id',$myarray)
+        //     ->groupBy('o.jenis','p.total', 'ps.sumber_dana', 'p.keterangan','p.tanggal')
+        //     ->get();
 
+        $data1 = Pengeluaran::where('id', $myarray)->get();
         $data = DB::table('pengeluaran')->orWhereIn('id',$myarray)->get();
 
-            $pdf = PDF::loadview('pengurus.pengeluaran.view',['data1'=>$data1,'data'=>$data]);
+            $pdf = PDF::loadview('pengurus.pengeluaran.view',['data1'=>$data1,'data'=>$data,'auth'=>$auth,'auth_id'=>$auth_id]);
             return $pdf->download('pengeluaran.pdf');
     }
 

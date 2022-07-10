@@ -73,7 +73,7 @@ class AbsensiController extends Controller
             $q->where('user_id',Auth::id());
         })->value('jenis');
         
-        $absensi = Absensi::whereIn('organisasi_id',$auth_id)->paginate(10);
+        $absensi = Absensi::whereIn('organisasi_id',$auth_id)->latest()->paginate(10);
         // dd($absensi);
         return view('pengurus/absensi/rekapan-absensi', compact('absensi', 'organisasi', 'kegiatan', 'auth', 'auth_id'));
     }

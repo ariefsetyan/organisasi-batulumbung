@@ -298,7 +298,7 @@ class AbsensiController extends Controller
                 'status' => $request->status
             ]);
 
-        return redirect('/absensi/absensi')->with('success', 'Data Absensi Berhasil Diubah!');
+        return redirect('/absensi/rekapan-absensi')->with('success', 'Data Absensi Berhasil Diubah!');
     }
 
     /**

@@ -166,90 +166,11 @@
                                     <td>{{$auth}}</td>
                                     <td>{{$absen->status}}</td>
                                     <td>
-                                        <button value="{{$absen->id}}" onclick="form_edit({{$absen->id}})" class="btn btn-primary" data-toggle="modal" data-target="#edit"><i class="bi bi-pencil-square"></i></button> |
                                         <a href="hapus_absen/{{$absen->id}}" class="btn btn-danger text-white"><i class="bi bi-trash-fill"></i></a></td>
                             @endforeach
                             </tbody>
                         </table>
-                        {{-- modaledit --}}
-                        <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <form method="post">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">update</h5>
-                                        </div>
-                                        <div class="modal-body">
-                                            {{ csrf_field() }}
-                                            <input type="text" hidden name="id_absen" class="form-control " id="id_absen">
-                                            <div class="form-group">
-                                                <label for="nama_angota">nama_anggota</label>
-                                                <input type="text" name="nama_anggota" class="form-control " id="nama_anggota" placeholder="Masukkan nama angota">
-                                                @error ('nama_angota')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                                @enderror
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="nama_kegiatan">nama_kegiatan</label>
-                                                <select name="nama_kegiatan" id="nama_kegiataan" class="form-control @error('nama_kegiatan') is-invalid @enderror" onchange="getvalanggota(this);">
-                                                    <option value="">Pilih kegiatan</option>
-                                                    @foreach($kegiatan as $kegiatans)
-                                                        <option value="{{$kegiatans->nama_kegiatan}}">{{$kegiatans->nama_kegiatan}}</option>
-                                                    @endforeach
-                                                </select>
-                                                @error ('nama_kegiatan')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                                @enderror
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="tanggal">Tanggal</label>
-                                                <input type="date" name="tanggal_absen" class="form-control @error('tanggal') is-invalid @enderror"
-                                                id="tanggal_absen" placeholder="Tanggal">
-
-                                                @error ('tanggal')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                                @enderror
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleFormControlSelect">Jenis Organisasi</label>
-                                                <select name="organisasi_id" class="form-control @error('organisasi_id') is-invalid @enderror" id="jenis_absen">
-                                                    <option value="">--Pilih--</option>
-                                                    <option value="1">Sekaa Teruna</option>
-                                                    <option value="2">Sekaa Gong</option>
-                                                    <option value="3">Sekaa Santi</option>
-                                                    <option value="4">PKK</option>
-                                                </select>
-                                                @error ('organisasi_id')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                                @enderror
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleFormControlSelect">status</label>
-                                                <select name="status" class="form-control @error('status') is-invalid @enderror" id="status">
-                                                    <option value="">--Pilih--</option>
-                                                    <option value="t">AKTIF</option>
-                                                    <option value="F">TIDAK AKTIF</option>
-
-                                                </select>
-                                                @error ('status')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                                @enderror
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button onclick="update()" type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
-                                            </div>
-                                            {{-- end modal edit --}}
+                       
                                         </div>
 
                                     </div>

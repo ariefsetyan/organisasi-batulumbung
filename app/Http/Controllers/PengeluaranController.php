@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pengeluaran;
+use App\Models\Pemasukan;
 use App\Models\Organisasi;
 use App\Models\DetailUser;
 use Illuminate\Http\Request;
@@ -39,7 +40,7 @@ class PengeluaranController extends Controller
             $q->where('user_id',Auth::id());
         })->value('jenis');
 
-        $sumber_dana = Pengeluaran::where('organisasi_id', $auth_id)->get();
+        $sumber_dana = Pemasukan::where('organisasi_id', $auth_id)->get();
         $organisasi = Pengeluaran::Get_organisasi();
 
         return view('pengurus.pengeluaran.form',compact('organisasi','sumber_dana', 'auth', 'auth_id'));

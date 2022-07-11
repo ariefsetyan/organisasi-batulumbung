@@ -231,11 +231,13 @@
                             <div class="card-body">
                                 @foreach ($pengumuman as $pengumuman)
                                 <div class="card-body bg-primary mb-2">
-                                    <h4 class="card-title" style="font-weight:800">{{$pengumuman->judul}}</h4>
+                                    <h4 class="card-title" style="font-weight:800">{{$pengumuman->judul}} | {{$pengumuman->tanggal}} </h4>
                                     <ul class="list-inline two-part d-flex align-items-center mb-0">
                                         <li>
                                             <span class="card-text ms-auto">{{$pengumuman->isi}}</span>
                                         </li>
+                                    </ul>
+                                    <ul class="list-inline two-part d-flex align-items-center mb-0">
                                         <li class="ms-auto">
                                             <a href="{{route('file.download', $pengumuman->id)}}" class="btn btn-danger text-light"><i class="bi bi-download"></i> Download</a>
                                         </li>
@@ -256,7 +258,7 @@
                                         <h4 class="card-title" style="font-weight:800">{{$events->nama_event}}</h4>
                                         <ul class="list-inline two-part d-flex align-items-center mb-0">
                                             <li>
-                                                <span class="card-text ms-auto">{{$events->tanggal}}</span>
+                                                <span class="card-text ms-auto" >{{$events->tanggal}}</span>
                                             </li>
                                         </ul>
                                         <ul class="list-inline two-part d-flex align-items-center mb-0"> 

@@ -103,9 +103,9 @@ class LoginController extends Controller
         $hitunganggota= User::where('level', 'Anggota')->whereHas('detail_user',function($q) use($auth_id){
             $q->where('organisasi_id',$auth_id);
         })->count();
-        $hitungevent = count($event);
-        $hitungkegiatan = count($kegiatan);
-        $hitungpengumuman = count($pengumuman);
+        $hitungevent = Event::where('organisasi_id', $auth_id)->count();
+        $hitungkegiatan = Kegiatan::where('organisasi_id', $auth_id)->count();
+        $hitungpengumuman = Pengumuman::where('organisasi_id', $auth_id)->count();
 
         $grafik = DB::table('absensi as a')->where('a.organisasi_id', $auth_id)
             ->select('jenis','a.nama_kegiatan',DB::raw('count(*) as jumlah'))

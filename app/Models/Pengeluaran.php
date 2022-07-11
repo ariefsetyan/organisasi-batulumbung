@@ -49,4 +49,10 @@ class Pengeluaran extends Model
     public function scopeInsert_pemasukan($data){
         return DB::table('pengeluaran')->insert($data);
     }
+
+    public function organisasi()
+    {
+        return $this->belongsTo(Organisasi::class);
+    }
+
 }

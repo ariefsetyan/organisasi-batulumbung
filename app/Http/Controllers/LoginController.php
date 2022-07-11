@@ -201,9 +201,9 @@ class LoginController extends Controller
 
     public function homePage(Request $request)
     {
-        $kegiatan = Kegiatan::latest()->paginate(5);
+        $kegiatan = Kegiatan::latest()->paginate(6);
         $organisasi = Organisasi::all();
-        $pengumuman = Pengumuman::latest()->paginate(5);
+        $pengumuman = Pengumuman::latest()->paginate(6);
         // dd($pengumuman);
         $event = Event::whereYear('tanggal', date('Y'))->whereMonth('tanggal', date('m'))->latest()->paginate(5);
 

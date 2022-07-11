@@ -96,9 +96,11 @@ class UserController extends Controller
          $auth = Organisasi::whereHas('detailUser',function($q){
             $q->where('user_id',Auth::id());
         })->value('jenis');
-
-        $user = User::where('status', $request->jenis)
-        ->where('level', 'Anggota')->get();
+       
+         $user = User::where('status', $request->jenis)
+         ->whereHas('detail_user',  function($q) use($auth_id){
+            $q->where('organisasi_id',$auth_id);
+        })->whereIn('id',$level)->get();
 
 		return view('pengurus/anggota/anggota', compact( 'user', 'auth', 'auth_id'));
     }
@@ -144,13 +146,11 @@ class UserController extends Controller
             $q->where('organisasi_id',$auth_id);
         })->whereNotIn('id',$level)->get();
 
-        $jenis = DetailUser::all();
-        $organisasi = Organisasi::all();
         $auth = Organisasi::whereHas('detailUser',function($q){
             $q->where('user_id',Auth::id());
         })->value('jenis');
 
-		return view('pengurus/pengurus-crud/pengurus', compact('organisasi', 'user', 'auth', 'auth_id'));
+		return view('pengurus/pengurus-crud/pengurus', compact('user', 'auth', 'auth_id'));
 
     }
 

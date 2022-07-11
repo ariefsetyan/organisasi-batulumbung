@@ -22,32 +22,41 @@
     </div>
 
     <div class="container-fluid">
+        @forelse ($pengeluaran as $data)
         <div class="col-lg-6 col-md-12 col-sm-12">
             <div class="card white-box p-0">
                 <div class="card-body">
-                    @forelse ($pengeluaran as $data)
-                        <div class="card-body mb-2" style="background-color: lightblue"> 
-                            <h4 class="card-title" style="font-weight:900; text-align:center" >{{$auth}}</h4>
-                            <table>
-                                <tr>
-                                    <td style="width: 160px; "><b>Tanggal</td>
-                                    <td>{{$data->tanggal}}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 160px; "><b>Total Pengeluaran</td>
-                                    <td>Rp {{number_format($data->total)}}</td>
-                                </tr>
-                                <tr>
-                                    <td><b>Sumber Dana</td>
-                                    <td>{{$data->sumber_dana}}</td>
-                                </tr>
-                                <tr>
-                                    <td><b>Keterangan</td>
-                                    <td>{{$data->keterangan}}</td>
-                                </tr>
+                        <div class="card-body bg-light mb-2">
+                            <table class="table table-sm">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <td colspan="2" style="font-weight:900; text-align:center; font-size:20px" >{{$data->organisasi->jenis}}</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="width: 160px; font-weight:700 ">Tanggal</td>
+                                        <td>{{$data->tanggal}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 160px; font-weight:700 ">Total Pengeluaran</td>
+                                        <td>Rp {{number_format($data->total)}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 160px; font-weight:700 ">Sumber Dana</td>
+                                        <td>{{$data->sumber_dana}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 160px; font-weight:700 ">Keterangan</td>
+                                        <td>{{$data->keterangan}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href ="{{$data->id}}/detail" class="btn btn-danger text-light m-t-10" data-bs-toggle="modal" data-bs-target="#detailPengeluaran">Detail</a></td></td>
+                                        <td style="font-size: 12px; text-align:right">Diposting : {!! $data->created_at !!}</td>
+                                    </tr>
+                                </tbody>
                             </table>
-                            <a href ="{{$data->id}}/detail" class="btn btn-danger text-light m-t-10" data-bs-toggle="modal" data-bs-target="#detailPengeluaran">Detail</a></td>
-                             <!-- Modal -->
+                            <!-- Modal -->
                              <div class="modal fade" id="detailPengeluaran" tabindex="-1" role="dialog" aria-labelledby="detailPengeluaranTitle" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
@@ -88,7 +97,7 @@
                                             <tr>
                                                 <td>Jenis Organisasi</td>
                                                 <td>:</td>
-                                                <td>{{$auth}}</td>
+                                                <td>{{$data->organisasi->jenis}}</td>
                                             </tr>
                                             <tr>
                                                 <td>Keterangan</td>
@@ -105,14 +114,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <p align="right" style="font-size: 12px">Diposting : {!! $data->created_at !!}</p>
                         </div>
-                        @empty
-                        <div class="card-body"  style="font-weight: 500; text-align:center; font-size:15px; background-color: lightblue">Tidak Ada Data</div>
-                    @endforelse
+                    </div>
                 </div>
             </div>
-        </div>
+            @empty
+            <div class="card-body"  style="font-weight: 500; text-align:center; font-size:15px; background-color: lightblue">Tidak Ada Data</div>
+        @endforelse
     </div>  
 </div>       
   

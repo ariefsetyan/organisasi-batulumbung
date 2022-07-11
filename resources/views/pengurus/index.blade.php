@@ -187,15 +187,20 @@
 
   <!-- pengumuman section -->
 
-  <section class="service_section layout_padding ">
+  
+
+  <!-- end pengumuman section -->
+
+   <!-- pengumuman section -->
+
+   <section class="service_section layout_padding ">
     <div class="container" id="pengumuman">
       <h2 class="custom_heading">Pengumuman</h2>
       <div class=" layout_padding2">
         <div class="card-deck">
           <div class="card">
-            <div class="row">
-              <div class="card-body">
               @forelse($pengumuman as $pengumumans)
+              <div class="card-body">
               <h5  style="font-weight: 800; ">
                   {{$pengumumans->judul}} - {{$pengumumans->organisasi->jenis}}
               </h5>
@@ -203,46 +208,54 @@
                 <h6>{{$pengumumans->tempat}}</h6>
                 <h6>{{$pengumumans->isi}}</h6>
                 <h6><a href="{{route('file.download', $pengumumans->id)}}">Download File</a></h6>
-                <p align="right" style="font-size: 12px">Diposting : {!! $pengumumans->created_at !!}</p>
+                <p style="font-size: 12px; text-align:right">Diposting : {!! $pengumumans->created_at !!}</p>
                 <hr color="orange">
-              @empty
-              <span  style="font-weight: 800; ">Tidak Ada Data</span>
-              @endforelse
               </div>
+              @empty
+                  <span  style="font-weight: 800; ">Tidak Ada Data</span>
+              @endforelse
             </div>
-          </div>
         </div>
+      </div>
     </div>
   </section>
 
   <!-- end pengumuman section -->
 
-   <!-- kegiatan section -->
+  <!-- kegiatan section -->
 
-   <section class="service_section layout_padding">
+  <section class="kegiatan_section">
     <div class="container" id="kegiatan">
       <h2 class="custom_heading">Kegiatan</h2>
       <div class=" layout_padding2">
         <div class="card-deck">
-          <div class="card">
-            <div class="row">
-              <div class="card-body">
-                @forelse($kegiatan as $kegiatans)
-                <h5  style="font-weight: 800; ">
-                  {{$kegiatans->nama_kegiatan}} - {{$kegiatans->organisasi->jenis}}
-                </h5>
-                <h6>{{$kegiatans->tanggal}} | {{$kegiatans->waktu}}</h6>
-                <h6>{{$kegiatans->tempat}}</h6>
-                <h6>{!! $kegiatans->deskripsi !!}</h6>
-                <p align="right" style="font-size: 12px">Diposting : {!! $kegiatans->created_at !!}</p>
-                <hr color="orange">
-                @empty
-                  <span  style="font-weight: 800; ">Tidak Ada Data</span>
-                @endforelse
+            @forelse($kegiatan as $kegiatans)
+            <div class="col-sm-6 d-flex mt-3">
+              <div class="card">
+                <div class="card-header">
+                @if($kegiatans->image)
+                  <div align="center" style="overflow:hidden;">
+                    <img class="card-img-top" src="{{ URL::to('/images/'.$kegiatans->image) }}">
+                  </div>
+                @endif
+                </div>
+                <div class="card-body">
+                  <h5 style="font-weight: 800; ">
+                    {{$kegiatans->nama_kegiatan}} - {{$kegiatans->organisasi->jenis}}
+                  </h5>
+                  <h6>{{$kegiatans->tanggal}} | {{$kegiatans->waktu}}</h6>
+                  <h6>{{$kegiatans->tempat}}</h6>
+                  <h6>{!! $kegiatans->deskripsi !!}</h6>
+                  <p style="font-size: 12px; text-align:right">Diposting : {!! $kegiatans->created_at !!}</p>
+                </div>
+                <center><hr color="orange" width="50%">
               </div>
             </div>
-          </div>
+          @empty
+          <span  style="font-weight: 800; ">Tidak Ada Data</span>
+          @endforelse
         </div>
+      </div>
     </div>
   </section>
 
@@ -266,7 +279,7 @@
                 <h6>{{$events->tanggal}} | {{$events->waktu}}</h6>
                 <h6>{{$events->tempat}}</h6>
                 <h6>{{$events->keterangan}}</h6>
-                <p align="right" style="font-size: 12px">Diposting : {!! $events->created_at !!}</p>
+                <p style="font-size: 12px; text-align:right">Diposting : {!! $events->created_at !!}</p>
                 <hr color="orange">
                 @empty
                   <span  style="font-weight: 800; ">Tidak Ada Data</span>
@@ -278,6 +291,7 @@
       </div>
     </div>
   </section>
+
 
   <!-- end event section -->
 

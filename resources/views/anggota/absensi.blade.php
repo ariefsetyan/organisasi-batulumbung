@@ -26,7 +26,7 @@
             <div class="card bg-light" style="width: 100rem;">
                 <div class="card-body bg-light">
                     <div class="table-responsive mt-3">
-                        <table class="table table-info table-striped">
+                        <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th style="font-weight: 800">NO</th>

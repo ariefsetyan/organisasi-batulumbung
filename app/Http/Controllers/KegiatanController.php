@@ -48,8 +48,8 @@ class KegiatanController extends Controller
             $q->where('user_id',Auth::id());
         })->value('jenis');
         
-        $kegiatan = Kegiatan::latest()->filter(request(['cariKegiatan', 'jenis']))->paginate(10)->withQueryString();
-       
+        $kegiatan = Kegiatan::where('organisasi_id',$auth_id)->latest()->filter(request(['cariKegiatan']))->paginate(10)->withQueryString();
+
 		return view('pengurus/kegiatan/kegiatan', compact(['auth', 'auth_id', 'kegiatan']));
  
     }
@@ -85,8 +85,8 @@ class KegiatanController extends Controller
             return redirect()->back()->withInput()->with('status', 'Tanggal awal tidak boleh lebih dari tanggal akhir filter');
         }
 
-        $kegiatan = Kegiatan::whereBetween('tanggal', [$dari, $sampai])->latest()->paginate(10);
-        $organisasi = Organisasi::all();
+        $kegiatan = Kegiatan::whereBetween('tanggal', [$dari, $sampai])
+        ->where('organisasi_id', $auth_id)->latest()->paginate(10);
 
         return view ('/pengurus/kegiatan/kegiatan', ['auth' => $auth, 'auth_id' => $auth_id, 'kegiatan' => $kegiatan, 'dari' => $request->dari, 'sampai' => $request->sampai, 'organisasi' => $organisasi]);
     }
@@ -236,7 +236,7 @@ class KegiatanController extends Controller
             $q->where('user_id',Auth::id());
         })->value('jenis');
         
-        $kegiatan = Kegiatan::whereIn('organisasi_id',$auth_id)->latest()->paginate(10);
+        $kegiatan = Kegiatan::whereIn('organisasi_id',$auth_id)->latest()->paginate(5);
 
         return view ('anggota/kegiatan', compact(['auth_id', 'auth', 'kegiatan']));
     }
@@ -253,8 +253,8 @@ class KegiatanController extends Controller
             $q->where('user_id',Auth::id());
         })->value('jenis');
 
-        $kegiatan = Kegiatan::latest()->filter(request(['cariKegiatanAnggota']))->paginate(10)->withQueryString();
-       
+        $kegiatan = Kegiatan::where('organisasi_id',$auth_id)->latest()->filter(request(['cariKegiatanAnggota']))->paginate(10)->withQueryString();
+
 		return view('anggota/kegiatan', compact(['auth', 'auth_id', 'kegiatan']));
  
     }

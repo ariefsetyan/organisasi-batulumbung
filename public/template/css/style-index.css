@@ -317,32 +317,43 @@ a:focus {
 
 
 
-
-
-
 /* tasty section */
+.kegiatan_section .card-img-top{
+  width: 30%;
+}
+.kegiatan_section .card .card-body {
+ text-align: center;
+}
 
-.tasty_section {
+.kegiatan_section .card .card-title {
+  color: #fc5d35;
+
+}
+
+.kegiatan_section .card::after {
+  content: "";
+  position: absolute;
   width: 100%;
-  height: 500px;
-  background-image: url(../images/tasty-image.png);
-  background-repeat: no-repeat;
-  background-size: cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  height: 7px;
+  background-color: transparent;
+}
+
+.kegiatan_section .card:hover {
+  cursor: pointer;
+  border: none;
+  border-radius: 0;
+  -webkit-box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.2);
 
 }
 
-.tasty_section h2 {
-  font-size: 125px;
-  text-align: center;
-  font-weight: bold;
-  color: #ffffff;
-  text-transform: uppercase;
+.kegiatan_section .card:hover::after {
+  background-color: #fc5d35;
 }
 
-/* end tasty section */
+
+/* end kegiatan section */
 
 /* client section */
 .client_container {

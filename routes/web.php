@@ -129,18 +129,20 @@ use App\Models\Absensi;
     // Absensi
     Route::get('/absensi/absensi', 'App\Http\Controllers\AbsensiController@index');
     Route::get('/pengurus/absensi/create-absensi', 'App\Http\Controllers\AbsensiController@create');
-    // Route::get('/absensi/absensi/{absensi}', 'App\Http\Controllers\AbsensiController@show');
     Route::post('/pengurus/absensi/absensi', 'App\Http\Controllers\AbsensiController@store');
     Route::delete('/absensi/absensi/{absensi}', 'App\Http\Controllers\AbsensiController@destroy');
     // Route::get('/absensi/absensi/{absensi}/edit', 'App\Http\Controllers\AbsensiController@edit');
     Route::patch('/absensi/absensi/{absensi}', 'App\Http\Controllers\AbsensiController@update')->name('editAbsensi');
-    // Route::post('/absensi/absensi', 'App\Http\Controllers\AbsensiController@import_excel');
     Route::get('/absensi/cetak-absensi', 'App\Http\Controllers\AbsensiController@cetakAbsensi')->name('cetak-absensi');
-    Route::get('/absensi/daftar_absensi', 'App\Http\Controllers\AbsensiController@daftarAbsensi')->name('daftar_absensi');
+    Route::get('/absensi/daftar_absensi/{kegiatan}', 'App\Http\Controllers\AbsensiController@daftarAbsensi')->name('daftar_absensi');
     Route::get('/absensi/rekapan-absensi', 'App\Http\Controllers\AbsensiController@rekapanAbsensi')->name('rekapan-absensi');
     Route::get('/absensi/cariAbsensi','App\Http\Controllers\AbsensiController@cariAbsensi')->name('cariAbsensi');
     Route::get('/absensi/cariStatus','App\Http\Controllers\AbsensiController@cariStatus')->name('cariStatus');
-    Route::get('/absensi/filterTanggal','App\Http\Controllers\AbsensiController@filterTanggal')->name('filterTanggalAbsensi');
+    Route::get('/absensi/filterTanggal','App\Http\Controllers\AbsensiController@filterTanggal')->name('filterTanggal');
+    // Route::get('/absensi/filterTanggalRekapan','App\Http\Controllers\AbsensiController@filterTanggalRekapan')->name('filterTanggalRekapan');
+    // Route::get('/absensi/daftar_absensi/{absensi}', 'App\Http\Controllers\AbsensiController@showdaftarAbsensi')->name('daftar_absensi');
+    // Route::get('/absensi/absensi/{absensi}', 'App\Http\Controllers\AbsensiController@show');
+    // Route::post('/absensi/absensi', 'App\Http\Controllers\AbsensiController@import_excel');
     // Route::get('/absensi/cariOrganisasi','App\Http\Controllers\AbsensiController@cariOrganisasi')->name('cariOrganisasi');
 
     // Rekapan Keuangan
@@ -159,7 +161,7 @@ use App\Models\Absensi;
     Route::get('absensi/get_kegiatan/{id}','App\Http\Controllers\AbsensiController@get_kegiatan');
     Route::get('absensi/get_absen/{id}','App\Http\Controllers\AbsensiController@get_absen');
     Route::get('absensi/hapus_absen/{id}','App\Http\Controllers\AbsensiController@hapus');
-    Route::post('absensi/update_absen','App\Http\Controllers\AbsensiController@update_absen');
+    // Route::post('absensi/update_absen','App\Http\Controllers\AbsensiController@update_absen');
     Route::get('verifikasi-akun','App\Http\Controllers\RegisterController@verifikasi_akun');
     Route::get('proses-verif/{id}','App\Http\Controllers\RegisterController@update_akun');
 

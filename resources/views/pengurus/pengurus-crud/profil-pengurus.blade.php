@@ -28,7 +28,7 @@
         </div>
         @endif
 
-        <table class="table table-light table-borderless">
+        <table class="table table-secondary table-striped"">
         @foreach($user as $user)
             <tr>
                 <th style="width:200px">ID</th>

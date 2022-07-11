@@ -24,14 +24,24 @@
     <div class="container-fluid">
         <div class="row ">
             @forelse($kegiatan as $kegiatan)
-            <div class="card" style="width: 100rem; background-color: lightblue">
+            <div class="card bg-light" style="width: 100rem;">
                 <div class="card-body">
-                    <h4 class="card-title" style="font-weight: 800; ">{{$kegiatan->nama_kegiatan}} - {{$auth}}</h4>
-                    <p class="card-text">{{$kegiatan->tanggal}} | {{$kegiatan->waktu}}</p>
-                    <p class="card-text">{{$kegiatan->tempat}}</p>
-                    <p class="card-text">{!! $kegiatan->deskripsi !!}</p>
-                    <a href="/kegiatan/kegiatan_pdf/{{$kegiatan->id}}" class="btn btn-danger text-white"><i class="bi bi-download"></i> Download</a>
-                    <p align="right" style="font-size: 12px">Diposting : {!! $kegiatan->created_at !!}</p>
+                    <table class="table table-sm">
+                        <tr>
+                            <td colspan="2" style="font-weight: 800; text-align: center">{{$kegiatan->nama_kegiatan}} - {{$kegiatan->organisasi->jenis}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><b>Tanggal</b> : {{$kegiatan->tanggal}} | <b>Waktu</b> : {{$kegiatan->waktu}} | <b>Tempat</b> : {{$kegiatan->tempat}}</td>  
+                        </tr>
+                        <tr>
+                            <td colspan="2">{!! $kegiatan->deskripsi !!}</td>
+                        </tr>
+                        <tr>
+                            <td><a href="/kegiatan/kegiatan_pdf/{{$kegiatan->id}}" class="btn btn-danger text-white"><i class="bi bi-download"></i> Download</a></td>
+                            <td style="font-size: 12px; text-align:right"> Diposting : {!! $kegiatan->created_at !!}</td>
+                        </tr>
+                    </table>
+                    
                 </div>
             </div>
             @empty

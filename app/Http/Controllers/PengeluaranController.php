@@ -142,7 +142,7 @@ class PengeluaranController extends Controller
             $q->where('user_id',Auth::id());
         })->value('jenis');
 
-        $pengeluaran = Pengeluaran::whereIn('organisasi_id',$auth_id)->latest()->paginate(10);
+        $pengeluaran = Pengeluaran::whereIn('organisasi_id',$auth_id)->latest()->paginate(5);
 
         return view('anggota.pengeluaran_anggota',compact('pengeluaran', 'auth', 'auth_id'));
     }

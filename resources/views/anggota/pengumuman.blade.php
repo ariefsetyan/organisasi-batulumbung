@@ -24,13 +24,23 @@
     <div class="container-fluid">
         <div class="row ">
             @forelse ($pengumuman as $pengumuman)
-                <div class="card" style="width: 100rem; background-color: lightblue">
+                <div class="card bg-light" style="width: 100rem">
                     <div class="card-body">
-                        <h4 class="card-title" style="font-weight: 800; ">{{$pengumuman->judul}} - {{$auth}}</h4>
-                        <p class="card-text">{{$pengumuman->tanggal}} | {{$pengumuman->waktu}}</p>
-                        <p class="card-text">{{$pengumuman->isi}}</p>
-                        <a href="{{route('file.download', $pengumuman->id)}}" class="btn btn-danger text-light"><i class="bi bi-download"></i> Download</a>
-                        <p align="right" style="font-size: 12px">Diposting : {!! $pengumuman->created_at !!}</p>
+                        <table class="table table-sm">
+                            <tr>
+                                <td colspan="2" style="font-weight: 800; text-align: center">{{$pengumuman->judul}} - {{$pengumuman->organisasi->jenis}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><b>Tanggal</b> : {{$pengumuman->tanggal}} | <b>Waktu</b> : {{$pengumuman->waktu}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">{{$pengumuman->isi}}</td>
+                            </tr>
+                            <tr>
+                                <td><a href="{{route('file.download', $pengumuman->id)}}" class="btn btn-danger text-light"><i class="bi bi-download"></i> Download</a></td>
+                                <td style="font-size: 12px; text-align:right">Diposting : {!! $pengumuman->created_at !!}</td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
                 @empty

@@ -95,7 +95,7 @@ class PemasukanController extends Controller
             $q->where('user_id',Auth::id());
         })->value('jenis');
 
-        $pemasukan = Pemasukan::whereIn('organisasi_id',$auth_id)->latest()->paginate(10);
+        $pemasukan = Pemasukan::whereIn('organisasi_id',$auth_id)->latest()->paginate(5);
         
         return view('anggota.pemasukan_anggota',compact('auth', 'auth_id', 'pemasukan'));
     }

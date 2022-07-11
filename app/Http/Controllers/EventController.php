@@ -40,8 +40,9 @@ class EventController extends Controller
         $auth = Organisasi::whereHas('detailUser',function($q){
             $q->where('user_id',Auth::id());
         })->value('jenis');
+         
+        $event = Event::where('organisasi_id',$auth_id)->latest()->filter(request(['cariEvent']))->paginate(10)->withQueryString();
 
-        $event = Event::whereIn('organisasi_id',$auth_id)->latest()->filter(request(['cariEvent']))->paginate(10)->withQueryString();
        
 		return view('pengurus/event/event', compact(['auth', 'auth_id', 'event']));
  
@@ -78,7 +79,8 @@ class EventController extends Controller
             return redirect()->back()->withInput()->with('status', 'Tanggal awal tidak boleh lebih dari tanggal akhir filter');
         }
 
-        $event = Event::whereBetween('tanggal', [$dari, $sampai])->latest()->paginate(10);
+        $event = Event::whereBetween('tanggal', [$dari, $sampai])
+        ->where('organisasi_id', $auth_id)->latest()->paginate(10);
 
         return view ('/pengurus/event/event', ['event' => $event, 'auth' => $auth, 'auth_id' => $auth_id, 'dari' => $request->dari, 'sampai' => $request->sampai]);
     }
@@ -157,7 +159,7 @@ class EventController extends Controller
             $q->where('user_id',Auth::id());
         })->value('jenis');
 
-        $event = Event::whereIn('organisasi_id',$auth_id)->latest()->paginate(10);
+        $event = Event::whereIn('organisasi_id',$auth_id)->latest()->paginate(5);
 
         return view ('anggota/event', compact([ 'event', 'auth_id', 'auth']));
     }

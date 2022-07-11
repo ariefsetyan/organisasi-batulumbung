@@ -33,27 +33,32 @@
                     </div>
                     @endif
 
-                    <form action="{{ route ('filterTanggalAbsensi') }}" method="get">
-                        @csrf
+                    <div class="row">
                         <div class="col-md-6">
-                            <div class="input-group mb-3" style="width:500px">
-                                <input type="text" class="form-control" name="dari" value="{{ isset($dari) ? $dari : old('dari')}}" onfocusin="(this.type='date')" outfocusin="(this.type='text)" placeholder="Tanggal Awal">
-                                <input type="text" class="form-control" name="sampai" value="{{ isset($sampai) ? $sampai : old('sampai')}}"  onfocusin="(this.type='date')" outfocusin="(this.type='text)" placeholder="Tanggal Akhir">
-                                <button class="btn btn-primary" type="submit" style="width:70px"> Filter</button>
-                            </div>
-                        </div>
-                    </form>
-
-                    <form class="form mb-3" method="get" action="{{ route ('cariAbsensi') }}">
-                        <div class="row mb-3">
-                            <div class="col-md-6">
+                            <form class="form mb-3" method="get" action="{{ route ('cariStatus') }}">
                                 <div class="form-group">
+                                <input type="hidden" name="kegiatan" value="{{$kegiatan ?? ''}}">  
+                                    <select name="jenis" id="jenis" class="form-control" style="width: 500px" onchange="this.form.submit()" >
+                                        <option value="" selected>Filter Status</option>
+                                        <option value="Hadir">Hadir</option>
+                                        <option value="Tidak Hadir">Tidak Hadir</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-6">
+                            <form class="form mb-3" method="get" action="{{ route ('cariAbsensi') }}">
+                                <div class="form-group">
+                                    <input type="hidden" name="kegiatan" value="{{$kegiatan ?? ''}}">  
                                     <input type="text" name="cariAbsensi" class="form-control w-75 d-inline" value="{{ request('cariAbsensi')}}" id="cariAbsensi" placeholder="Cari ...">
                                     <button type="submit" class="btn btn-primary mb-1"><i class="fa fa-search"></i> Cari</button>
-                                </div>
-                            </div>
+                                </div>  
+                            </form>
                         </div>
-                    </form>
+                    </div>
+
+
+                  
 
                     <div class="table-responsive mt-3">
                         <table class="table table-striped">
@@ -70,67 +75,65 @@
                                 </tr>
                             </thead>
 
-                                    <tbody>
-                                    @forelse ($absensi as $result => $absen)
-                                        <tr>
-                                            <th scope="row">{{ $result + $absensi->firstitem() }}</th>
-                                            <td>{{$absen->user_id}}</td>
-                                            <td>{{$absen->nama}}</td>
-                                            <td>{{$absen->nama_kegiatan}}</td>
-                                            <td>{{ \Carbon\Carbon::parse($absen->tanggal)->format('Y-m-d')}}</td>
-                                            <!-- carbon format (y-m-d) -->
-                                            <td>{{$auth}}</td>
-                                            <td>{{$absen->status}}</td>
-                                            <td><a href="/absensi/absensi/{{$absen->id}}"  class="btn btn-primary" data-toggle="modal" data-target="#editData{{ $absen->id }}"><i class="bi bi-pencil-square"></i></a> |
-                                            <div class="modal fade" id="editData{{ $absen->id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editDataLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="editDataLabel">Form Edit Data</h5>
-                                                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                        <form method="post" action="{{ route ('editAbsensi', $absen->id)}}" style="width:100%">
-                                                            @method('patch')
-                                                            @csrf
-                                                            <div class="form-group">
-                                                                <label for="exampleFormControlSelect">Status</label>
-                                                                <select name="status" value="{{ $absen->status }}" class="form-control @error('status') is-invalid @enderror"
-                                                                id="exampleFormControlSelect">
-                                                                    <option value="Hadir" @if($absen->status == "Hadir") selected @endif>Hadir</option>
-                                                                    <option value="Tidak Hadir" @if($absen->status == "Tidak Hadir") selected @endif>Tidak Hadir</option>
-                                                                </select>
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <button type="button" class="btn btn-danger text-light" data-dismiss="modal">Batal</button>
-                                                                <button type="submit" class="btn btn-primary">Simpan</button>
-                                                            </div>
-                                                            </form>
-                                                        </div>
+                            <tbody>
+                                @forelse($absensi as $absensi)
+                                <tr>
+                                    <th>{{$loop->iteration}}</th>
+                                    <td>{{$absensi->user_id}}</td>
+                                    <td>{{$absensi->nama}}</td>
+                                    <td>{{$absensi->nama_kegiatan}}</td>
+                                    <td>{{ \Carbon\Carbon::parse($absensi->tanggal)->format('Y-m-d')}}</td>
+                                    <!-- carbon format (y-m-d) -->
+                                    <td>{{$auth}}</td>
+                                    <td>{{$absensi->status}}</td>
+                                    <td><a href="/absensi/absensi/{{$absensi->id}}"  class="btn btn-primary" data-toggle="modal" data-target="#editData{{ $absensi->id }}"><i class="bi bi-pencil-square"></i></a> |
+                                    <div class="modal fade" id="editData{{ $absensi->id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editDataLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="editDataLabel">Form Edit Data</h5>
+                                                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                <form method="post" action="{{ route ('editAbsensi', $absensi->id)}}" style="width:100%">
+                                                    @method('patch')
+                                                    @csrf
+                                                    <div class="form-group">
+                                                        <label for="exampleFormControlSelect">Status</label>
+                                                        <select name="status" value="{{ $absensi->status }}" class="form-control @error('status') is-invalid @enderror" 
+                                                        id="exampleFormControlSelect">
+                                                            <option value="Hadir" @if($absensi->status == "Hadir") selected @endif>Hadir</option>
+                                                            <option value="Tidak Hadir" @if($absensi->status == "Tidak Hadir") selected @endif>Tidak Hadir</option>
+                                                        </select>
                                                     </div>
+
+                                                    <div class="form-group">
+                                                        <button type="button" class="btn btn-danger text-light" data-dismiss="modal">Batal</button>
+                                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                                    </div>
+                                                    </form>
                                                 </div>
                                             </div>
-                                            <form action="/absensi/absensi/{{$absen->id}}" method="post" class="d-inline">
-                                                @method('delete')
-                                                @csrf
-                                                <button type="submit" class="btn btn-danger text-light"><i class="bi bi-trash-fill"></i></button>
-                                            </form>
-                                            </td>
-                                        </tr>
-                                        @empty
-                                        <td colspan="8" class="table-active text-center">Tidak Ada Data</td>
-                                        @endforelse
-                                    </tbody>
-                                </table>
-                                <div class="d-flex justify-content-start">
-                                    {{$absensi->links()}}
-                                </div>
-                                <a href="/absensi/absensi" class="btn btn-danger my-3 text-light">Kembali</a>
-                            </div>
-                        </div>
+                                        </div>
+                                    </div>
+                                    <form action="/absensi/absensi/{{$absensi->id}}" method="post" class="d-inline">
+                                        @method('delete')
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger text-light"><i class="bi bi-trash-fill"></i></button>
+                                    </form> 
+                                    </td>
+                                </tr>
+                                @empty
+                                <td colspan="8" class="table-active text-center">Tidak Ada Data</td>
+                                @endforelse
+                            </tbody>
+                        </table>
+                        
+                        <a href="/absensi/rekapan-absensi" class="btn btn-danger my-3 text-light">Kembali</a>
                     </div>
                 </div>
             </div>
         </div>
-        @endsection
+    </div>
+</div>
+@endsection

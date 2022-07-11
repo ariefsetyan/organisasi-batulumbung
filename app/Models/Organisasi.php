@@ -43,6 +43,11 @@ class Organisasi extends Model
     {
         return $this->HasMany(pemasukan::class);
     }
+    
+    public function pengeluaran()
+    {
+        return $this->HasMany(pengeluaran::class);
+    }
 }
 
 

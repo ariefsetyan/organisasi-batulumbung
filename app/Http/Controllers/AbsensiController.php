@@ -41,29 +41,27 @@ class AbsensiController extends Controller
         return view('pengurus.absensi.absensi', compact('absensi', 'organisasi', 'kegiatan', 'auth', 'auth_id'));
     }
 
-    public function daftarAbsensi(Absensi $absensi)
+    public function daftarAbsensi(Absensi $absensi, Kegiatan $kegiatan )
     {
-        $organisasi = Organisasi::all();
-        $kegiatan = Kegiatan::all();
-        
+               
         $auth_id = Organisasi::whereHas('detailUser',function($q){
             $q->where('user_id',Auth::id());
-        })->pluck('id');
+        })->value('id');
         
         $auth = Organisasi::whereHas('detailUser',function($q){
             $q->where('user_id',Auth::id());
         })->value('jenis');
-        
-        $absensi = Absensi::whereIn('organisasi_id',$auth_id)->latest()->paginate(10);
+
+        $absensi = Absensi::where('organisasi_id', $auth_id)
+        ->where('nama_kegiatan', $kegiatan->nama_kegiatan)->get();
 
         // dd($absensi);
-        return view('pengurus/absensi/daftar_absensi', compact('absensi', 'organisasi', 'kegiatan', 'auth', 'auth_id'));
+        return view('pengurus/absensi/daftar_absensi', ['kegiatan'=>$kegiatan->nama_kegiatan], compact(['absensi',  'auth', 'auth_id']));
     }
 
     public function rekapanAbsensi(Absensi $absensi)
     {
         $organisasi = Organisasi::all();
-        $kegiatan = Kegiatan::all();
         
         $auth_id = Organisasi::whereHas('detailUser',function($q){
             $q->where('user_id',Auth::id());
@@ -73,6 +71,7 @@ class AbsensiController extends Controller
             $q->where('user_id',Auth::id());
         })->value('jenis');
         
+        $kegiatan = Kegiatan::whereIn('organisasi_id', $auth_id)->get();
         $absensi = Absensi::whereIn('organisasi_id',$auth_id)->latest()->paginate(10);
         // dd($absensi);
         return view('pengurus/absensi/rekapan-absensi', compact('absensi', 'organisasi', 'kegiatan', 'auth', 'auth_id'));
@@ -89,11 +88,16 @@ class AbsensiController extends Controller
             $q->where('user_id',Auth::id());
         })->value('jenis');
 
-        $absensi = Absensi::whereIn('organisasi_id',$auth_id)->latest()->filter(request(['cariAbsensi']))->paginate(10)->withQueryString();
-        $kegiatan = Kegiatan::all();
+        $absensi = Absensi::where('organisasi_id',$auth_id)
+        ->where('nama_kegiatan', $request->kegiatan)->filter(request(['cariAbsensi']))->paginate(10)->withQueryString();
+        $kegiatan = $request->kegiatan;
 
-        return view('pengurus/absensi/rekapan-absensi', compact('absensi','kegiatan', 'auth_id', 'auth'));
+        // $kegiatan = Kegiatan::whereIn('organisasi_id',$auth_id)->latest()->paginate(10);
+        // $absensi = Absensi::whereIn('organisasi_id',$auth_id)->latest()->filter(request(['cariAbsensi']))->paginate(10)->withQueryString();
+
+        return view('pengurus/absensi/daftar_absensi', compact('absensi', 'kegiatan', 'auth_id', 'auth'));
     }
+
 
     public function cariStatus(Request $request)
     {
@@ -106,12 +110,13 @@ class AbsensiController extends Controller
             $q->where('user_id',Auth::id());
         })->value('jenis');
 
-        $absensi = Absensi::where('status', $request->jenis)->where('organisasi_id',$auth_id)->get();
-       
-        // $absensi = Absensi::whereIn('organisasi_id',$auth_id)->latest()->filter(request(['cariStatus']))->paginate(10)->withQueryString();
-        $kegiatan = Kegiatan::all();
+        $absensi = Absensi::where('status', $request->jenis)
+        ->where('organisasi_id',$auth_id)
+        ->where('nama_kegiatan', $request->kegiatan)->get();
 
-        return view('pengurus/absensi/rekapan-absensi', compact('absensi','kegiatan', 'auth_id', 'auth'));
+        $kegiatan = $request->kegiatan;
+
+        return view('pengurus/absensi/daftar_absensi', compact(['absensi', 'auth_id', 'auth', 'kegiatan']));
     }
 
     public function filterTanggal(Request $request)
@@ -135,22 +140,24 @@ class AbsensiController extends Controller
         if($request->dari > $request->sampai){
             return redirect()->back()->withInput()->with('status', 'Tanggal awal tidak boleh lebih dari tanggal akhir filter');
         }
-
-        $absensi = Absensi::whereBetween('tanggal', [$dari, $sampai])->latest()->paginate(10);
-        // $organisasi = Organisasi::all();
-        $kegiatan = Kegiatan::all();
-
+        
         $auth = Organisasi::whereHas('detailUser',function($q){
             $q->where('user_id',Auth::id());
         })->value('jenis');
-
-          
+        
+        
         $auth_id = Organisasi::whereHas('detailUser',function($q){
             $q->where('user_id',Auth::id());
         })->pluck('id');
 
-        return view('/pengurus/absensi/rekapan-absensi', ['absensi' => $absensi, 'dari' => $request->dari, 'sampai' => $request->sampai, 'auth' => $auth, 'auth_id' => $auth_id, 'kegiatan'=>$kegiatan]);
+        $kegiatan = Kegiatan::whereBetween('tanggal', [$dari, $sampai])
+        ->where('organisasi_id', $auth_id)->latest()->paginate(10);
+
+
+        return view('/pengurus/absensi/rekapan-absensi', ['kegiatan' => $kegiatan, 'dari' => $request->dari, 'sampai' => $request->sampai, 'auth' => $auth, 'auth_id' => $auth_id]);
     }
+
+    
 
     // public function import_excel(Request $request)
     // {
@@ -177,21 +184,20 @@ class AbsensiController extends Controller
     //     return redirect('/absensi/absensi');
     // }
 
-    public function cetakAbsensi(Request $request)
-    {
-        
+    public function cetakAbsensi(Request $request, Kegiatan $kegiatan)
+    {        
+    
         $auth_id = Organisasi::whereHas('detailUser',function($q){
-            $q->where('user_id', Auth::id());
-        })->pluck('id');
-
+            $q->where('user_id',Auth::id());
+        })->value('id');
+        
         $auth = Organisasi::whereHas('detailUser',function($q){
-            $q->where('user_id', Auth::id());
+            $q->where('user_id',Auth::id());
         })->value('jenis');
 
-       
-        $absensi = Absensi::where('organisasi_id',$auth_id)->get();
+        $absensi = Absensi::where('organisasi_id', $auth_id)->get();
 
-        return view('pengurus.absensi.cetak-absensi',compact(['auth_id', 'auth', 'absensi']));
+        return view('pengurus/absensi/cetak-absensi',  compact(['absensi',  'auth', 'auth_id']));
     }
 
     /**
@@ -243,7 +249,6 @@ class AbsensiController extends Controller
             'nama_kegiatan' => $request->nama_kegiatan,
             'tanggal'       => $request->tanggal,
             'organisasi_id' => $request->organisasi_id,
-            'anggota_id'    => $key->anggota_id,
             'nama'          => $key->nama,
             'status'        => $key->status,
             'user_id'        => $key->user_id,
@@ -297,8 +302,10 @@ class AbsensiController extends Controller
             ->update([
                 'status' => $request->status
             ]);
+        
+        $kegiatan = Kegiatan::where('nama_kegiatan', $absensi->nama_kegiatan)->get();
 
-        return redirect('/absensi/rekapan-absensi')->with('success', 'Data Absensi Berhasil Diubah!');
+        return redirect('/absensi/daftar_absensi/'  .$kegiatan[0]->id)->with('success', 'Data Absensi Berhasil Diubah!');
     }
 
     /**
@@ -342,14 +349,14 @@ class AbsensiController extends Controller
 
     }
 
-    public function update_absen(Request $request)
-    {
+    // public function update_absen(Request $request)
+    // {
 
-        $data = DB::table('absensi')
-            ->where('id', $request->id)
-            ->update(['nama' => $request->nama_anggota,'nama_kegiatan'=>$request->nama_kegiatan,"organisasi_id"=>$request->jenis_absen,'tanggal'=>$request->tanggal,'status'=>$request->status]);
-            return redirect('/absensi/absensi')->with('status', 'Data Absensi Berhasil Diupdate!');
-    }
+    //     $data = DB::table('absensi')
+    //         ->where('id', $request->id)
+    //         ->update(['nama' => $request->nama_anggota,'nama_kegiatan'=>$request->nama_kegiatan,"organisasi_id"=>$request->jenis_absen,'tanggal'=>$request->tanggal,'status'=>$request->status]);
+    //         return redirect('/absensi/absensi')->with('status', 'Data Absensi Berhasil Diupdate!');
+    // }
 
     public function hapus($id)
     {

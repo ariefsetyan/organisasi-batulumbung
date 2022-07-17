@@ -76,6 +76,32 @@
                        
                         <a href="/absensi/absensi" class="btn btn-danger my-3 text-light">Kembali</a>
                     </div>
+                    
+                    <div class="table-responsive mt-3">
+                        <table class="table table-success table-hover" id="myTable">
+                            <thead>
+                                <tr>
+                                    <th class="border-top-0">NO</th>
+                                    <th class="border-top-0">ID USER</th>
+                                    <th class="border-top-0">NAMA</th>
+                                    <th class="border-top-0">HADIR</th>
+                                    <th class="border-top-0">TIDAK HADIR</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                            @foreach ($user as $userr)
+                                <tr>
+                                    <th scope="row">{{ $loop->iteration }}</th>
+                                    <td>{{$userr->user_id}}</td>
+                                    <td>{{$userr->user->nama}}</td>
+                                    <td>{{$userr->user->absensi->where('status', 'Hadir')->where('tanggal', '>=' , Carbon\Carbon::now()->subMonth(3))->count()}}</td>
+                                    <td>{{$userr->user->absensi->where('status', 'Tidak Hadir')->where('tanggal', '>=' , Carbon\Carbon::now()->subMonth(3))->count()}}</td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

@@ -149,8 +149,8 @@
                 <!-- GRAFIK-->
                 <!-- ============================================================== -->
                 <div class="row">
-                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                        <div class="white-box">
+                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12" >
+                        <div class="white-box"  style="height: 600px">
 {{--                            <h3 class="box-title">Grafik Absensi Kegiatan</h3>--}}
 {{--                            <div class="d-md-flex">--}}
 {{--                                <ul class="list-inline d-flex ms-auto">--}}
@@ -172,13 +172,35 @@
                                 <div id="container"></div>
 
                             </figure>
-{{--                            <div id="ct-visits" style="height: 405px;">--}}
+{{--                            <div id="ct-visits">--}}
 {{--                                <div class="chartist-tooltip" style="top: -17px; left: -12px;"><span>--}}
 {{--                                        class="chartist-tooltip-value">6</span>--}}
 {{--                                </div>--}}
 {{--                            </div>--}}
                         </div>
+                        
                     </div>
+                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                        <div class="white-box"  style="height: 600px">
+                            <h3 class="box-title">Grafik Keuangan</h3>
+                            <div class="d-md-flex">
+                                <ul class="list-inline d-flex ms-auto">
+                                    <li class="ps-3">
+                                        <h5><i class="fa fa-circle me-1 text-info"></i>Pengeluaran</h5>
+                                    </li>
+                                    <li class="ps-3">
+                                        <h5><i class="fa fa-circle me-1 text-inverse"></i>Pemasukan</h5>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div id="ct-visits"  style="height: 400px">
+                                <div class="chartist-tooltip" style="top: -17px; left: -12px;"><span
+                                        class="chartist-tooltip-value">6</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 </div>
 
                 <!-- ============================================================== -->
@@ -283,6 +305,30 @@
 @endsection
 
 @push('script')
+<script>
+$.get("{{route('getGrafik')}}",function(data_pemasukan,data_pengeluaran){
+new Chartist.Line('#ct-visits', {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu','Sep','Okt','Nov','Des'],
+        series: 
+          data_pemasukan,data_pengeluaran
+        
+    }, {
+        top: 0,
+        low: 1,
+        showPoint: true,
+        fullWidth: true,
+        plugins: [
+            Chartist.plugins.tooltip()
+        ],
+        axisY: {
+            labelInterpolationFnc: function (value) {
+                return (value / 1000) + 'k';
+            }
+        },
+        showArea: true
+    });
+});
+    </script>
     <script>
         // Create the chart
         Highcharts.chart('container', {
@@ -333,11 +379,12 @@
                 {
                     name: "Absensi",
                     colorByPoint: true,
-                    data: [@foreach($grafik1 as $row)
+                    data: [@foreach($grafik2 as $nama => $jumlah)
                             {
-                                name: "{{$row->nama_kegiatan}}",
-                                y: {{$row->jumlah}},
-                                drilldown: "{{$row->nama_kegiatan}}"
+                                name: "{{$nama}}",
+                                y: {{$jumlah}},
+                                drilldown: "{{$nama}}"
+                                
                             },
 
                         @endforeach]
@@ -363,16 +410,26 @@
                     }
                 },
                 series: [
-                        @foreach($grafik1 as $x)
+                        @foreach($grafik as $x => $data)
                     {
-                        name: "{{$x->nama_kegiatan}}",
-                        id: "{{$x->nama_kegiatan}}",
+                        name: "{{$x}}",
+                        id: "{{$x}}",
                         data: [
-                                @foreach($grafik as $row)
+                                @foreach($data->where('status', 'Hadir') as $row)
+                                @if($row->nama_kegiatan == $x)
                             [
-                                "{{$row->jenis}}",
-                                {{$row->jumlah}}
+                                "{{$row->status}}",
+                                {{$data->where('status', 'Hadir')->count() }}
                             ],
+                            @endif
+                            @endforeach
+                                @foreach($data->where('status', 'Tidak Hadir') as $row)
+                                @if($row->nama_kegiatan == $x)
+                            [
+                                "{{$row->status}}",
+                                {{$data->where('status', 'Tidak Hadir')->count() }}
+                            ],
+                            @endif
                             @endforeach
                         ]
                     },

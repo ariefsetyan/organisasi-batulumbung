@@ -51,6 +51,7 @@ use App\Models\Absensi;
 
 //Route::group(['middleware' => ['auth:anggota']], function (){
     Route::get('/pengurus/dashboard', 'App\Http\Controllers\LoginController@dashboardPengurus');
+    Route::get('/pengurus/getGrafik', 'App\Http\Controllers\LoginController@getGrafik')->name('getGrafik');
 
     // Anggota
     Route::get('/anggota/anggota', 'App\Http\Controllers\UserController@indexAnggota');

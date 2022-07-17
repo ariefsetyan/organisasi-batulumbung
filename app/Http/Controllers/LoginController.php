@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Absensi;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\DetailUser;
@@ -9,10 +10,13 @@ use App\Models\Kegiatan;
 use App\Models\Pengumuman;
 use App\Models\Organisasi;
 use App\Models\Event;
+use App\Models\Pemasukan;
+use App\Models\Pengeluaran;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Carbon;
+
 
 class LoginController extends Controller
 {
@@ -107,20 +111,63 @@ class LoginController extends Controller
         $hitungkegiatan = Kegiatan::where('organisasi_id', $auth_id)->count();
         $hitungpengumuman = Pengumuman::where('organisasi_id', $auth_id)->count();
 
-        $grafik = DB::table('absensi as a')->where('a.organisasi_id', $auth_id)
-            ->select('jenis','a.nama_kegiatan',DB::raw('count(*) as jumlah'))
-            ->leftJoin('kegiatan as k','a.nama_kegiatan','=','k.nama_kegiatan')
-            ->leftJoin('organisasi as o','a.organisasi_id','=','o.id')
-            ->groupBy('a.nama_kegiatan','jenis')
-            ->get();
-        $grafik1 = DB::table('absensi as a')->where('a.organisasi_id', $auth_id)
-            ->select('a.nama_kegiatan',DB::raw('count(*) as jumlah'))
-            ->leftJoin('kegiatan as k','a.nama_kegiatan','=','k.nama_kegiatan')
-            ->groupBy('a.nama_kegiatan')
-            ->get();
+        // $grafik = DB::table('absensi as a')->where('a.organisasi_id', $auth_id)
+        //     ->select('status','a.nama_kegiatan',DB::raw('count(*) as jumlah'))
+        //     ->leftJoin('kegiatan as k','a.nama_kegiatan','=','k.nama_kegiatan')
+        //     ->leftJoin('organisasi as o','a.organisasi_id','=','o.id')
+        //     ->groupBy('a.nama_kegiatan','status')
+        //     ->get();
+        // $grafik1 = DB::table('absensi as a')->where('a.organisasi_id', $auth_id)
+        //     ->select('a.nama_kegiatan',DB::raw('count(*) as jumlah'))
+        //     ->leftJoin('kegiatan as k','a.nama_kegiatan','=','k.nama_kegiatan')
+        //     ->groupBy('a.nama_kegiatan')
+        //     ->get();
 
-        return view('/pengurus/dashboard', compact(['kegiatan', 'organisasi', 'pengumuman', 'event', 'hitunganggota', 'hitungevent', 'hitungkegiatan', 'hitungpengumuman','grafik1','grafik']));
+        $grafik2 = Absensi::where('organisasi_id', $auth_id)->pluck('nama_kegiatan')->countBy();
+        $grafik = Absensi::where('organisasi_id', $auth_id)->get(['nama_kegiatan', 'status'])->groupBy('nama_kegiatan');
 
+            // dd($grafik3['Rapat Anggota']->where('status', 'Hadir')->count());
+
+       
+
+
+        return view('/pengurus/dashboard', compact(['kegiatan', 'organisasi', 'pengumuman', 'event', 'hitunganggota', 'hitungevent', 'hitungkegiatan', 'hitungpengumuman','grafik','grafik2']));
+
+    }
+
+    public function getGrafik(){
+        $pemasukan = Pemasukan::selectRaw('year(created_at) year, monthname(created_at) month, sum(jmlh_pemasukan) as sum')
+        ->whereYear('created_at',Carbon\Carbon::today()->year)
+        ->groupBy('year','month')
+        ->orderBy('month','DESC')
+        ->get()
+        ->toArray();
+
+        $pengeluaran = Pengeluaran::selectRaw('year(created_at) year, monthname(created_at) month, sum(total) as sum')
+        ->whereYear('created_at',Carbon\Carbon::today()->year)
+        ->groupBy('year','month')
+        ->orderBy('month','DESC')
+        ->get()
+        ->toArray();
+
+        $data_pengeluaran = [];
+        $data_pemasukan = [];
+
+        $months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August','September','October','November','December'];
+
+        foreach($months as $key => $month){
+            $key = array_search($month, array_column($pemasukan, 'month'));
+            $data = $key === false ? 0 : $pemasukan[$key]['sum'];
+            array_push($data_pemasukan, $data);
+        }
+
+        foreach($months as $key => $month){
+            $key = array_search($month, array_column($pengeluaran, 'month'));
+            $data = $key === false ? 0 : $pengeluaran[$key]['sum'];
+            array_push($data_pengeluaran, $data);
+        }
+
+        return response()->json(array($data_pemasukan,$data_pengeluaran));
     }
 
     public function logout(Request $request)

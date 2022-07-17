@@ -4,17 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Absensi;
 use App\Models\Organisasi;
+use App\Models\User;
 use App\Models\DetailUser;
 use App\Models\Kegiatan;
 use App\Models\ExcelAbsensi;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\AbsensiImport;
-use App\Exports\AbsensiExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use DB;
-use Carbon\Carbon;
-
 
 class AbsensiController extends Controller
 {
@@ -62,6 +60,7 @@ class AbsensiController extends Controller
     public function rekapanAbsensi(Absensi $absensi)
     {
         $organisasi = Organisasi::all();
+        $level = User::where('level','Anggota')->pluck('id');
         
         $auth_id = Organisasi::whereHas('detailUser',function($q){
             $q->where('user_id',Auth::id());
@@ -73,8 +72,9 @@ class AbsensiController extends Controller
         
         $kegiatan = Kegiatan::whereIn('organisasi_id', $auth_id)->get();
         $absensi = Absensi::whereIn('organisasi_id',$auth_id)->latest()->paginate(10);
-        // dd($absensi);
-        return view('pengurus/absensi/rekapan-absensi', compact('absensi', 'organisasi', 'kegiatan', 'auth', 'auth_id'));
+        $user = DetailUser::whereIn('organisasi_id', $auth_id)->whereIn('id',$level)->get();
+        
+        return view('pengurus/absensi/rekapan-absensi', compact('absensi', 'organisasi', 'user', 'kegiatan', 'auth', 'auth_id'));
     }
 
     public function cariAbsensi(Request $request)

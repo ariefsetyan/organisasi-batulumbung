@@ -230,7 +230,7 @@
       <div class=" layout_padding2">
         <div class="card-deck">
             @forelse($kegiatan as $kegiatans)
-            <div class="col-sm-6 d-flex mt-3">
+            <div class="col-sm-4 d-flex mt-3">
               <div class="card">
                 <div class="card-header">
                 @if($kegiatans->image)
@@ -246,9 +246,9 @@
                   <h6>{{$kegiatans->tanggal}} | {{$kegiatans->waktu}}</h6>
                   <h6>{{$kegiatans->tempat}}</h6>
                   <h6>{!! $kegiatans->deskripsi !!}</h6>
-                  <p style="font-size: 12px; text-align:right">Diposting : {!! $kegiatans->created_at !!}</p>
                 </div>
                 <center><hr color="orange" width="50%">
+                <p style="font-size: 12px; text-align:right">Diposting : {!! $kegiatans->created_at !!}</p>
               </div>
             </div>
           @empty

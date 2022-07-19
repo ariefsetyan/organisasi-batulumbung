@@ -123,8 +123,8 @@ class LoginController extends Controller
         //     ->groupBy('a.nama_kegiatan')
         //     ->get();
 
-        $grafik2 = Absensi::where('organisasi_id', $auth_id)->pluck('nama_kegiatan')->countBy();
-        $grafik = Absensi::where('organisasi_id', $auth_id)->get(['nama_kegiatan', 'status'])->groupBy('nama_kegiatan');
+        $grafik2 = Absensi::where('organisasi_id', $auth_id)->where('tanggal', '>=' , Carbon\Carbon::now()->subMonth(3))->pluck('nama_kegiatan')->countBy();
+        $grafik = Absensi::where('organisasi_id', $auth_id)->get(['nama_kegiatan', 'status', 'tanggal'])->groupBy('nama_kegiatan');
 
             // dd($grafik3['Rapat Anggota']->where('status', 'Hadir')->count());
 
@@ -136,7 +136,12 @@ class LoginController extends Controller
     }
 
     public function getGrafik(){
+        $auth_id = Organisasi::whereHas('detailUser',function($q){
+            $q->where('user_id', Auth::id());
+        })->value('id');
+
         $pemasukan = Pemasukan::selectRaw('year(created_at) year, monthname(created_at) month, sum(jmlh_pemasukan) as sum')
+        ->where('organisasi_id', $auth_id)
         ->whereYear('created_at',Carbon\Carbon::today()->year)
         ->groupBy('year','month')
         ->orderBy('month','DESC')
@@ -144,6 +149,7 @@ class LoginController extends Controller
         ->toArray();
 
         $pengeluaran = Pengeluaran::selectRaw('year(created_at) year, monthname(created_at) month, sum(total) as sum')
+        ->where('organisasi_id', $auth_id)
         ->whereYear('created_at',Carbon\Carbon::today()->year)
         ->groupBy('year','month')
         ->orderBy('month','DESC')

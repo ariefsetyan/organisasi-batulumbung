@@ -51,13 +51,13 @@
                                         <td>{{$data->keterangan}}</td>
                                     </tr>
                                     <tr>
-                                        <td><a href ="{{$data->id}}/detail" class="btn btn-danger text-light m-t-10" data-bs-toggle="modal" data-bs-target="#detailPengeluaran">Detail</a></td></td>
+                                        <td><a href ="{{$data->id}}/detail" class="btn btn-danger text-light m-t-10" data-bs-toggle="modal" data-bs-target="#detailPengeluaran{{$data->id}}">Detail</a></td>
                                         <td style="font-size: 12px; text-align:right">Diposting : {!! $data->created_at !!}</td>
                                     </tr>
                                 </tbody>
                             </table>
                             <!-- Modal -->
-                             <div class="modal fade" id="detailPengeluaran" tabindex="-1" role="dialog" aria-labelledby="detailPengeluaranTitle" aria-hidden="true">
+                             <div class="modal fade" id="detailPengeluaran{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="detailPengeluaranTitle" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -65,7 +65,6 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            @foreach ($pengeluaran as $data)
                                             <div class="card-body bg-light mb-2"> 
                                             <table class="table table-striped">
                                             <tr align="center">
@@ -106,7 +105,6 @@
                                             </tr>
                                         </table>
                                             </div>
-                                            @endforeach
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

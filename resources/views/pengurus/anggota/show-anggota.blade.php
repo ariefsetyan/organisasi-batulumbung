@@ -49,19 +49,16 @@
             <tr>
                 <th>Pekerjaan</th>
                 <td>{{ $user->pekerjaan }}</td>
-                <td></td>
             </tr>
             
             <tr>
                 <th>Jenis Kelamin</th>
                 <td>{{ $user->jenis_kelamin }}</td>
-                <td></td>
             </tr>
             
             <tr>
                 <th>Alamat</th>
                 <td>{{ $user->alamat }}</td>
-                <td></td>
             </tr>
             
             <tr>

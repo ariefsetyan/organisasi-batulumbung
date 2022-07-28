@@ -127,7 +127,7 @@ class RegisterController extends Controller
         DB::table('user')
             ->where('id','=',$id)
             ->update(['status'=>'1']);
-        return redirect('verifikasi-akun');
+        return redirect('verifikasi-akun')->with('success', 'Verifikasi Berhasil!');
     }
 
 }

@@ -29,13 +29,12 @@ class Absensi extends Model
             return $query->where('nama', 'like', '%' . $cariAbsensiAnggota . '%')
             ->orWhere('nama_kegiatan', 'like', '%' . $cariAbsensiAnggota . '%');        
         });
-
           
-
-            // $query->when($filters ?? false, function($query, $filters) {
-            //     return $query->where('status', 'like', '%' . $filters['cariStatus'] . '%');
-            //         $query->where('organisasi_id','=', $filters['organisasi']);  
-            // });
+        $query->when($filters['jenis'] ?? false, function($query, $cariAbsensiAnggota) {
+            return $query->whereHas('organisasi', function($query) use ($cariAbsensiAnggota) {
+                $query->where('jenis', $cariAbsensiAnggota);
+            });
+        });
         }
 
     // relasi

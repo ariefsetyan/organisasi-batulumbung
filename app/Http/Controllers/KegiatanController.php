@@ -236,9 +236,10 @@ class KegiatanController extends Controller
             $q->where('user_id',Auth::id());
         })->value('jenis');
         
+        $organisasi = Organisasi::all();
         $kegiatan = Kegiatan::whereIn('organisasi_id',$auth_id)->latest()->paginate(5);
 
-        return view ('anggota/kegiatan', compact(['auth_id', 'auth', 'kegiatan']));
+        return view ('anggota/kegiatan', compact(['auth_id', 'auth', 'kegiatan', 'organisasi']));
     }
 
     public function cariKegiatanAnggota(Request $request)
@@ -252,10 +253,11 @@ class KegiatanController extends Controller
         $auth = Organisasi::whereHas('detailUser',function($q){
             $q->where('user_id',Auth::id());
         })->value('jenis');
-
-        $kegiatan = Kegiatan::where('organisasi_id',$auth_id)->latest()->filter(request(['cariKegiatanAnggota']))->paginate(10)->withQueryString();
-
-		return view('anggota/kegiatan', compact(['auth', 'auth_id', 'kegiatan']));
+      
+        $organisasi = Organisasi::all();
+        $kegiatan = Kegiatan::whereIn('organisasi_id',$auth_id)->latest()->filter(request(['cariKegiatanAnggota', 'jenis']))->paginate(10)->withQueryString();
+       
+		return view('anggota/kegiatan', compact(['auth', 'auth_id', 'kegiatan', 'organisasi']));
  
     }
 

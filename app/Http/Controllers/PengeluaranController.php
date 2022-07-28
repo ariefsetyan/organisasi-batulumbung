@@ -142,9 +142,10 @@ class PengeluaranController extends Controller
             $q->where('user_id',Auth::id());
         })->value('jenis');
 
+        $organisasi = Organisasi::all();
         $pengeluaran = Pengeluaran::whereIn('organisasi_id',$auth_id)->latest()->paginate(5);
 
-        return view('anggota.pengeluaran_anggota',compact('pengeluaran', 'auth', 'auth_id'));
+        return view('anggota.pengeluaran_anggota',compact('pengeluaran', 'auth', 'auth_id', 'organisasi'));
     }
 
     public function cariPengeluaranAnggota(Request $request)
@@ -159,9 +160,10 @@ class PengeluaranController extends Controller
             $q->where('user_id',Auth::id());
         })->value('jenis');
         
-        $pengeluaran = Pengeluaran::whereIn('organisasi_id',$auth_id)->latest()->filter(request(['cariPengeluaranAnggota']))->paginate(10)->withQueryString();
+        $organisasi = Organisasi::all();
+        $pengeluaran = Pengeluaran::whereIn('organisasi_id',$auth_id)->latest()->filter(request(['cariPengeluaranAnggota', 'jenis']))->paginate(10)->withQueryString();
        
-		return view('anggota/pengeluaran_anggota', compact('auth_id', 'auth', 'pengeluaran'));
+		return view('anggota/pengeluaran_anggota', compact('auth_id', 'auth', 'pengeluaran', 'organisasi'));
  
     }
 }

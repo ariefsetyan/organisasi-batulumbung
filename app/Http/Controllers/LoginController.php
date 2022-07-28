@@ -140,17 +140,17 @@ class LoginController extends Controller
             $q->where('user_id', Auth::id());
         })->value('id');
 
-        $pemasukan = Pemasukan::selectRaw('year(created_at) year, monthname(created_at) month, sum(jmlh_pemasukan) as sum')
+        $pemasukan = Pemasukan::selectRaw('year(tanggal) year, monthname(tanggal) month, sum(jmlh_pemasukan) as sum')
         ->where('organisasi_id', $auth_id)
-        ->whereYear('created_at',Carbon\Carbon::today()->year)
+        ->whereYear('tanggal',Carbon\Carbon::today()->year)
         ->groupBy('year','month')
         ->orderBy('month','DESC')
         ->get()
         ->toArray();
 
-        $pengeluaran = Pengeluaran::selectRaw('year(created_at) year, monthname(created_at) month, sum(total) as sum')
+        $pengeluaran = Pengeluaran::selectRaw('year(tanggal) year, monthname(tanggal) month, sum(total) as sum')
         ->where('organisasi_id', $auth_id)
-        ->whereYear('created_at',Carbon\Carbon::today()->year)
+        ->whereYear('tanggal',Carbon\Carbon::today()->year)
         ->groupBy('year','month')
         ->orderBy('month','DESC')
         ->get()

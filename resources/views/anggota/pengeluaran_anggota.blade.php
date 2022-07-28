@@ -11,11 +11,22 @@
                 <h4 class="page-title">Pengeluaran</h4>
             </div>
             <div class="col-md-6 ms-auto">
-                <form class="form mb-3" method="get" action="{{ route ('cariPengeluaranAnggota') }}">
-                    <div class="col-md-6 ms-auto">
-                        <input type="text" name="cariPengeluaranAnggota" class="form-control w-75 d-inline" value="{{ request('cariPengeluaranAnggota')}}" id="cariPengeluaranAnggota" placeholder="Cari ...">
-                        <button type="submit" class="btn btn-primary mb-1"><i class="fa fa-search"></i> Cari</button>  
-                    </div>                    
+                <form class="form" method="get" action="{{ route ('cariPengeluaranAnggota') }}">
+                    <div class="row">
+                        <div class="col-md-6 ms-auto">
+                            <input type="text" name="cariPengeluaranAnggota" class="form-control" value="{{ request('cariPengeluaranAnggota')}}" id="cariPengeluaranAnggota" placeholder="Cari ...">
+                        </div>  
+                        <div class="col-md-6 ms-auto">
+                            <div class="form-group">
+                                <select name="jenis" id="jenis" class="form-control" onchange="this.form.submit()">
+                                    <option value="" selected>Filter Organisasi</option>
+                                    @foreach($organisasi as $organisasis)
+                                    <option value="{{$organisasis->jenis}}">{{$organisasis->jenis}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>                  
                 </form>
             </div>
         </div>
@@ -117,7 +128,7 @@
                 </div>
             </div>
             @empty
-            <div class="card-body"  style="font-weight: 500; text-align:center; font-size:15px; background-color: lightblue">Tidak Ada Data</div>
+            <div class="card-body"  style="font-weight: 500; text-align:center; font-size:15px;">Tidak Ada Data</div>
         @endforelse
     </div>  
 </div>       

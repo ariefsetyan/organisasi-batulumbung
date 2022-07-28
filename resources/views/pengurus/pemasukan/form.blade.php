@@ -41,7 +41,7 @@
                                     {{ csrf_field() }}
 
                                     <div class="form-group">
-                                    <label for="organisasi_id" class="form-label">Jenis Organisasi</label> <br>
+                                    <label for="organisasi_id" class="form-label" required>Jenis Organisasi</label> <br>
                                             <input type="text"  value="{{$auth}}" class="form-control" readonly 
                                             id="organisasi_id">
                                             <input type="hidden" value="{{$auth_id}}" name="organisasi_id">
@@ -49,22 +49,22 @@
                                     <div class="form-group">
                                         <label>Jumlah Pemasukan</label>
                                         <input type="number" name="jumlah_pemasukan" class="form-control"
-                                               id="jumlah_pemasukkan" placeholder="Masukkan Jumlah Pemasukan">
+                                               id="jumlah_pemasukkan" placeholder="Masukkan Jumlah Pemasukan" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="tanggal">Tanggal</label>
                                         <input type="date" name="tanggal" class="form-control"
-                                               id="tanggal" placeholder="Masukkan Tanggal">
+                                               id="tanggal" placeholder="Masukkan Tanggal" required>
                                     </div>
                                     <div class="form-group">
                                         <label>Sumber Dana</label>
                                         <input type="text" name="sumber_dana" class="form-control"
-                                               id="jumlah_pemasukkan" placeholder="Masukkan Sumber Dana">
+                                               id="jumlah_pemasukkan" placeholder="Masukkan Sumber Dana" required>
                                     </div>
                                     <div class="form-group">
                                         <label>Keterangan</label>
                                         <input type="text" name="keterangan" class="form-control"
-                                               id="keterangan" placeholder="Masukkan Keterangan">
+                                               id="keterangan" placeholder="Masukkan Keterangan" required>
                                     </div>
 
                                     <div class="modal-footer">

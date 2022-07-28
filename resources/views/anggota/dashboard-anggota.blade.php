@@ -1,6 +1,6 @@
 @extends ('layouts.main-anggota')
 
-@section('title', 'Dashboard Anggota')
+@section('title', 'Home Anggota')
 
 @section('content')
 <!-- ============================================================== -->
@@ -16,7 +16,7 @@
     <div class="page-breadcrumb bg-white">
         <div class="row align-items-center">
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <h4 class="page-title">Dashboard</h4>
+                <h4 class="page-title">Home</h4>
             </div>
         </div>
     </div>
@@ -152,7 +152,7 @@
 
                                 <div class="form-group">
                                     <label form="nik">NIK</label>
-                                    <input type="text" name="nik" value="{{ $user->nik }}" class="form-control @error('nik') is-invalid @enderror" id="nik" placeholder="Masukkan NIK">
+                                    <input type="text" name="nik" value="{{ $user->nik }}" class="form-control @error('nik') is-invalid @enderror" id="nik" readonly>
                                     @error('nik')
                                     <div class="invalid-feedback">
                                         {{ $message }}

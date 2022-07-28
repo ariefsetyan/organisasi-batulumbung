@@ -33,11 +33,11 @@ class Kegiatan extends Model
             ->orWhere('deskripsi', 'like', '%' . $cariKegiatanAnggota . '%');        
         });
 
-        // $query->when($filters['jenis'] ?? false, function($query, $organisasi) {
-        //     return $query->whereHas('organisasi', function($query) use ($organisasi) {
-        //         $query->where('jenis', $organisasi);
-        //     });
-        // });
+        $query->when($filters['jenis'] ?? false, function($query, $cariKegiatanAnggota) {
+            return $query->whereHas('organisasi', function($query) use ($cariKegiatanAnggota) {
+                $query->where('jenis', $cariKegiatanAnggota);
+            });
+        });
     }
 
     public function organisasi()

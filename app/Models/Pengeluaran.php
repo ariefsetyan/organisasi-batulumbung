@@ -38,6 +38,12 @@ class Pengeluaran extends Model
             return $query->where('sumber_dana', 'like', '%' . $cariLaporan . '%')
             ->orWhere('keterangan', 'like', '%' . $cariLaporan . '%');        
         });
+
+        $query->when($filters['jenis'] ?? false, function($query, $cariPengeluaranAnggota) {
+            return $query->whereHas('organisasi', function($query) use ($cariPengeluaranAnggota) {
+                $query->where('jenis', $cariPengeluaranAnggota);
+            });
+        });
     }
 
     public function scopeGet_sumber_dana(){

@@ -7,15 +7,26 @@
 <div class="page-wrapper">
     <div class="page-breadcrumb bg-white">
         <div class="row align-items-center">
-            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <div class="col-md-4">
                 <h4 class="page-title">Daftar Absensi</h4>
             </div>
             <div class="col-md-6 ms-auto">
-                <form class="form mb-3" method="get" action="{{ route ('cariAbsensiAnggota') }}">
-                    <div class="col-md-6 ms-auto">
-                        <input type="text" name="cariAbsensiAnggota" class="form-control w-75 d-inline" value="{{ request('cariAbsensiAnggota')}}" id="cariAbsensiAnggota" placeholder="Cari ...">
-                        <button type="submit" class="btn btn-primary mb-1"><i class="fa fa-search"></i> Cari</button>  
-                    </div>                    
+                <form class="form" method="get" action="{{ route ('cariAbsensiAnggota') }}">
+                    <div class="row">
+                        <div class="col-md-6 ms-auto">
+                            <input type="text" name="cariAbsensiAnggota" class="form-control" value="{{ request('cariAbsensiAnggota')}}" id="cariAbsensiAnggota" placeholder="Cari ...">
+                        </div>  
+                        <div class="col-md-6 ms-auto">
+                            <div class="form-group">
+                                <select name="jenis" id="jenis" class="form-control" onchange="this.form.submit()">
+                                    <option value="" selected>Filter Organisasi</option>
+                                    @foreach($organisasi as $organisasis)
+                                    <option value="{{$organisasis->jenis}}">{{$organisasis->jenis}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>                  
                 </form>
             </div>
         </div>

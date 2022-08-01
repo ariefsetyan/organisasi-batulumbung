@@ -28,6 +28,12 @@ class Pemasukan extends Model
             return $query->where('sumber_dana', 'like', '%' . $cariLaporan . '%')
             ->orWhere('keterangan', 'like', '%' . $cariLaporan . '%');        
         });
+
+        $query->when($filters['jenis'] ?? false, function($query, $cariPemasukanAnggota) {
+            return $query->whereHas('organisasi', function($query) use ($cariPemasukanAnggota) {
+                $query->where('jenis', $cariPemasukanAnggota);
+            });
+        });
     }
 
     public function organisasi()

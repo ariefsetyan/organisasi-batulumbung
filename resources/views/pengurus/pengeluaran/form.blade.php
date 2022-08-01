@@ -39,7 +39,7 @@
                                     <div class="form-group">
                                         <label for="organisasi_id" class="form-label">Jenis Organisasi</label> <br>
                                             <input type="text"  value="{{$auth}}" class="form-control" readonly 
-                                            id="organisasi_id">
+                                            id="organisasi_id" required>
                                             <input type="hidden" value="{{$auth_id}}" name="organisasi_id">
                                     </div>
 
@@ -85,7 +85,7 @@
                                     <div class="form-group">
                                         <label>Keterangan</label>
                                         <input type="text" name="keterangan" class="form-control"
-                                               id="keterangan" placeholder="Masukkan Keterangan">
+                                               id="keterangan" placeholder="Masukkan Keterangan" required> 
                                     </div>
 
                                     <button type="submit" class="btn btn-primary btn-simpan"><i class="fa fa-save"></i> Submit</button>

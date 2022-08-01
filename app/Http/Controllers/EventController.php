@@ -159,9 +159,10 @@ class EventController extends Controller
             $q->where('user_id',Auth::id());
         })->value('jenis');
 
+        $organisasi = Organisasi::all();
         $event = Event::whereIn('organisasi_id',$auth_id)->latest()->paginate(5);
 
-        return view ('anggota/event', compact([ 'event', 'auth_id', 'auth']));
+        return view ('anggota/event', compact([ 'event', 'auth_id', 'auth', 'organisasi']));
     }
 
     public function cariEventAnggota(Request $request)
@@ -176,9 +177,10 @@ class EventController extends Controller
             $q->where('user_id',Auth::id());
         })->value('jenis');
 
-        $event = Event::whereIn('organisasi_id',$auth_id)->latest()->filter(request(['cariEventAnggota']))->paginate(10)->withQueryString();
+        $data = Organisasi::all();
+        $event = Event::whereIn('organisasi_id',$auth_id)->latest()->filter(request(['cariEventAnggota', 'jenis']))->paginate(10)->withQueryString();
        
-		return view('anggota/event', compact(['auth', 'auth_id', 'event']));
+		return view('anggota/event', compact(['auth', 'auth_id', 'event', 'data']));
  
  
     }

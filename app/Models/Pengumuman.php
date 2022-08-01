@@ -28,11 +28,11 @@ class Pengumuman extends Model
             ->orWhere('isi', 'like', '%' . $cariPengumumanAnggota . '%');        
         });
 
-        // $query->when($filters['jenis'] ?? false, function($query, $organisasi) {
-        //     return $query->whereHas('organisasi', function($query) use ($organisasi) {
-        //         $query->where('jenis', $organisasi);
-        //     });
-        // });
+        $query->when($filters['jenis'] ?? false, function($query, $cariPengumumanAnggota) {
+            return $query->whereHas('organisasi', function($query) use ($cariPengumumanAnggota) {
+                $query->where('jenis', $cariPengumumanAnggota);
+            });
+        });
     }
 
     public function organisasi()

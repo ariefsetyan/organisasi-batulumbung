@@ -263,35 +263,7 @@ class AbsensiController extends Controller
         return redirect('/absensi/absensi')->with('success', 'Data Absensi Berhasil Ditambahkan!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Absensi  $absensi
-     * @return \Illuminate\Http\Response
-     */
-    // public function show(Absensi $absensi)
-    // {
-    //     return view('pengurus.absensi.show-absensi', compact('absensi'));
-    // }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Absensi  $absensi
-     * @return \Illuminate\Http\Response
-     */
-    // public function edit(Absensi $absensi)
-    // {
-    //     return view('pengurus.absensi.edit-absensi', compact('absensi'));
-    // }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Absensi  $absensi
-     * @return \Illuminate\Http\Response
-     */
+    
     public function update(Request $request, Absensi $absensi)
     {
         $request->validate([
@@ -308,12 +280,7 @@ class AbsensiController extends Controller
         return redirect('/absensi/daftar_absensi/'  .$kegiatan[0]->id)->with('success', 'Data Absensi Berhasil Diubah!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Absensi  $absensi
-     * @return \Illuminate\Http\Response
-     */
+   
     public function destroy(Absensi $absensi)
     {
         Absensi::destroy($absensi->id);
@@ -349,15 +316,6 @@ class AbsensiController extends Controller
 
     }
 
-    // public function update_absen(Request $request)
-    // {
-
-    //     $data = DB::table('absensi')
-    //         ->where('id', $request->id)
-    //         ->update(['nama' => $request->nama_anggota,'nama_kegiatan'=>$request->nama_kegiatan,"organisasi_id"=>$request->jenis_absen,'tanggal'=>$request->tanggal,'status'=>$request->status]);
-    //         return redirect('/absensi/absensi')->with('status', 'Data Absensi Berhasil Diupdate!');
-    // }
-
     public function hapus($id)
     {
         DB::table('absensi')->where('id',$id)->delete();
@@ -375,11 +333,13 @@ class AbsensiController extends Controller
         $auth = Organisasi::whereHas('detailUser',function($q){
             $q->where('user_id',Auth::id());
         })->value('jenis');
+
+        $organisasi = Organisasi::all();
     
         $absensi = Auth::guard('web')->user()->id;
-        $data_absensi = Absensi::where('user_id', $absensi)->whereIn('organisasi_id',$auth_id)->latest()->filter(request(['cariAbsensiAnggota']))->paginate(10)->withQueryString();
+        $data_absensi = Absensi::where('user_id', $absensi)->whereIn('organisasi_id',$auth_id)->latest()->filter(request(['cariAbsensiAnggota', 'jenis']))->paginate(10)->withQueryString();
        
-		return view('anggota/absensi', compact('auth_id', 'auth', 'data_absensi'));
+		return view('anggota/absensi', compact('auth_id', 'auth', 'data_absensi', 'organisasi'));
  
     }
 }

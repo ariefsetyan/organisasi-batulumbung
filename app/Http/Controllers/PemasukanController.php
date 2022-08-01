@@ -53,7 +53,7 @@ class PemasukanController extends Controller
             "user_id"=>Auth::user()->id
         );
         $pemasukan = DB::table('pemasukan')->insert($data);
-        return redirect('pemasukan');
+        return redirect('pemasukan')->with('success', 'Data Pemasukan Berhasil Ditambahkan!');
     }
 
     public function hapus($id)
@@ -95,9 +95,10 @@ class PemasukanController extends Controller
             $q->where('user_id',Auth::id());
         })->value('jenis');
 
+        $rganisasi = Organisasi::all();
         $pemasukan = Pemasukan::whereIn('organisasi_id',$auth_id)->latest()->paginate(5);
         
-        return view('anggota.pemasukan_anggota',compact('auth', 'auth_id', 'pemasukan'));
+        return view('anggota.pemasukan_anggota',compact('auth', 'auth_id', 'pemasukan', 'organisasi'));
     }
 
     public function cariPemasukanAnggota(Request $request)
@@ -112,9 +113,10 @@ class PemasukanController extends Controller
             $q->where('user_id',Auth::id());
         })->value('jenis');
         
-        $pemasukan = Pemasukan::whereIn('organisasi_id',$auth_id)->latest()->filter(request(['cariPemasukanAnggota']))->paginate(10)->withQueryString();
+        $organisasi = Organisasi::all();
+        $pemasukan = Pemasukan::whereIn('organisasi_id',$auth_id)->latest()->filter(request(['cariPemasukanAnggota', 'jenis']))->paginate(10)->withQueryString();
        
-		return view('anggota/pemasukan_anggota', compact('auth_id', 'auth', 'pemasukan'));
+		return view('anggota/pemasukan_anggota', compact('auth_id', 'auth', 'pemasukan', 'organisasi'));
  
     }
 }

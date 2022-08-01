@@ -30,6 +30,12 @@ class Event extends Model
             ->orWhere('tempat', 'like', '%' . $cariEventAnggota . '%')
             ->orWhere('keterangan', 'like', '%' . $cariEventAnggota . '%');      
         });
+        
+        $query->when($filters['jenis'] ?? false, function($query, $cariEventAnggota) {
+            return $query->whereHas('organisasi', function($query) use ($cariEventAnggota) {
+                $query->where('jenis', $cariEventAnggota);
+            });
+        });
     }
 
     public function organisasi()

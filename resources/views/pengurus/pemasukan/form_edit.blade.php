@@ -45,17 +45,17 @@
                                     <div class="form-group">
                                         <label for="tanggal">Tanggal</label>
                                         <input type="date" name="tanggal" class="form-control"
-                                               id="tanggal" placeholder="Masukkan Tanggal" value="{{$data->tanggal}}">
+                                               id="tanggal" placeholder="Masukkan Tanggal" value="{{$data->tanggal}}" required>
                                     </div>
                                     <div class="form-group">
                                         <label>Sumber Dana</label>
                                         <input type="text" name="sumber_dana" class="form-control"
-                                               id="jumlah_pemasukkan" placeholder="Masukkan Sumber Dana" value="{{$data->sumber_dana}}">
+                                               id="jumlah_pemasukkan" placeholder="Masukkan Sumber Dana" value="{{$data->sumber_dana}}" required>
                                     </div>
                                     <div class="form-group">
                                         <label>Keterangan</label>
                                         <input type="text" name="keterangan" class="form-control"
-                                               id="keterangan" placeholder="Masukkan Keterangan" value="{{$data->keterangan}}">
+                                               id="keterangan" placeholder="Masukkan Keterangan" value="{{$data->keterangan}}" required>
                                     </div>
 
                                     <div class="modal-footer">

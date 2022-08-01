@@ -243,9 +243,10 @@ class PengumumanController extends Controller
             $q->where('user_id',Auth::id());
         })->value('jenis');
         
+        $organisasi = Organisasi::all();
         $pengumuman = Pengumuman::whereIn('organisasi_id',$auth_id)->latest()->paginate(5);
 
-        return view ('anggota/pengumuman', compact(['auth_id', 'auth', 'pengumuman']));
+        return view ('anggota/pengumuman', compact(['auth_id', 'auth', 'pengumuman', 'organisasi']));
     }
 
     public function cariPengumumanAnggota(Request $request)
@@ -260,9 +261,10 @@ class PengumumanController extends Controller
             $q->where('user_id',Auth::id());
         })->value('jenis');
         
-        $pengumuman = Pengumuman::whereIn('organisasi_id',$auth_id)->latest()->filter(request(['cariPengumumanAnggota']))->paginate(10)->withQueryString();
+        $organisasi = Organisasi::all();
+        $pengumuman = Pengumuman::whereIn('organisasi_id',$auth_id)->latest()->filter(request(['cariPengumumanAnggota', 'jenis']))->paginate(10)->withQueryString();
        
-		return view('anggota/pengumuman', compact('auth_id', 'auth', 'pengumuman'));
+		return view('anggota/pengumuman', compact('auth_id', 'auth', 'pengumuman', 'organisasi'));
  
     }
 

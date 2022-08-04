@@ -359,8 +359,10 @@ class UserController extends Controller
             'alamat'        => 'required'
         ]);
 
-        User::where('id', $user->id)
-        ->update($validateData);
+        // dd($request);
+        User::find($user->id)
+            ->update($validateData);
+
 
         // $organisasi = collect($request->organisasi_id);
         // $indeks = count($organisasi);

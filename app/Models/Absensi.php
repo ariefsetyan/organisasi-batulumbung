@@ -11,7 +11,6 @@ class Absensi extends Model
     protected $fillable = [
         'user_id',
         'organisasi_id',
-        'nama', 
         'nama_kegiatan', 
         'tanggal',
         'status',
@@ -20,15 +19,15 @@ class Absensi extends Model
 
     public function scopeFilter($query, array $filters) {
     
-        $query->when($filters['cariAbsensi'] ?? false, function($query, $cariAbsensi) {
-            return $query->where('nama', 'like', '%' . $cariAbsensi . '%')
-            ->orWhere('nama_kegiatan', 'like', '%' . $cariAbsensi . '%');        
-        });
+        // $query->when($filters['cariAbsensi'] ?? false, function($query, $cariAbsensi) {
+        //     return $query->where('nama', 'like', '%' . $cariAbsensi . '%')
+        //     ->orWhere('nama_kegiatan', 'like', '%' . $cariAbsensi . '%');        
+        // });
 
-        $query->when($filters['cariAbsensiAnggota'] ?? false, function($query, $cariAbsensiAnggota) {
-            return $query->where('nama', 'like', '%' . $cariAbsensiAnggota . '%')
-            ->orWhere('nama_kegiatan', 'like', '%' . $cariAbsensiAnggota . '%');        
-        });
+        // $query->when($filters['cariAbsensiAnggota'] ?? false, function($query, $cariAbsensiAnggota) {
+        //     return $query->where('nama', 'like', '%' . $cariAbsensiAnggota . '%')
+        //     ->orWhere('nama_kegiatan', 'like', '%' . $cariAbsensiAnggota . '%');        
+        // });
           
         $query->when($filters['jenis'] ?? false, function($query, $cariAbsensiAnggota) {
             return $query->whereHas('organisasi', function($query) use ($cariAbsensiAnggota) {

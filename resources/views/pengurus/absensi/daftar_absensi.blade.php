@@ -46,22 +46,10 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="col-md-6">
-                            <form class="form mb-3" method="get" action="{{ route ('cariAbsensi') }}">
-                                <div class="form-group">
-                                    <input type="hidden" name="kegiatan" value="{{$kegiatan ?? ''}}">  
-                                    <input type="text" name="cariAbsensi" class="form-control w-75 d-inline" value="{{ request('cariAbsensi')}}" id="cariAbsensi" placeholder="Cari ...">
-                                    <button type="submit" class="btn btn-primary mb-1"><i class="fa fa-search"></i> Cari</button>
-                                </div>  
-                            </form>
-                        </div>
                     </div>
 
-
-                  
-
                     <div class="table-responsive mt-3">
-                        <table class="table table-striped">
+                        <table class="table table-striped" id="myTable">
                             <thead>
                                 <tr>
                                     <th class="border-top-0">NO</th>
@@ -80,7 +68,8 @@
                                 <tr>
                                     <th>{{$loop->iteration}}</th>
                                     <td>{{$absensi->user_id}}</td>
-                                    <td>{{$absensi->nama}}</td>
+                                    <td>{{$absensi->user->nama ?? 'Belum Terdaftar'}}</td>
+                                    
                                     <td>{{$absensi->nama_kegiatan}}</td>
                                     <td>{{ \Carbon\Carbon::parse($absensi->tanggal)->format('Y-m-d')}}</td>
                                     <!-- carbon format (y-m-d) -->

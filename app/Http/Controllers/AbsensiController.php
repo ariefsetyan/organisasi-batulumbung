@@ -39,22 +39,21 @@ class AbsensiController extends Controller
         return view('pengurus.absensi.absensi', compact('absensi', 'organisasi', 'kegiatan', 'auth', 'auth_id'));
     }
 
-    public function daftarAbsensi(Absensi $absensi, Kegiatan $kegiatan )
+    public function daftarAbsensi(Absensi $absensi, Kegiatan $kegiatan)
     {
-               
         $auth_id = Organisasi::whereHas('detailUser',function($q){
             $q->where('user_id',Auth::id());
         })->value('id');
         
         $auth = Organisasi::whereHas('detailUser',function($q){
             $q->where('user_id',Auth::id());
-        })->value('jenis');
-
+        })->value('jenis'); 
+        
         $absensi = Absensi::where('organisasi_id', $auth_id)
         ->where('nama_kegiatan', $kegiatan->nama_kegiatan)->get();
 
         // dd($absensi);
-        return view('pengurus/absensi/daftar_absensi', ['kegiatan'=>$kegiatan->nama_kegiatan], compact(['absensi',  'auth', 'auth_id']));
+        return view('pengurus/absensi/daftar_absensi', ['kegiatan'=>$kegiatan->nama_kegiatan], compact(['absensi', 'auth', 'auth_id']));
     }
 
     public function rekapanAbsensi(Absensi $absensi)
@@ -249,7 +248,6 @@ class AbsensiController extends Controller
             'nama_kegiatan' => $request->nama_kegiatan,
             'tanggal'       => $request->tanggal,
             'organisasi_id' => $request->organisasi_id,
-            'nama'          => $key->nama,
             'status'        => $key->status,
             'user_id'        => $key->user_id,
             'is_label'=>'f'

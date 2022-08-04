@@ -23,7 +23,7 @@
             <tr>
                 <th scope="row">{{ ++$no }}</th>
                 <td>{{$absen->anggota_id}}</td>
-                <td>{{$absen->nama}}</td>
+                <td>{{$absen->luser->nama}}</td>
                 <td>{{$absen->nama_kegiatan}}</td>
                 <td>{{ \Carbon\Carbon::parse($absen->tanggal)->format('d/m/Y')}}</td> 
                 <!-- carbon format (y-m-d) -->

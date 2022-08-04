@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 use App\Models\ExcelAbsensi;
+use App\Models\User;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
@@ -14,7 +15,7 @@ class AbsensiImport implements ToModel, WithHeadingRow
     */
     public function model(array $row)
     {
-//dd($row);
+        // dd( $row['user_id']);
         $excel_absensi = [
             // 'anggota_id'    => $row['ANGGOTA ID'],
             // 'nama'          => $row['NAMA'],
@@ -23,7 +24,7 @@ class AbsensiImport implements ToModel, WithHeadingRow
             // 'jenis'         => $row['JENIS'],
             // 'status'        => $row['STATUS']
             'user_id'        => $row['user_id'],
-            'nama'              => $row['nama'],
+            // 'nama'              => $row['nama'],
             // 'nama_kegiatan' => $row['nama_kegiatan'],
             // 'tanggal'       => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tanggal']),
             // 'jenis'         => $row['jenis'],

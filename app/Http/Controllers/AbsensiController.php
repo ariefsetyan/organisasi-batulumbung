@@ -249,8 +249,8 @@ class AbsensiController extends Controller
             'tanggal'       => $request->tanggal,
             'organisasi_id' => $request->organisasi_id,
             'status'        => $key->status,
-            'user_id'        => $key->user_id,
-            'is_label'=>'f'
+            'user_id'       => $key->user_id,
+            'is_label'      =>'f'
         ];
 
         Absensi::create($create_data);

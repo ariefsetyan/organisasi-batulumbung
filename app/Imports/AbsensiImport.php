@@ -15,7 +15,7 @@ class AbsensiImport implements ToModel, WithHeadingRow
     */
     public function model(array $row)
     {
-        // dd( $row['user_id']);
+        // dd( $row);
         $excel_absensi = [
             // 'anggota_id'    => $row['ANGGOTA ID'],
             // 'nama'          => $row['NAMA'],

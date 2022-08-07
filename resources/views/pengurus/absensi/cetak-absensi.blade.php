@@ -53,7 +53,7 @@
                     <tr>
                         <th scope="row">{{ $loop->iteration}}</th>
                         <td>{{$absen->user_id}}</td>
-                        <td>{{$absen->nama}}</td>
+                        <td>{{$absen->user->nama ?? 'User Belum Terdaftar'}}</td>
                         <td>{{$absen->nama_kegiatan}}</td>
                         <td>{{ \Carbon\Carbon::parse($absen->tanggal)->format('Y-m-d')}}</td>
                         <!-- carbon format (y-m-d) -->

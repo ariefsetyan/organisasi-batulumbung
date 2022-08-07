@@ -137,7 +137,7 @@ use App\Models\Absensi;
     Route::get('/absensi/cetak-absensi', 'App\Http\Controllers\AbsensiController@cetakAbsensi')->name('cetak-absensi');
     Route::get('/absensi/daftar_absensi/{kegiatan}', 'App\Http\Controllers\AbsensiController@daftarAbsensi')->name('daftar_absensi');
     Route::get('/absensi/rekapan-absensi', 'App\Http\Controllers\AbsensiController@rekapanAbsensi')->name('rekapan-absensi');
-    Route::get('/absensi/cariAbsensi','App\Http\Controllers\AbsensiController@cariAbsensi')->name('cariAbsensi');
+    // Route::get('/absensi/cariAbsensi','App\Http\Controllers\AbsensiController@cariAbsensi')->name('cariAbsensi');
     Route::get('/absensi/cariStatus','App\Http\Controllers\AbsensiController@cariStatus')->name('cariStatus');
     Route::get('/absensi/filterTanggal','App\Http\Controllers\AbsensiController@filterTanggal')->name('filterTanggal');
     // Route::get('/absensi/filterTanggalRekapan','App\Http\Controllers\AbsensiController@filterTanggalRekapan')->name('filterTanggalRekapan');
@@ -192,7 +192,7 @@ use App\Models\Absensi;
      Route::get('anggota/login', 'App\Http\Controllers\LoginController@indexAnggota');
      Route::post('anggota/login', 'App\Http\Controllers\LoginController@prosesLoginAnggota')->name('loginPostAnggota');
      Route::get('/dashboard-anggota', 'App\Http\Controllers\LoginController@dashboardAnggota');
-     Route::patch('/dashboard-anggota/{anggota}', 'App\Http\Controllers\UserController@updateProfilAnggota')->name('updateProfilAnggota');
+     Route::patch('/dashboard-anggota/{user}', 'App\Http\Controllers\UserController@updateProfilAnggota')->name('updateProfilAnggota');
      Route::patch('/dashboard-anggota', 'App\Http\Controllers\UserController@updatePasswordAnggota')->name('update_password_anggota');
 
     //Register 

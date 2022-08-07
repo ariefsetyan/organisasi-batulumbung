@@ -17,7 +17,6 @@ class CreateAbsensiTable extends Migration
             $table->bigIncrements('id');
             $table->foreignId('user_id');
             $table->foreignId('organisasi_id');
-            $table->string('nama');
             $table->string('nama_kegiatan');
             $table->string('tanggal');
             $table->string('status');

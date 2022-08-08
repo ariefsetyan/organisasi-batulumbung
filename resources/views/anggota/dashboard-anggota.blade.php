@@ -51,6 +51,11 @@
                     <table class="table table-striped">
                         @foreach($semua as $user)
                         <tr>
+                            <th> ID Anggota</th>
+                            <th>:</th>
+                            <th colspan="4">{{ $user->id}}</th>
+                        </tr>
+                        <tr>
                             <th style="width:200px">Nama</th>
                             <th>:</th>
                             <td>{{ $user->nama}}</td>

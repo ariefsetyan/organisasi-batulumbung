@@ -71,7 +71,7 @@ class AbsensiController extends Controller
         
         $kegiatan = Kegiatan::whereIn('organisasi_id', $auth_id)->get();
         $absensi = Absensi::whereIn('organisasi_id',$auth_id)->latest()->paginate(10);
-        $user = DetailUser::whereIn('organisasi_id', $auth_id)->whereIn('id',$level)->get();
+        $user = DetailUser::whereIn('organisasi_id', $auth_id)->get();
         
         return view('pengurus/absensi/rekapan-absensi', compact('absensi', 'organisasi', 'user', 'kegiatan', 'auth', 'auth_id'));
     }
